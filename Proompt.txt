@@ -7,3 +7,8 @@ Here are the 12 categories for a player with the letter "{letter}":
 
 {index + 1}{category}
 {response}
+
+
+
+
+Gotta update this but so far only the happy path works. An empty one will not and sometimes It gives more 
