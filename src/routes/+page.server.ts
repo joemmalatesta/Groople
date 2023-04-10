@@ -1,5 +1,8 @@
 import { OPENAI_KEY } from '$env/static/private';
-const API_URL = 'https://api.openai.com/v1/engines/davinci/completions';
+import { Configuration, OpenAIApi } from 'openai';
+const openAI = new OpenAIApi( new Configuration({
+      apiKey: OPENAI_KEY
+    }))
 
 export const actions = {
 	default: async (event) => {
@@ -24,33 +27,19 @@ export const actions = {
     ${useableData}
     `;
 
-    console.log(prompt)
+    let output
 
-		const body = JSON.stringify({
-          prompt,
-          max_tokens: 50,
-          n: 1,
-          stop: 'finished',
-          temperature: 0.2,
-        });
-        const headers = {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${OPENAI_KEY}`,
-        };
-        try {
-          const response = await fetch(API_URL, { method: 'POST', body, headers });
-          const json = await response.json();
-          console.log('OpenAI response:', json);
-          const message = json.choices[0].text.trim();
-          console.log(message)
-          return {
-            message : "working",
-          };
-        } catch (error) {
-          console.error(error);
-          return {
-            message: error,
-          };
-        }
+    openAI.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [{
+        role: "user",
+        content: prompt
+      }]
+    }).then(res => {
+      output = res.data.choices[0].message?.content
+    })
+    return {
+      message: output,
+    };
 	}
 };
