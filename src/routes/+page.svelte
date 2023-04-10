@@ -18,7 +18,7 @@
 	];
 
 	// Choose or select Letter
-    let letter: string = randomLetter();
+    let letter: string = "D";
 	function randomLetter() {
 		//Only scattergories letters
 		const characters = "abcdefghijklmnoprstw";
@@ -28,11 +28,14 @@
 </script>
 
 <div class="flex justify-center items-center flex-col">
-	<h1 class="text-6xl">{data.message}</h1>
+	<h1 class="text-6xl">Scattergories</h1>
+	<h1 class="text-6xl">Letter: {letter}</h1>
 	<form method="POST" class="flex flex-col mt-5">
+		<input type="text" name=letter value={letter} class="hidden">
 		{#each categories as  category, index}
-			<Category index={index} category={category} letter={letter}/>
+			<Category index={++index} category={category} letter={letter}/>
 		{/each}
 		<button type="submit" class="bg-blue-400 p-2">Submit</button>
 	</form>
+
 </div>
