@@ -29,7 +29,7 @@
 
 <div class="flex justify-center items-center flex-col">
 	<h1 class="text-6xl">{data.message}</h1>
-	<form action="POST" class="flex flex-col mt-5">
+	<form method="POST" class="flex flex-col mt-5">
 		{#each categories as  category, index}
 			<Category index={index} category={category} letter={letter}/>
 		{/each}
