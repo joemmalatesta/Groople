@@ -26,9 +26,9 @@
 	}
 </script>
 
-<div class="flex justify-around items-center">
+<div class="flex justify-around items-center md:flex-row flex-col">
 	<label class="p-1 text-xl" for="{index}Input">{index}: {category}</label>
-	<!-- Should be a component -->
+	<div class="flex">
 	<input
 		bind:value={answer}
 		type="text"
@@ -38,4 +38,5 @@
 		id="{index}Input"
 	/>
 	<p>{validResponse}</p>
+</div>
 </div>
