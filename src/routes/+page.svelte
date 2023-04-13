@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import Category from '../components/Category.svelte';
+	import { slide } from 'svelte/transition';
 
 	export let form;
 	let allCategories: string[] = [
@@ -246,16 +247,21 @@
 	<div class="flex items-center justify-center md:flex-row flex-col w-full">
 		<h1 class="lg:text-6xl md:text-3xl text-2xl md:mr-20">Letter: {letter}</h1>
 		<form method="POST" use:enhance class="flex flex-col mt-5 items-center">
+			<input type="text" value={letter} class="hidden" name="letter">
 			{#each categories as category, index}
-				<div class="my-1 w-full">
-					<Category
-						index={index + 1}
-						{category}
-						{letter}
-						valid={responseArray[index] ? responseArray[index].toLowerCase() : ''}
-						recordedAnswer={answerArray[index]}
-					/>
-				</div>
+
+				{#key responseArray}
+					<div class="my-1 w-full"
+					transition:slide>
+						<Category
+							index={index + 1}
+							{category}
+							{letter}
+							valid={responseArray[index] ? responseArray[index].toLowerCase() : ''}
+							recordedAnswer={answerArray[index]}
+						/>
+					</div>
+				{/key}
 			{/each}
 			<button type="submit" class="bg-blue-400 hover:bg-blue-500 p-2 w-60">Submit</button>
 		</form>

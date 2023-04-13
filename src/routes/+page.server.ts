@@ -9,18 +9,15 @@ export const actions: Actions = {
 	default: async (event) => {
 		const formData = Object.fromEntries(await event.request.formData());
 		const dataArray = Object.entries(formData).map(([index, value]) => ({ index, value }));
-    
 
 		// Sort the array of objects by index in ascending order
 		dataArray.sort((a, b) => Number(a.index) - Number(b.index));
-
 		// Remove the letter object from the array and get its value
 		const letterIndex = dataArray.findIndex(({ index }) => index === 'letter');
 		const [letterObject] = dataArray.splice(letterIndex, 1);
 		const letter = letterObject?.value; // Use optional chaining in case letterObject is undefined
 
 
-    console.log(dataArray)
 		// Display the formatted data in the console
 		let useableData = dataArray
   .map(({ index, value }) => `${index}: ${value ? value : 'ZZZZZZ'}`)
@@ -59,6 +56,7 @@ export const actions: Actions = {
     })
 	const answerArray = res.data.choices[0].message?.content
     return {
+		// Useable Data should be dataArray it makes more sense but whatever
 	  input : useableData,		
       output: answerArray
     }
