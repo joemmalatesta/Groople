@@ -232,33 +232,32 @@
 		return selectedCategories;
 	}
 
-	// Choose or select Letter
-
-	let answer = true;
-	$: console.log(form);
-	let responseArray: string[] = form?.message.split('\n') || [];
-	$: responseArray = form?.message.split('\n') || [];
+	// Get input and output for the thing
+	let inputArray: string[] = [];
+	$: inputArray = form?.input?.split('\n') || [];
+	let answerArray: string[] = [];
+	$: answerArray = inputArray.map((item) => item.split(':')[2].trim());
+	let responseArray: string[] = [];
+	$: responseArray = form?.output?.split('\n') || [];
 </script>
 
 <div class="flex justify-center items-center flex-col">
-	<h1 class="text-6xl">Scattergories</h1>
-	<h1 class="text-6xl">Letter: {letter}</h1>
-	<form method="POST" use:enhance class="flex flex-col mt-5 items-center w-4/5">
-		<input type="text" name="letter" value={letter} class="hidden" />
-		{#each categories as category, index}
-			<Category
-				index={index + 1}
-				{category}
-				{letter}
-				valid={responseArray[index] ? responseArray[index].toLowerCase() : ''}
-			/>
-		{/each}
-		<button type="submit" class="bg-blue-400 hover:bg-blue-500 p-2 w-60">Submit</button>
-	</form>
-
-	<button
-		on:click={() => {
-			categories = refreshCategories();
-		}}>Refresh Categories</button
-	>
+	<h1 class="lg:text-6xl text-3xl">Daily Challenge</h1>
+	<div class="flex items-center justify-center md:flex-row flex-col w-full">
+		<h1 class="lg:text-6xl md:text-3xl text-2xl md:mr-20">Letter: {letter}</h1>
+		<form method="POST" use:enhance class="flex flex-col mt-5 items-center">
+			{#each categories as category, index}
+				<div class="my-1 w-full">
+					<Category
+						index={index + 1}
+						{category}
+						{letter}
+						valid={responseArray[index] ? responseArray[index].toLowerCase() : ''}
+						recordedAnswer={answerArray[index]}
+					/>
+				</div>
+			{/each}
+			<button type="submit" class="bg-blue-400 hover:bg-blue-500 p-2 w-60">Submit</button>
+		</form>
+	</div>
 </div>

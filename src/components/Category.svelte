@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let index: number, category: string, letter: string, valid: string;
+	export let index: number, category: string, letter: string, valid: string, recordedAnswer: string;
 	let answer: string = '';
 	let cssOutline: string = '';
 
@@ -24,12 +24,17 @@
 			validResponse = "❌"
 		}
 	}
+
+	$: if (recordedAnswer === "ZZZZZZ")
+	{
+		recordedAnswer = "Unanswered"
+	}
 </script>
 
-<div class="flex justify-around items-center md:flex-row flex-col">
+<div class="flex justify-between items-center md:flex-row flex-col">
 	<label class="p-1 text-xl" for="{index}Input">{index}: {category}</label>
-	<div class="flex">
-	<input
+	{#if !recordedAnswer}
+		<input
 		bind:value={answer}
 		type="text"
 		placeholder="{letter}..."
@@ -37,6 +42,7 @@
 		name="{index} : {category}"
 		id="{index}Input"
 	/>
-	<p>{validResponse}</p>
-</div>
+	{:else}
+		<p class="text-xl"><span class="underline">{recordedAnswer}</span> {validResponse}</p>
+	{/if}
 </div>

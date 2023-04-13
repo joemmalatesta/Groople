@@ -23,7 +23,7 @@ export const actions: Actions = {
     console.log(dataArray)
 		// Display the formatted data in the console
 		let useableData = dataArray
-  .map(({ index, value }) => `${index}: ${value ? value : 'ZYZYAQJIX'}`)
+  .map(({ index, value }) => `${index}: ${value ? value : 'ZZZZZZ'}`)
   .join('\n');
 		let prompt = `Welcome to Scattergories! You are the judge, and your task is to determine whether the player's responses match the category and start with the selected letter.
 		If the response is a valid match, please respond with a "Yes." If the response does not match, please respond with a "No."
@@ -57,14 +57,10 @@ export const actions: Actions = {
         content: prompt
       }]
     })
-
-    const output = res.data.choices[0].message?.content
-    console.log(res.data.choices)
-    console.log(useableData)
-    console.log(output)
-
+	const answerArray = res.data.choices[0].message?.content
     return {
-      message: output
+	  input : useableData,		
+      output: answerArray
     }
 	}
 };
