@@ -2,8 +2,19 @@
 	import { enhance } from '$app/forms';
 	import Category from '../components/Category.svelte';
 	import { slide } from 'svelte/transition';
+	import Time from '../components/Time.svelte';
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
 
 	export let form;
+
+	let time: number;
+	let formElement: any;
+	$: if (time === 0) {
+		formElement.dispatchEvent(new Event('submit'));
+	}
+
 	let allCategories: string[] = [
 		"A Boy's Name",
 		'U.S. Cities',
@@ -243,16 +254,24 @@
 </script>
 
 <div class="flex justify-center items-center flex-col">
-	<h1 class="lg:text-6xl text-3xl">Daily Challenge</h1>
+	<h1 class="lg:text-6xl text-5xl text-rose-400 font-sans mt-3">Daily Challenge</h1>
 	<div class="flex items-center justify-center md:flex-row flex-col w-full">
-		<h1 class="lg:text-6xl md:text-3xl text-2xl md:mr-20">Letter: {letter}</h1>
-		<form method="POST" use:enhance class="flex flex-col mt-5 items-center">
-			<input type="text" value={letter} class="hidden" name="letter">
+		<div class="flex flex-col items-center justify-around md:mr-20">
+			<h1 class="lg:text-6xl md:text-4xl text-3xl md:mb-10">Letter: {letter}</h1>
+			<Time bind:time />
+		</div>
+		<script>
+			if (time === 0) {
+				let formElement;
+				formElement.dispatchEvent(new Event('submit'));
+			}
+		</script>
+		<form bind:this={formElement} method="POST" use:enhance class="flex flex-col mt-5 items-center relative">
+			<!-- Have this here, so the letter is sent with the form details. I'm sure theres a better way -->
+			<input type="text" value={letter} class="hidden" name="letter" />
 			{#each categories as category, index}
-
 				{#key responseArray}
-					<div class="my-1 w-full"
-					transition:slide>
+					<div class="my-1 w-full" transition:slide>
 						<Category
 							index={index + 1}
 							{category}
@@ -263,7 +282,6 @@
 					</div>
 				{/key}
 			{/each}
-			<button type="submit" class="bg-blue-400 hover:bg-blue-500 p-2 w-60">Submit</button>
 		</form>
 	</div>
 </div>
