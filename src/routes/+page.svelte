@@ -11,7 +11,7 @@
 			<img src="svelteLogo.png" alt="Svelte Logo" class="w-16 mr-1" />cattergories
 		</h1>
 		<p class="md:text-5xl text-2xl">12 Questions, 120 Seconds, Daily</p>
-		<a class="text-2xl p-3 font-semibold rounded-xl bg-[#ee9074] hover:bg-[#e97e5e] shadow-xl ring-orange-600 ring-2" href="/daily"
+		<a class="text-2xl p-3 font-semibold rounded-xl bg-[#ee9074] hover:bg-[#e97e5e] shadow-xl ring-orange-600/50 ring-2" href="/daily"
 			>Start Daily Challenge</a
 		>
 		<p class="text-md">Once started, the challenge cannot be stopped.</p>
