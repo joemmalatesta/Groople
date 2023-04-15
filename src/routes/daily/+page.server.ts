@@ -24,7 +24,9 @@ export const actions: Actions = {
   .join('\n');
 		let prompt = `Welcome to Scattergories! You are the judge, and your task is to determine whether the player's responses match the category and start with the selected letter.
 		If the response is a valid match, please respond with a "Yes." If the response does not match, please respond with a "No."
-		 Please ensure that responses are not overly-vague or manipulated by unjust use of adjectives.
+		Here are some extra rules you should be aware of
+			1) Players shall not use adjectives that do not distinctly redefine the answer. Things like "Nice car" for "N" and "Red Car" for "R" will not be allowed.
+			2) Players shall not submit multiple answers for a category. even if one of them is correct, you must respond with "No" if there are multiple answers provided.
 
 		Here are the 12 categories and answers for a player with the letter "${letter}":
 		${useableData}

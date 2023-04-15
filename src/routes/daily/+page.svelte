@@ -259,8 +259,9 @@
 </script>
 
 <div class="flex justify-center items-center flex-col">
-	<h1 class="lg:text-6xl text-5xl text-rose-400 font-sans mt-3">Daily Challenge</h1>
+	<h1 class="lg:text-6xl text-5xl text-[#f73f0a]/75 font-bold mt-3">Daily Challenge</h1>
 	<div class="flex items-center justify-center md:flex-row flex-col w-full">
+		<!-- Worry about these always being seen on the phone version -->
 		<div class="flex flex-col items-center justify-around md:mr-20">
 			<h1 class="lg:text-6xl md:text-4xl text-3xl md:mb-10">Letter: {letter}</h1>
 			<Time bind:time />
@@ -276,7 +277,7 @@
 			<input type="text" value={letter} class="hidden" name="letter" />
 			{#each categories as category, index}
 				{#key responseArray}
-					<div class="my-1 w-full" in:slide={{duration: 500, delay: 300}}>
+					<div class="my-1 w-full" transition:slide={{duration: 500}}>
 						<Category
 							index={index + 1}
 							{category}
