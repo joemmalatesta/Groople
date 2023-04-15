@@ -22,9 +22,9 @@
             <h3>Yesterdays Challenge</h3>
         </div>
         <!-- Play Daily Challenge -->
-        <div><a class="text-2xl p-3 rounded-xl bg-emerald-300 hover:bg-emerald-400 shadow-md" href="/daily"
-			>Start Daily Challenge</a
-		></div>
+        <div>
+            I dont know what will go here
+		</div>
         <!-- Be able to submit as many as you want. up to 50 or something and it will either send an email or store in DB -->
         <div>
             <h3>Submit your own list</h3>
