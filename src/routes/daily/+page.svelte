@@ -1,5 +1,10 @@
+<svelte:head>
+	<title>Daily Challenge</title>
+	<meta name="description" content="Take the daily SvelteGories Quiz">
+</svelte:head>
+
 <script lang="ts">
-	import { enhance } from '$app/forms';
+	import { deserialize, enhance } from '$app/forms';
 	import Category from '../../components/Category.svelte';
 	import { slide } from 'svelte/transition';
 	import Time from '../../components/Time.svelte';
@@ -271,7 +276,7 @@
 			<input type="text" value={letter} class="hidden" name="letter" />
 			{#each categories as category, index}
 				{#key responseArray}
-					<div class="my-1 w-full" transition:slide>
+					<div class="my-1 w-full" in:slide={{duration: 500, delay: 300}}>
 						<Category
 							index={index + 1}
 							{category}
