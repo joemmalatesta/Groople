@@ -7,7 +7,7 @@
 	import { deserialize, enhance } from '$app/forms';
 	import Category from '../../components/Category.svelte';
 	import { slide } from 'svelte/transition';
-	import Time from '../../components/Time.svelte';
+	import Time from '../../components/Timer.svelte';
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
@@ -272,7 +272,8 @@
 				formElement.dispatchEvent(new Event('submit'));
 			}
 		</script>
-		<form bind:this={formElement} method="POST" use:enhance class="flex flex-col mt-5 items-center relative">
+		<div class="flex flex-col mt-5 items-center relative">
+		<form bind:this={formElement} method="POST" use:enhance >
 			<!-- Have this here, so the letter is sent with the form details. I'm sure theres a better way -->
 			<input type="text" value={letter} class="hidden" name="letter" />
 			{#each categories as category, index}
@@ -289,5 +290,7 @@
 				{/key}
 			{/each}
 		</form>
+		<button class="p-2 w-full bg-[#f73f0a]/70 hover:bg-[#f73f0a]/80 rounded-md" on:click={() => {time = 0}}>Submit</button>
+	</div>
 	</div>
 </div>
