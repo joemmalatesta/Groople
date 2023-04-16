@@ -1,5 +1,5 @@
 <svelte:head>
-	<title>Deez</title>
+	<title>Scatter Svlete</title>
 	<meta name="description" content="" />
 </svelte:head>
 
@@ -23,7 +23,12 @@
         </div>
         <!-- Play Daily Challenge -->
         <div>
-            I dont know what will go here
+            Rules
+			<ul>
+				<li>Descriptive words that don't redefine the answer will be marked Incorrect. E.g "Black Dog" for B.</li>
+				<li>Answers may only be submitted once. If you put the same thing for multiple categories, it will only be counted correct one time</li>
+				<li>Only one answer is allowed per category. Answering "Nigeria or Nicaragua" for N will be wrong even if it is correct</li>
+			</ul>
 		</div>
         <!-- Be able to submit as many as you want. up to 50 or something and it will either send an email or store in DB -->
         <div>
