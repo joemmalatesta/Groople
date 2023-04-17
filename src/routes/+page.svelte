@@ -269,7 +269,7 @@
 	<h1
 		class="md:text-7xl text-5xl font-semibold text-transparent bg-black bg-clip-text p-3 flex items-center"
 	>
-		<img src="svelteLogo.png" alt="Svelte Logo" class="w-16 mr-1" />cattergories
+		<img src="svelteLogo.png" alt="Svelte Logo" class="md:w-16 w-12 mr-1" />cattergories
 	</h1>
 	<div class="flex items-center justify-center md:flex-row flex-col w-fit relative">
 		<!-- Worry about these always being seen on the phone version -->
@@ -289,7 +289,7 @@
 				formElement.dispatchEvent(new Event('submit'));
 			}
 		</script>
-		<div class="flex flex-col mt-5 items-center relative">
+		<div class="flex flex-col mt-5 items-center relative {modalActive ? "blur":""}">
 			<form bind:this={formElement} method="POST" use:enhance>
 				<!-- Have this here, so the letter is sent with the form details. I'm sure theres a better way -->
 				<input type="text" value={letter} class="hidden" name="letter" />
@@ -316,7 +316,7 @@
 			>
 		</div>
 		{#if modalActive}
-			<div class="absolute inset-0 p-8">
+			<div class="absolute md:inset-0 md:p-8 md:w-auto w-screen p-2 top-16">
 				<RulesModal bind:modalActive />
 			</div>
 		{/if}

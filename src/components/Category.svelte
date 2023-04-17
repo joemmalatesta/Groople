@@ -32,7 +32,7 @@
 	}
 </script>
 
-<div class="flex justify-between items-center md:flex-row flex-col {modalActive ? "blur":""}">
+<div class="flex justify-between items-center md:flex-row flex-col">
 	<label class="p-1 text-xl" for="{index}Input">{index}: {category}</label>
 	{#if !recordedAnswer}
 		<input
