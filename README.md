@@ -1,38 +1,15 @@
-# create-svelte
+# [Play Daily Challenge](https://scattergories-game.vercel.app/)
+## Submission for SvelteHacks
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Daily Scattergories Challenge like Worlde that is judged by GPT-3.5
 
-## Creating a project
+### Future
+- Add feature to rebuttle answers, or get a second opppinion
+- I want to add groups in which you can compare score and vote on answers
+- I want to add a "Submit your own list" feature
+- Eventually, I would like to use Websockets in order to make a real time game.
+- I want people to actually play this, so learn how to advertise it maybe
 
-If you're seeing this, you've probably already done this step. Congrats!
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+I started this too late to have all the features I would for the hackathon, but the main game works 
