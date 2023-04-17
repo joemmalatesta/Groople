@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let index: number, category: string, letter: string, valid: string, recordedAnswer: string;
+	export let index: number, category: string, letter: string, valid: string, recordedAnswer: string, modalActive: boolean;
 	let answer: string = '';
 	let cssOutline: string = '';
 
@@ -32,7 +32,7 @@
 	}
 </script>
 
-<div class="flex justify-between items-center md:flex-row flex-col">
+<div class="flex justify-between items-center md:flex-row flex-col {modalActive ? "blur":""}">
 	<label class="p-1 text-xl" for="{index}Input">{index}: {category}</label>
 	{#if !recordedAnswer}
 		<input
