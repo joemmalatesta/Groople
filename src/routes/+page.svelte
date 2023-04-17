@@ -1,3 +1,7 @@
+<svelte:head>
+	<title>Scatter Svelte</title>
+</svelte:head>
+
 <script lang="ts">
 	import Category from '../components/Category.svelte';
 	import { slide } from 'svelte/transition';
