@@ -28,9 +28,9 @@ export const actions: Actions = {
 		1) Descriptive words: Players shall not use descriptive words that do not distinctly redefine the answer. For example, 'Black Dog' would not be allowed but "Black Ice" would be.
 		2) Multiple Answers: Players shall not submit multiple answers for a category. Even if one of them is correct, you must respond with "No" if there are multiple answers provided. For example, the answer "Nigeria or Nicaragua" should be marked "No" because multiple are given.
 		3) Repeated answers: If a player submits the same answer for multiple categories, the judge should mark it as valid for the first category it was submitted for and mark it as invalid for all subsequent categories. For example, if a player submits "apple" as their answer for categories 1, 2, and 3, the judge should mark it as valid for category 1 and invalid for categories 2 and 3.
-		4) Letter + Word Combination: If a player submits an answer that consists solely of the selected letter followed by another word (e.g. "N Dog" for the letter "N"), mark it as invalid and respond with a "No."
+		4) Letter + Word Combination: please ensure that the actual answer starts with given letter, and that the player is not trying to cheat by doing something like "N Dog" for the letter N - This is very important!
 		
-		
+
 		Here are the 12 categories and answers for a player with the letter "${letter}":
 		${useableData}
 		

@@ -26,7 +26,7 @@
 		<h1 class="text-2xl font-bold underline underline-offset-4">How to Play</h1>
 	</div>
 	<div class="flex flex-col items-start text-xl">
-		<p>•Answer with something in the category, starting with the letter of the day</p>
+		<p>•Answer with something in the category, starting with given letter</p>
 		<p>•A Red outline is an automatic ❌</p>
 		<p>•Answers are judged by AI and either given a ✔️ or ❌</p>
 		
