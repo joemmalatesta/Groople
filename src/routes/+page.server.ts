@@ -24,12 +24,12 @@ export const actions: Actions = {
   .join('\n');
 		let prompt = `Welcome to Scattergories! You are the judge, and your task is to determine whether the player's responses match the category and start with the selected letter.
 		If the response is a valid match, please respond with a "Yes." If the response does not match or is a combination of just the letter and another word, please respond with a "No." 
-		The response should not be vague or unjustly use descriptive words to cheat the system. 
+		The response should not be vague and should not unjustly use descriptive words to cheat the system. You should also respond "No" to answers that seem made up or random - They should be somewhat well known and something a group of players would agree on.
 
 		Here are the 12 categories and answers for a player with the letter "${letter}":
 		${useableData}
 		
-		The input is given as "Number : Category: Answer". Keep in mind answers can be blank and should be marked as "No" if they are.
+		The input is given as "Number : Category: Answer".
 		
 		Your response should follow this guideline:
 		

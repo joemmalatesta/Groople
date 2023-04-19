@@ -268,14 +268,22 @@
 	let noCount = 0;
 	let shareString = '';
 	$: for (let i = 0; i < responseArray.length; i++) {
-		if (responseArray[i].toLowerCase() == 'yes') {
+		console.log(responseArray, answerArray)
+		if (responseArray[i].toLowerCase() == 'yes' && answerArray[i].toLowerCase().startsWith(letter.toLowerCase())) {
 			yesCount++;
 		} else {
 			noCount++;
 		}
 	}
+
+	//Create and handle function to copy to clipboard
 	let date = new Date();
-	$: shareString = `Scattergories Score ${date.toLocaleDateString()} - ${yesCount}✔️ ${noCount}❌`;
+	$: shareString = `Scattergories\n${date.toLocaleDateString()}\n${yesCount}✔️ ${noCount}❌`;
+	let shared = false
+	function shareClicked() {
+		navigator.clipboard.writeText(shareString);
+		shared = true
+	}
 </script>
 
 <svelte:head>
@@ -325,12 +333,17 @@
 					{/key}
 				{/each}
 			</form>
-			<button
-				class="p-2 w-full bg-[#fc5504] hover:bg-[#fc3c04] rounded-md"
-				on:click={() => {
-					time = 0;
-				}}>Submit</button
-			>
+
+			{#if responseArray.length > 1}
+				<button on:click={shareClicked} class="bg-sky-300 hover:bg-sky-400  w-full p-2 rounded-md">{!shared ? "Share" : "Copied to Clipboard"}</button>
+			{:else}
+				<button
+					class="p-2 w-full bg-[#fc5504] hover:bg-[#fc3c04] rounded-md"
+					on:click={() => {
+						time = 0;
+					}}>Submit</button
+				>
+			{/if}
 		</div>
 		{#if modalActive}
 			<div class="absolute md:inset-0 p-2 top-16 flex justify-center h-fit">
