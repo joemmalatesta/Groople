@@ -13,4 +13,4 @@
 		}, 1000);
 </script>
 
-<h4 class="lg:text-6xl md:text-5xl text-3xl">{time}</h4>
+{time}

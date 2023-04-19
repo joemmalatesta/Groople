@@ -1,7 +1,3 @@
-<svelte:head>
-	<title>Scatter Svelte</title>
-</svelte:head>
-
 <script lang="ts">
 	import Category from '../components/Category.svelte';
 	import { slide } from 'svelte/transition';
@@ -23,7 +19,6 @@
 		formElement.dispatchEvent(new Event('submit'));
 		//Change time to a loading symbol
 	}
-
 
 	//List of 250 categories. Chose 12 random. won't be the case for always though
 	const allCategories: string[] = [
@@ -267,7 +262,25 @@
 	//Response is GPT's response to the answers.
 	let responseArray: string[] = [];
 	$: responseArray = form?.output?.split('\n') || [];
+
+	// Count up yes and no's for the share option.
+	let yesCount = 0;
+	let noCount = 0;
+	let shareString = '';
+	$: for (let i = 0; i < responseArray.length; i++) {
+		if (responseArray[i].toLowerCase() == 'yes') {
+			yesCount++;
+		} else {
+			noCount++;
+		}
+	}
+	let date = new Date();
+	$: shareString = `Scattergories Score ${date.toLocaleDateString()} - ${yesCount}✔️ ${noCount}❌`;
 </script>
+
+<svelte:head>
+	<title>Scatter Svelte</title>
+</svelte:head>
 
 <div class="flex justify-center items-center flex-col">
 	<h1
@@ -275,17 +288,17 @@
 	>
 		<img src="svelteLogo.png" alt="Svelte Logo" class="md:w-16 w-12 mr-1" />cattergories
 	</h1>
-	<div class="flex items-center justify-center md:flex-row flex-col w-fit relative">
+	<p class="text-3xl">{date.toLocaleDateString()}</p>
+	<div class="flex items-center justify-center md:flex-row flex-col w-full relative">
 		<!-- Worry about these always being seen on the phone version -->
 		<div class="flex flex-col items-center justify-around md:mr-20">
 			<h1 class="lg:text-6xl md:text-4xl text-3xl md:mb-10">Letter: {letter}</h1>
 			<!-- Kinda hacky but IDC -->
 			{#if !modalActive}
-				<Time bind:time />
-				{:else}
-				<h4 class="lg:text-6xl md:text-5xl text-3xl">120</h4>
+				<h4 class="lg:text-6xl md:text-5xl text-5xl"><Time bind:time /></h4>
+			{:else}
+				<h4 class="lg:text-6xl md:text-5xl text-5xl">120</h4>
 			{/if}
-			
 		</div>
 		<script>
 			if (time === 0) {
@@ -293,7 +306,7 @@
 				formElement.dispatchEvent(new Event('submit'));
 			}
 		</script>
-		<div class="flex flex-col mt-5 items-center relative {modalActive ? "blur":""}">
+		<div class="flex flex-col mt-5 items-center relative {modalActive ? 'blur' : ''}">
 			<form bind:this={formElement} method="POST" use:enhance>
 				<!-- Have this here, so the letter is sent with the form details. I'm sure theres a better way -->
 				<input type="text" value={letter} class="hidden" name="letter" />
@@ -313,14 +326,14 @@
 				{/each}
 			</form>
 			<button
-				class="p-2 w-full bg-[#f73f0a]/70 hover:bg-[#f73f0a]/80 rounded-md"
+				class="p-2 w-full bg-[#fc5504] hover:bg-[#fc3c04] rounded-md"
 				on:click={() => {
 					time = 0;
 				}}>Submit</button
 			>
 		</div>
 		{#if modalActive}
-			<div class="absolute md:inset-0 md:p-8 md:w-auto w-screen p-2 top-16">
+			<div class="absolute md:inset-0 p-2 top-16 flex justify-center h-fit">
 				<RulesModal bind:modalActive />
 			</div>
 		{/if}

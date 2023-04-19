@@ -20,22 +20,17 @@
 	let showExamples = [false, false, false];
 </script>
 
-<div class=" bg-neutral-800 text-neutral-100 ring-neutral-500 ring-2 rounded-lg p-4">
+<div class=" bg-neutral-800 text-neutral-100 ring-neutral-500 ring-2 rounded-lg p-10">
 	<!-- How to Play -->
-	<div class="flex justify-center mb-2">
-		<h1 class="text-2xl font-bold underline underline-offset-4">How to Play</h1>
-	</div>
-	<div class="flex flex-col items-start text-xl">
+	<h1 class="text-2xl font-bold underline underline-offset-4">How to Play</h1>
+	<div class="flex flex-col items-start text-lg">
 		<p>•Answer with something in the category, starting with given letter</p>
 		<p>•A Red outline is an automatic ❌</p>
 		<p>•Answers are judged by AI and either given a ✔️ or ❌</p>
-		
 	</div>
 
 	<!-- RULES -->
-	<div class="flex justify-center my-2">
-		<h1 class="text-2xl font-bold underline underline-offset-4">Rules</h1>
-	</div>
+	<h1 class="text-2xl font-bold underline underline-offset-4">Rules</h1>
 	<div class="flex flex-col items-start">
 		{#each rules as rule, index}
 			<h4 class="md:text-xl text-lg md:font-semibold">• {rule.rule}</h4>
@@ -61,7 +56,7 @@
 	</div>
 	<div class="flex justify-center items-center m-3">
 		<button
-			class="p-2  hover:bg-[#ff5100] bg-[#ff5e00] text-black drop-shadow-lg rounded-md"
+			class="p-2 hover:bg-[#ff5100] bg-[#ff5e00] text-black drop-shadow-lg rounded-md"
 			on:click={() => {
 				modalActive = !modalActive;
 			}}>Start Daily Challenge</button
