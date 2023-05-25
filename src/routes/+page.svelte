@@ -1,3 +1,7 @@
+<svelte:head>
+	<title>SvelteGories</title>
+</svelte:head>
+
 <script lang="ts">
 	import Category from '../components/Category.svelte';
 	import { slide } from 'svelte/transition';
