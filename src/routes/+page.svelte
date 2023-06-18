@@ -287,7 +287,7 @@
 </script>
 
 <svelte:head>
-	<title>Scatter Svelte</title>
+	<title>Scatter</title>
 </svelte:head>
 
 <div class="flex justify-center items-center flex-col">
@@ -335,10 +335,10 @@
 			</form>
 
 			{#if responseArray.length > 1}
-				<button on:click={shareClicked} class="bg-sky-300 hover:bg-sky-400  w-full p-2 rounded-md">{!shared ? "Share" : "Copied to Clipboard"}</button>
+				<button on:click={shareClicked} class="bg-neutral-800 hover:bg-neutral-900 text-white drop-shadow-md w-full p-2 rounded-md">{!shared ? "Share" : "Copied to Clipboard"}</button>
 			{:else}
 				<button
-					class="p-2 w-full bg-[#fc5504] hover:bg-[#fc3c04] rounded-md"
+					class="p-2 w-full bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white"
 					on:click={() => {
 						time = 0;
 					}}>Submit</button

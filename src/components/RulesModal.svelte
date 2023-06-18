@@ -20,7 +20,7 @@
 	let showExamples = [false, false, false];
 </script>
 
-<div class=" bg-neutral-800 text-neutral-100 ring-neutral-500 ring-2 rounded-lg md:p-12 p-2">
+<div class=" bg-neutral-700 text-neutral-100 ring-neutral-500 ring-2 rounded-lg md:p-12 p-2">
 	<!-- How to Play -->
 	<h1 class="text-2xl font-bold underline underline-offset-4">How to Play</h1>
 	<div class="flex flex-col items-start text-md md:text-xl">
@@ -56,7 +56,7 @@
 	</div>
 	<div class="flex justify-center items-center m-3">
 		<button
-			class="p-2 hover:bg-[#ff5100] bg-[#ff5e00] text-black drop-shadow-lg rounded-md"
+			class="p-2 hover:bg-neutral-900 bg-neutral-800 text-white drop-shadow-lg rounded-md"
 			on:click={() => {
 				modalActive = !modalActive;
 			}}>Start Daily Challenge</button
