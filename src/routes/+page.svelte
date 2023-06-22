@@ -14,9 +14,11 @@
 	let time: number;
 
 	// Manually click form element so it doesn't accidentally submit.
+	let answersSubmitted: boolean = false;
 	let formElement: any;
 	$: if (time === 0) {
 		formElement.dispatchEvent(new Event('submit'));
+		answersSubmitted = true
 		//Change time to a loading symbol
 	}
 
@@ -228,6 +230,7 @@
 		'Things That Can Get You Fired'
 	];
 
+
 	//Get random letter
 	let letter: string = randomLetter();
 	function randomLetter() {
@@ -259,17 +262,22 @@
 	//two step process to get the answers that the user submitted
 	$: answerArray = inputArray.map((item) => item.split(':')[2].trim());
 
+
 	//Response is GPT's response to the answers.
 	let responseArray: string[] = [];
 	$: responseArray = form?.output?.split('\n') || [];
+
+
 
 	// Count up yes and no's for the share option.
 	let yesCount = 0;
 	let noCount = 0;
 	let shareString = '';
 	$: for (let i = 0; i < responseArray.length; i++) {
-		console.log(responseArray, answerArray)
-		if (responseArray[i].toLowerCase() == 'yes' && answerArray[i].toLowerCase().startsWith(letter.toLowerCase())) {
+		if (
+			responseArray[i].toLowerCase() == 'yes' &&
+			answerArray[i].toLowerCase().startsWith(letter.toLowerCase())
+		) {
 			yesCount++;
 		} else {
 			noCount++;
@@ -279,11 +287,13 @@
 	//Create and handle function to copy to clipboard
 	let date = new Date();
 	$: shareString = `Scattergories\n${date.toLocaleDateString()}\n${yesCount}✔️ ${noCount}❌`;
-	let shared = false
+	let shared = false;
 	function shareClicked() {
 		navigator.clipboard.writeText(shareString);
-		shared = true
+		shared = true;
 	}
+
+	
 </script>
 
 <svelte:head>
@@ -308,12 +318,6 @@
 				<h4 class="lg:text-6xl md:text-5xl text-5xl">120</h4>
 			{/if}
 		</div>
-		<script>
-			if (time === 0) {
-				let formElement;
-				formElement.dispatchEvent(new Event('submit'));
-			}
-		</script>
 		<div class="flex flex-col mt-5 items-center relative {modalActive ? 'blur' : ''}">
 			<form bind:this={formElement} method="POST" use:enhance>
 				<!-- Have this here, so the letter is sent with the form details. I'm sure theres a better way -->
@@ -328,6 +332,7 @@
 								valid={responseArray[index] ? responseArray[index].toLowerCase() : ''}
 								recordedAnswer={answerArray[index]}
 								{modalActive}
+								{answersSubmitted}
 							/>
 						</div>
 					{/key}
@@ -335,7 +340,11 @@
 			</form>
 
 			{#if responseArray.length > 1}
-				<button on:click={shareClicked} class="bg-neutral-800 hover:bg-neutral-900 text-white drop-shadow-md w-full p-2 rounded-md">{!shared ? "Share" : "Copied to Clipboard"}</button>
+				<button
+					on:click={shareClicked}
+					class="bg-neutral-800 hover:bg-neutral-900 text-white drop-shadow-md w-full p-2 rounded-md"
+					>{!shared ? 'Share' : 'Copied to Clipboard'}</button
+				>
 			{:else}
 				<button
 					class="p-2 w-full bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white"

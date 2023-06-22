@@ -6,6 +6,7 @@
 			//AlertTime is used because text needs to be replaced before the second animateRefresh call for actual refreshing
 			if (time === 0) {
 				clearInterval(interval);
+				localStorage.setItem("played", "true");
 				alertTime = true;
 			} else {
 				time--;

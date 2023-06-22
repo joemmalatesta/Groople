@@ -1,5 +1,6 @@
 <script lang="ts">
-	export let index: number, category: string, letter: string, valid: string, recordedAnswer: string, modalActive: boolean;
+
+	export let index: number, category: string, letter: string, valid: string, recordedAnswer: string, modalActive: boolean, answersSubmitted: boolean;
 	let answer: string = '';
 	let cssOutline: string = '';
 
@@ -30,11 +31,16 @@
 	{
 		recordedAnswer = "Unanswered"
 	}
+
+
+
 </script>
 
 <div class="flex justify-between items-center md:flex-row flex-col">
 	<label class="p-1 text-xl" for="{index}Input">{index}: {category}</label>
-	{#if !recordedAnswer}
+	{#if !recordedAnswer && answersSubmitted}
+		<img src="loading.svg" alt="response loading" class="md:w-20 w-10 h-8">
+	{:else if !recordedAnswer}
 		<input
 		bind:value={answer}
 		type="text"
@@ -44,6 +50,7 @@
 		id="{index}Input"
 		autocomplete="off"
 	/>
+
 	{:else}
 		<p class="text-xl"><span class="underline">{recordedAnswer}</span> {validResponse}</p>
 	{/if}
