@@ -301,30 +301,28 @@
 </svelte:head>
 
 <div class="flex justify-center items-center flex-col">
-	<h1
-		class="md:text-7xl text-5xl font-semibold text-transparent bg-black bg-clip-text p-3 flex items-center"
-	>
-		<img src="svelteLogo.png" alt="Svelte Logo" class="md:w-16 w-12 mr-1" />cattergories
-	</h1>
-	<p class="text-3xl">{date.toLocaleDateString()}</p>
-	<div class="flex items-center justify-center md:flex-row flex-col w-full relative">
-		<!-- Worry about these always being seen on the phone version -->
-		<div class="flex flex-col items-center justify-around md:mr-20">
-			<h1 class="lg:text-6xl md:text-4xl text-3xl md:mb-10">Letter: {letter}</h1>
+	<p class="md:text-3xl text-xl">{date.toLocaleDateString()}</p>
+
+
+
+	<!-- Worry about these always being seen on the phone version -->
+		<div class="flex items-center justify-between py-4 md:w-1/3 border-b-2 md:border-none sticky md:static top-0 md:top-auto z-40 px-20 bg-white w-full">
+			<h3 class="lg:text-6xl md:text-4xl text-3xl flex flex-col justify-center items-center"><p class="text-xl underline-offset-2 underline">Letter</p>{letter}</h3>
 			<!-- Kinda hacky but IDC -->
 			{#if !modalActive}
-				<h4 class="lg:text-6xl md:text-5xl text-5xl"><Time bind:time /></h4>
+				<h3 class="lg:text-6xl md:text-4xl text-3xl flex flex-col justify-center items-center"><p class="text-xl underline-offset-2 underline">Time</p><Time bind:time /></h3>
 			{:else}
-				<h4 class="lg:text-6xl md:text-5xl text-5xl">120</h4>
+			<h3 class="lg:text-6xl md:text-4xl text-3xl flex flex-col justify-center items-center"><p class="text-xl underline-offset-2 underline">Time</p>100</h3>
 			{/if}
 		</div>
-		<div class="flex flex-col mt-5 items-center relative {modalActive ? 'blur' : ''}">
-			<form bind:this={formElement} method="POST" use:enhance>
+	<div class="flex items-center justify-center md:flex-row flex-col w-full relative md:mt-5">
+		<div class="flex flex-col mt-5 items-center relative {modalActive ? 'blur' : ''} w-full">
+			<form bind:this={formElement} method="POST" use:enhance class="lg:w-1/2 w-full">
 				<!-- Have this here, so the letter is sent with the form details. I'm sure theres a better way -->
 				<input type="text" value={letter} class="hidden" name="letter" />
 				{#each categories as category, index}
 					{#key responseArray}
-						<div class="my-1 w-full" transition:slide={{ duration: 500 }}>
+						<div class="my-1 w-full md:border-b-2" transition:slide={{ duration: 500 }}>
 							<Category
 								index={index + 1}
 								{category}
@@ -340,24 +338,33 @@
 			</form>
 
 			{#if responseArray.length > 1}
+			<div class="flex justify-center gap-3 md:w-1/2 w-full">
 				<button
 					on:click={shareClicked}
-					class="bg-neutral-800 hover:bg-neutral-900 text-white drop-shadow-md w-full p-2 rounded-md"
+					class="bg-neutral-800 hover:bg-neutral-900 text-white drop-shadow-md p-2 rounded-md w-1/2 mb-5"
 					>{!shared ? 'Share' : 'Copied to Clipboard'}</button
 				>
+				<a href="/create"
+					class="bg-neutral-800 hover:bg-neutral-900 text-white drop-shadow-md p-2 rounded-md w-1/2 mb-5 text-center"
+					>Create your own list!</a
+				>
+			</div>
 			{:else}
 				<button
-					class="p-2 w-full bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white"
+					class="p-2 bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white md:w-1/2 w-full mb-5"
 					on:click={() => {
 						time = 0;
 					}}>Submit</button
 				>
+			
 			{/if}
 		</div>
-		{#if modalActive}
-			<div class="absolute md:inset-0 p-2 top-16 flex justify-center h-fit">
+		
+	</div>
+	
+</div>
+{#if modalActive}
+			<div class="absolute inset-0 p-2 mt-48 flex justify-center h-fit z-50">
 				<RulesModal bind:modalActive />
 			</div>
 		{/if}
-	</div>
-</div>

@@ -36,7 +36,7 @@
 
 </script>
 
-<div class="flex justify-between items-center md:flex-row flex-col">
+<div class="flex md:justify-between items-start mx-6 md:mx-0 md:items-center sm:flex-row flex-col">
 	<label class="p-1 text-xl" for="{index}Input">{index}: {category}</label>
 	{#if !recordedAnswer && answersSubmitted}
 		<img src="loading.svg" alt="response loading" class="md:w-20 w-10 h-8">
@@ -45,10 +45,11 @@
 		bind:value={answer}
 		type="text"
 		placeholder="{letter}..."
-		class="focus:outline-none p-1 border-2 {cssOutline} rounded-md"
+		class="focus:outline-none p-1 border-2 {cssOutline} rounded-md w-full md:w-fit"
 		name="{index} : {category}"
 		id="{index}Input"
 		autocomplete="off"
+		spellcheck="true"
 	/>
 
 	{:else}

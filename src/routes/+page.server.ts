@@ -21,7 +21,7 @@ export const actions: Actions = {
 
 		// Display the formatted data in the console
 		let useableData = dataArray
-			.map(({ index, value }) => `${index}: ${value && String(value).length < 60 ? value : 'ZZZZZZ'}`)
+			.map(({ index, value }) => `${index}: ${value && String(value).length < 45 ? value : 'ZZZZZZ'}`)
 			.join('\n');
 		let prompt = `Welcome to Scattergories! You are the judge, and your task is to determine whether the player's responses match the category and start with the selected letter.
 		If the response is a valid match, please respond with a "Yes." If the response does not match or is a combination of just the letter and another word, please respond with a "No." 

@@ -22,18 +22,18 @@
 
 <div class=" bg-neutral-700 text-neutral-100 ring-neutral-500 ring-2 rounded-lg md:p-12 p-2">
 	<!-- How to Play -->
-	<h1 class="text-2xl font-bold underline underline-offset-4">How to Play</h1>
-	<div class="flex flex-col items-start text-md md:text-xl">
-		<p>•Answer with something in the category, starting with given letter</p>
+	<h1 class="md:text-2xl text-xl font-bold underline underline-offset-4">How to Play</h1>
+	<div class="flex flex-col items-start text-sm md:text-xl">
+		<p>•Answer with something in the category, starting with the given letter</p>
 		<p>•A Red outline is an automatic ❌</p>
 		<p>•Answers are judged by AI and either given a ✔️ or ❌</p>
 	</div>
 
 	<!-- RULES -->
-	<h1 class="text-2xl font-bold underline underline-offset-4">Rules</h1>
+	<h1 class="md:text-2xl text-xl font-bold underline underline-offset-4">Rules</h1>
 	<div class="flex flex-col items-start">
 		{#each rules as rule, index}
-			<h4 class="md:text-xl text-md md:font-semibold">• {rule.rule}</h4>
+			<h4 class="md:text-xl text-sm md:font-semibold">• {rule.rule}</h4>
 			<button
 				class="underline underline-offset-2 hover:underline-offset-4 transition-all"
 				title="Show Examples"
@@ -47,7 +47,7 @@
 				{#key showExamples[index]}
 					<ul transition:slide>
 						{#each rule.examples as example}
-							<li>{example}</li>
+							<li class="text-sm md:text-md">{example}</li>
 						{/each}
 					</ul>
 				{/key}
