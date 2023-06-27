@@ -32,7 +32,7 @@
 		recordedAnswer = "Unanswered"
 	}
 
-
+	console.log(recordedAnswer, answersSubmitted)
 
 </script>
 

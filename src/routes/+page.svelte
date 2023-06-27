@@ -4,6 +4,7 @@
 	import Time from '../components/Timer.svelte';
 	import { enhance } from '$app/forms';
 	import RulesModal from '../components/RulesModal.svelte';
+	import { browser } from '$app/environment';
 	// Get information from +page.server.ts
 	export let form;
 
@@ -18,7 +19,7 @@
 	let formElement: any;
 	$: if (time === 0) {
 		formElement.dispatchEvent(new Event('submit'));
-		answersSubmitted = true
+		answersSubmitted = true;
 		//Change time to a loading symbol
 	}
 
@@ -230,7 +231,6 @@
 		'Things That Can Get You Fired'
 	];
 
-
 	//Get random letter
 	let letter: string = randomLetter();
 	function randomLetter() {
@@ -262,17 +262,37 @@
 	//two step process to get the answers that the user submitted
 	$: answerArray = inputArray.map((item) => item.split(':')[2].trim());
 
-
 	//Response is GPT's response to the answers.
 	let responseArray: string[] = [];
 	$: responseArray = form?.output?.split('\n') || [];
-
-
 
 	// Count up yes and no's for the share option.
 	let yesCount = 0;
 	let noCount = 0;
 	let shareString = '';
+	let scores: any = {
+		0: 0,
+		1: 0,
+		2: 0,
+		3: 0,
+		4: 0,
+		5: 0,
+		6: 0,
+		7: 0,
+		8: 0,
+		9: 0,
+		10: 0,
+		11: 0,
+		12: 0
+	};
+	if (browser === true) {
+		if (!localStorage.getItem('scores')) {
+			localStorage.setItem('scores', JSON.stringify(scores));
+		} else {
+			scores = JSON.parse(String(localStorage.getItem('scores')));
+		}
+	}
+
 	$: for (let i = 0; i < responseArray.length; i++) {
 		if (
 			responseArray[i].toLowerCase() == 'yes' &&
@@ -287,13 +307,21 @@
 	//Create and handle function to copy to clipboard
 	let date = new Date();
 	$: shareString = `Scattergories\n${date.toLocaleDateString()}\n${yesCount}✔️ ${noCount}❌`;
+	// Update score when the string is made
+
+	$: if (yesCount + noCount == 12 && browser === true) {
+
+		const storedScores = JSON.parse(String(localStorage.getItem('scores')));
+		console.log(storedScores)
+		scores[yesCount] += 1;
+		console.log(scores)
+		localStorage.setItem('scores', JSON.stringify(scores));
+	}
 	let shared = false;
 	function shareClicked() {
 		navigator.clipboard.writeText(shareString);
 		shared = true;
 	}
-
-	
 </script>
 
 <svelte:head>
@@ -303,18 +331,27 @@
 <div class="flex justify-center items-center flex-col">
 	<p class="md:text-3xl text-xl">{date.toLocaleDateString()}</p>
 
-
-
 	<!-- Worry about these always being seen on the phone version -->
-		<div class="flex items-center justify-between py-4 md:w-1/3 border-b-2 md:border-none sticky md:static top-0 md:top-auto z-40 px-20 bg-white w-full">
-			<h3 class="lg:text-6xl md:text-4xl text-3xl flex flex-col justify-center items-center"><p class="text-xl underline-offset-2 underline">Letter</p>{letter}</h3>
-			<!-- Kinda hacky but IDC -->
-			{#if !modalActive}
-				<h3 class="lg:text-6xl md:text-4xl text-3xl flex flex-col justify-center items-center"><p class="text-xl underline-offset-2 underline">Time</p><Time bind:time /></h3>
-			{:else}
-			<h3 class="lg:text-6xl md:text-4xl text-3xl flex flex-col justify-center items-center"><p class="text-xl underline-offset-2 underline">Time</p>100</h3>
-			{/if}
-		</div>
+	<div
+		class="flex items-center justify-between py-4 md:w-1/3 border-b-2 md:border-none sticky md:static top-0 md:top-auto z-40 px-20 bg-white w-full"
+	>
+		<h3 class="lg:text-6xl md:text-4xl text-3xl flex flex-col justify-center items-center">
+			<p class="text-xl underline-offset-2 underline">Letter</p>
+			{letter}
+		</h3>
+		<!-- Kinda hacky but IDC -->
+		{#if !modalActive}
+			<h3 class="lg:text-6xl md:text-4xl text-3xl flex flex-col justify-center items-center">
+				<p class="text-xl underline-offset-2 underline">Time</p>
+				<Time bind:time />
+			</h3>
+		{:else}
+			<h3 class="lg:text-6xl md:text-4xl text-3xl flex flex-col justify-center items-center">
+				<p class="text-xl underline-offset-2 underline">Time</p>
+				100
+			</h3>
+		{/if}
+	</div>
 	<div class="flex items-center justify-center md:flex-row flex-col w-full relative md:mt-5">
 		<div class="flex flex-col mt-5 items-center relative {modalActive ? 'blur' : ''} w-full">
 			<form bind:this={formElement} method="POST" use:enhance class="lg:w-1/2 w-full">
@@ -338,17 +375,18 @@
 			</form>
 
 			{#if responseArray.length > 1}
-			<div class="flex justify-center gap-3 md:w-1/2 w-full">
-				<button
-					on:click={shareClicked}
-					class="bg-neutral-800 hover:bg-neutral-900 text-white drop-shadow-md p-2 rounded-md w-1/2 mb-5"
-					>{!shared ? 'Share' : 'Copied to Clipboard'}</button
-				>
-				<a href="/create"
-					class="bg-neutral-800 hover:bg-neutral-900 text-white drop-shadow-md p-2 rounded-md w-1/2 mb-5 text-center"
-					>Create your own list!</a
-				>
-			</div>
+				<div class="flex justify-center gap-3 md:w-1/2 w-full">
+					<button
+						on:click={shareClicked}
+						class="bg-neutral-800 hover:bg-neutral-900 text-white drop-shadow-md p-2 rounded-md w-1/2 mb-5"
+						>{!shared ? 'Share' : 'Copied to Clipboard'}</button
+					>
+					<a
+						href="/create"
+						class="bg-neutral-800 hover:bg-neutral-900 text-white drop-shadow-md p-2 rounded-md w-1/2 mb-5 text-center"
+						>Create your own list!</a
+					>
+				</div>
 			{:else}
 				<button
 					class="p-2 bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white md:w-1/2 w-full mb-5"
@@ -356,15 +394,12 @@
 						time = 0;
 					}}>Submit</button
 				>
-			
 			{/if}
 		</div>
-		
 	</div>
-	
 </div>
 {#if modalActive}
-			<div class="absolute inset-0 p-2 mt-48 flex justify-center h-fit z-50">
-				<RulesModal bind:modalActive />
-			</div>
-		{/if}
+	<div class="absolute inset-0 p-2 mt-48 flex justify-center h-fit z-50">
+		<RulesModal bind:modalActive />
+	</div>
+{/if}

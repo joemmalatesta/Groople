@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser} from '$app/environment';
 	export let time = 100;
 	let alertTime = false;
 	const interval = setInterval(function () {
@@ -6,7 +7,10 @@
 			//AlertTime is used because text needs to be replaced before the second animateRefresh call for actual refreshing
 			if (time === 0) {
 				clearInterval(interval);
-				localStorage.setItem("played", "true");
+				if (browser === true){
+					localStorage.setItem("played", "true");
+				}
+				
 				alertTime = true;
 			} else {
 				time--;
