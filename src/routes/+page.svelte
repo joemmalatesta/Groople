@@ -5,6 +5,7 @@
 	import { enhance } from '$app/forms';
 	import RulesModal from '../components/RulesModal.svelte';
 	import { browser } from '$app/environment';
+	import Scores from '../components/Scores.svelte';
 	// Get information from +page.server.ts
 	export let form;
 
@@ -310,17 +311,9 @@
 	// Update score when the string is made
 
 	$: if (yesCount + noCount == 12 && browser === true) {
-
-		const storedScores = JSON.parse(String(localStorage.getItem('scores')));
-		console.log(storedScores)
+		localStorage.setItem('yesCount', String(yesCount))
 		scores[yesCount] += 1;
-		console.log(scores)
 		localStorage.setItem('scores', JSON.stringify(scores));
-	}
-	let shared = false;
-	function shareClicked() {
-		navigator.clipboard.writeText(shareString);
-		shared = true;
 	}
 </script>
 
@@ -374,20 +367,7 @@
 				{/each}
 			</form>
 
-			{#if responseArray.length > 1}
-				<div class="flex justify-center gap-3 md:w-1/2 w-full">
-					<button
-						on:click={shareClicked}
-						class="bg-neutral-800 hover:bg-neutral-900 text-white drop-shadow-md p-2 rounded-md w-1/2 mb-5"
-						>{!shared ? 'Share' : 'Copied to Clipboard'}</button
-					>
-					<a
-						href="/create"
-						class="bg-neutral-800 hover:bg-neutral-900 text-white drop-shadow-md p-2 rounded-md w-1/2 mb-5 text-center"
-						>Create your own list!</a
-					>
-				</div>
-			{:else}
+			{#if responseArray.length < 1}
 				<button
 					class="p-2 bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white md:w-1/2 w-full mb-5"
 					on:click={() => {
@@ -401,5 +381,10 @@
 {#if modalActive}
 	<div class="absolute inset-0 p-2 mt-48 flex justify-center h-fit z-50">
 		<RulesModal bind:modalActive />
+	</div>
+{/if}
+{#if responseArray.length > 1}
+	<div class="absolute inset-0 p-2 mt-48 flex justify-center h-fit z-50">
+		<Scores bind:shareString/>
 	</div>
 {/if}

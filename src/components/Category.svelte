@@ -31,9 +31,6 @@
 	{
 		recordedAnswer = "Unanswered"
 	}
-
-	console.log(recordedAnswer, answersSubmitted)
-
 </script>
 
 <div class="flex md:justify-between items-start mx-6 md:mx-0 md:items-center sm:flex-row flex-col">
