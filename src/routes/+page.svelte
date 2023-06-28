@@ -11,6 +11,7 @@
 
 	// Show rules modal before each game. controls category blur and timer
 	let modalActive = true;
+	let scoresModalActive = false;
 
 	//
 	let time: number;
@@ -311,7 +312,7 @@
 	// Update score when the string is made
 
 	$: if (yesCount + noCount == 12 && browser === true) {
-		localStorage.setItem('yesCount', String(yesCount))
+		localStorage.setItem('yesCount', String(yesCount));
 		scores[yesCount] += 1;
 		localStorage.setItem('scores', JSON.stringify(scores));
 	}
@@ -375,6 +376,14 @@
 					}}>Submit</button
 				>
 			{/if}
+			{#if responseArray.length > 1 && scoresModalActive === false}
+				<button
+					class="p-2 bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white md:w-1/2 w-full mb-5"
+					on:click={() => {
+						scoresModalActive = true
+					}}>Show Results</button
+				>
+			{/if}
 		</div>
 	</div>
 </div>
@@ -383,8 +392,8 @@
 		<RulesModal bind:modalActive />
 	</div>
 {/if}
-{#if responseArray.length > 1}
+{#if responseArray.length > 1 || scoresModalActive === true}
 	<div class="absolute inset-0 p-2 mt-48 flex justify-center h-fit z-50">
-		<Scores bind:shareString/>
+		<Scores bind:shareString bind:scoresModalActive />
 	</div>
 {/if}
