@@ -34,26 +34,30 @@
 >  
     <h2 class="text-center text-2xl">Score today: {yesCount}</h2>
 	{#if scores !== null}
-		<ScoreChart scoreData={scores}/>
+		<div class="md:h-[30rem] md:w-[30rem] h-[20rem] w-[20rem]">
+			<ScoreChart scoreData={scores}/>
+		</div>
+		
 	{/if}
-	<div class="flex flex-col justify-center w-full">
+	<div class="flex gap-2 justify-center w-full">
 		<button
 			on:click={shareClicked}
 			class="bg-neutral-800 hover:bg-neutral-900 text-white ring-1 ring-neutral-500/20 p-2 rounded-md w-full mb-2"
-			>{!shared ? 'Share' : 'Copied to Clipboard'}</button
+			>{!shared ? 'Share' : 'Copied!'}</button
 		>
 		<a
 			href="/create"
 			class="bg-neutral-800 hover:bg-neutral-900 text-white ring-1 ring-neutral-500/20 p-2 rounded-md w-full mb-2 text-center"
-			>Create your own list!</a
+			>Create a list</a
 		>
-        <button
+        
+	</div>
+	<button
 			on:click={() => {
                 scoresModalActive = false
             }}
-			class="bg-neutral-800 hover:bg-neutral-900 text-white ring-1 ring-neutral-500/20 p-2 rounded-md w-full mb-3"
+			class="w-full underline-offset-2 underline hover:underline-offset-4 transition-all text-sm md:text-base"
 			>Dismiss</button
 		>
-	</div>
 </div>
 {/if}

@@ -36,7 +36,7 @@
 	});
 </script>
 
-<canvas bind:this={ctx} height=500 width=330/>
+<canvas bind:this={ctx} height="100%" width="100%"/>
 
 
 

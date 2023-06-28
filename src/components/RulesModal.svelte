@@ -56,7 +56,7 @@
 	</div>
 	<div class="flex justify-center items-center m-3">
 		<button
-			class="p-2 hover:bg-neutral-900 bg-neutral-800 shadow-sm shadow-neutral-600 text-white drop-shadow-lg rounded-md"
+			class="p-2 hover:bg-neutral-900 bg-neutral-800  ring-2 ring-neutral-500/20 text-white rounded-md"
 			on:click={() => {
 				modalActive = !modalActive;
 			}}>Start Daily Challenge</button
