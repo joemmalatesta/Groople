@@ -1,7 +1,7 @@
 <script lang="ts">
 	let categories: string[] = ["", "", "", "","","","","","","","",""];
 	let newCategory: string = '';
-	$: console.log(categories)
+
 </script>
 
 <svelte:head>

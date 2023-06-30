@@ -4,7 +4,6 @@
 	import ScoreChart from './ScoreChart.svelte';
 	let scores: any = null;
     let yesCount: any
-	export let shareString: string;
     export let scoresModalActive: boolean
 
 	onMount(() => {
@@ -12,7 +11,6 @@
 		if (browser === true) {
 			scores = JSON.parse(String(localStorage.getItem('scores')));
             yesCount = localStorage.getItem("yesCount")
-			console.log(scores);
 		}
 	});
 

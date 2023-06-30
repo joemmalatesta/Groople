@@ -20,9 +20,10 @@
 	let answersSubmitted: boolean = false;
 	let formElement: any;
 	$: if (time === 0) {
-		formElement.dispatchEvent(new Event('submit'));
+		const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
+		formElement.dispatchEvent(submitEvent);
 		answersSubmitted = true;
-		//Change time to a loading symbol
+		// Change time to a loading symbol
 	}
 
 	//List of 250 categories. Chose 12 random. won't be the case for always though
@@ -271,7 +272,6 @@
 	// Count up yes and no's for the share option.
 	let yesCount = 0;
 	let noCount = 0;
-	let shareString = '';
 	let scores: any = {
 		0: 0,
 		1: 0,
@@ -308,7 +308,6 @@
 
 	let date = new Date();
 	// Update score when the string is made
-
 	$: if (yesCount + noCount == 12 && browser === true) {
 		localStorage.setItem('yesCount', String(yesCount));
 		scores[yesCount] += 1;
@@ -378,7 +377,7 @@
 				<button
 					class="p-2 bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white md:w-1/2 w-full mb-5"
 					on:click={() => {
-						scoresModalActive = true
+						scoresModalActive = true;
 					}}>Show Results</button
 				>
 			{/if}
@@ -392,6 +391,6 @@
 {/if}
 {#if responseArray.length > 1 || scoresModalActive === true}
 	<div class="absolute inset-0 p-2 mt-48 flex justify-center h-fit z-50">
-		<Scores bind:shareString bind:scoresModalActive />
+		<Scores bind:scoresModalActive />
 	</div>
 {/if}

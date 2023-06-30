@@ -60,8 +60,8 @@ export const actions: Actions = {
 			]
 		});
 		const answerArray = res.data.choices[0].message?.content;
-		console.log(prompt);
-		console.log(answerArray);
+		console.log("Prompt:" +prompt);
+		console.log("Answers:" + answerArray);
 		return {
 			// Useable Data should be dataArray it makes more sense but whatever
 			input: useableData,
