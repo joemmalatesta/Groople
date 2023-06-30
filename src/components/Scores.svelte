@@ -25,6 +25,10 @@
 	}
 
 
+	let date = new Date();
+	$: shareString = `Scattergories\n${date.toLocaleDateString()}\n${yesCount}✔️ ${12-yesCount}❌`;
+
+
 </script>
 
 

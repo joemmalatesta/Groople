@@ -24,13 +24,14 @@
 			}
 		]
 	};
-	const config = {
+	const config: any = {
 		type: 'bar',
 		data,
 		options: {
 			indexAxis: 'y'
 		}
 	};
+
 	onMount(() => {
 		new Chart(ctx, config);
 	});

@@ -306,9 +306,7 @@
 		}
 	}
 
-	//Create and handle function to copy to clipboard
 	let date = new Date();
-	$: shareString = `Scattergories\n${date.toLocaleDateString()}\n${yesCount}✔️ ${noCount}❌`;
 	// Update score when the string is made
 
 	$: if (yesCount + noCount == 12 && browser === true) {
