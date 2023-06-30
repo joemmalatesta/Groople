@@ -18,8 +18,8 @@
 				label: 'Times Scored',
 				data: scoreData,
 				fill: false,
-				backgroundColor: ['rgba(36, 36, 36)'],
-				borderColor: ['rgb(16, 16, 16)'],
+				backgroundColor: ['rgba(245, 245, 245)'],
+				borderColor: ['rgb(220, 220, 220)'],
 				borderWidth: 1
 			}
 		]
