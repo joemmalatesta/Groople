@@ -67,5 +67,5 @@ export const actions: Actions = {
 			input: useableData,
 			output: answerArray
 		};
-	}
+	},
 };
