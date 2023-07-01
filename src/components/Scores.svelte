@@ -37,8 +37,7 @@
 					localStorage.setItem('streak', String(0));
 				}
 			}
-
-			// Update streak, if you're valid
+			streak = parseInt(String(localStorage.getItem('streak')));
 
 			//Set date for tomorrow.
 			let tomorrow: any = new Date();
