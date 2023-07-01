@@ -7,27 +7,18 @@
 	import { browser } from '$app/environment';
 	import Scores from '../components/Scores.svelte';
 	import { onMount } from 'svelte';
-	
+
 	// Get information from +page.server.ts
 	export let form;
 
-
-
-
+	let currentDate: any = new Date();
+	let lastPlayed: string|null, tomorrow: string|null
 	onMount(() => {
 		if (browser === true) {
-		let yesterday: any = new Date();
-		yesterday.setDate(yesterday.getDate() + 1);
-		let year = yesterday.getFullYear();
-		let month = yesterday.getMonth() + 1; // Months are zero-based, so add 1
-		let day = yesterday.getDate();
-		yesterday = year + '-' + month + '-' + day;
-		localStorage.setItem('yesterday', yesterday);
-	}
-	})
-
-
-	
+			lastPlayed = localStorage.getItem('lastPlayed');
+			tomorrow = localStorage.getItem('tomorrow')
+		}
+	});
 
 	// Show rules modal before each game. controls category blur and timer
 	let modalActive = true;
@@ -338,6 +329,7 @@
 <svelte:head>
 	<title>Scatter</title>
 </svelte:head>
+
 
 <div class="flex justify-center items-center flex-col">
 	<p class="md:text-3xl text-xl">{date.toLocaleDateString()}</p>

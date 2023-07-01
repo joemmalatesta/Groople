@@ -5,6 +5,7 @@
 	let scores: any = null;
 	let yesCount: any;
 	export let scoresModalActive: boolean;
+	let streak: number | null;
 
 	onMount(() => {
 		scoresModalActive = true;
@@ -13,14 +14,37 @@
 			scores = JSON.parse(String(localStorage.getItem('scores')));
 			yesCount = localStorage.getItem('yesCount');
 
-			
 			//Set played for today
-			let currentDate = new Date();
-			let year = currentDate.getFullYear();
-			let month = currentDate.getMonth() + 1; // Months are zero-based, so add 1
-			let day = currentDate.getDate();
-			let formattedDate = year + '-' + month + '-' + day;
-			localStorage.setItem('today', formattedDate);
+			let currentDate: any = new Date();
+			currentDate = `${currentDate.getFullYear()}-${
+				currentDate.getMonth() + 1
+			}-${currentDate.getDate()}`;
+			localStorage.setItem('lastPlayed', currentDate);
+
+			//Make a streak if there isn't one
+			if (!localStorage.getItem('streak') && yesCount > 0) {
+				localStorage.setItem('streak', String(1));
+			} else if (!localStorage.getItem('streak') && yesCount == 0) {
+				localStorage.setItem('streak', String(0));
+			}
+
+			//add to the streak or delete it
+			if (currentDate == localStorage.getItem('tomorrow')) {
+				if (yesCount > 0) {
+					streak = parseInt(String(localStorage.getItem('streak')));
+					localStorage.setItem('streak', String(streak + 1));
+				} else if (yesCount == 0) {
+					localStorage.setItem('streak', String(0));
+				}
+			}
+
+			// Update streak, if you're valid
+
+			//Set date for tomorrow.
+			let tomorrow: any = new Date();
+			tomorrow.setDate(tomorrow.getDate() + 1);
+			tomorrow = `${tomorrow.getFullYear()}-${tomorrow.getMonth() + 1}-${tomorrow.getDate()}`;
+			localStorage.setItem('tomorrow', tomorrow);
 		}
 	});
 
@@ -39,7 +63,10 @@
 	<div
 		class="bg-gradient-to-b from-neutral-700 to-neutral-800 text-neutral-100 ring-neutral-500 ring-2 rounded-lg md:p-8 p-4 drop-shadow-2xl"
 	>
-		<h2 class="text-center text-2xl">Score today: {yesCount}</h2>
+		<div class="w-full flex items-center flex-col">
+			<h2 class="text-2xl">Score today: {yesCount}</h2>
+			<h2 class="text-lg">Streak: {yesCount}{yesCount >= 10 ? ' 🔥' : ''}</h2>
+		</div>
 		{#if scores !== null}
 			<div class="md:h-[30rem] md:w-[30rem] h-[20rem] w-[20rem]">
 				<ScoreChart scoreData={scores} />
