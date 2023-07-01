@@ -6,11 +6,7 @@
 			//If out of time, run animate saying "Time's up."
 			//AlertTime is used because text needs to be replaced before the second animateRefresh call for actual refreshing
 			if (time === 0) {
-				clearInterval(interval);
-				if (browser === true){
-					localStorage.setItem("played", "true");
-				}
-				
+				clearInterval(interval);				
 				alertTime = true;
 			} else {
 				time--;
