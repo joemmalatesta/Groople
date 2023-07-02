@@ -9,42 +9,40 @@
 
 	onMount(() => {
 		scoresModalActive = true;
-		if (browser === true) {
-			// Get scores and todays score
-			scores = JSON.parse(String(localStorage.getItem('scores')));
-			yesCount = localStorage.getItem('yesCount');
+		// Get scores and todays score
+		scores = JSON.parse(String(localStorage.getItem('scores')));
+		yesCount = localStorage.getItem('yesCount');
 
-			//Set played for today
-			let currentDate: any = new Date();
-			currentDate = `${currentDate.getFullYear()}-${
-				currentDate.getMonth() + 1
-			}-${currentDate.getDate()}`;
-			localStorage.setItem('lastPlayed', currentDate);
+		//Set played for today
+		let currentDate: any = new Date();
+		currentDate = `${currentDate.getFullYear()}-${
+			currentDate.getMonth() + 1
+		}-${currentDate.getDate()}`;
+		localStorage.setItem('lastPlayed', currentDate);
 
-			//Make a streak if there isn't one
-			if (!localStorage.getItem('streak') && yesCount > 0) {
-				localStorage.setItem('streak', String(1));
-			} else if (!localStorage.getItem('streak') && yesCount == 0) {
+		//Make a streak if there isn't one
+		if (!localStorage.getItem('streak') && yesCount > 0) {
+			localStorage.setItem('streak', String(1));
+		} else if (!localStorage.getItem('streak') && yesCount == 0) {
+			localStorage.setItem('streak', String(0));
+		}
+
+		//add to the streak or delete it
+		if (currentDate == localStorage.getItem('tomorrow')) {
+			if (yesCount > 0) {
+				streak = parseInt(String(localStorage.getItem('streak')));
+				localStorage.setItem('streak', String(streak + 1));
+			} else if (yesCount == 0) {
 				localStorage.setItem('streak', String(0));
 			}
-
-			//add to the streak or delete it
-			if (currentDate == localStorage.getItem('tomorrow')) {
-				if (yesCount > 0) {
-					streak = parseInt(String(localStorage.getItem('streak')));
-					localStorage.setItem('streak', String(streak + 1));
-				} else if (yesCount == 0) {
-					localStorage.setItem('streak', String(0));
-				}
-			}
-			streak = parseInt(String(localStorage.getItem('streak')));
-
-			//Set date for tomorrow.
-			let tomorrow: any = new Date();
-			tomorrow.setDate(tomorrow.getDate() + 1);
-			tomorrow = `${tomorrow.getFullYear()}-${tomorrow.getMonth() + 1}-${tomorrow.getDate()}`;
-			localStorage.setItem('tomorrow', tomorrow);
 		}
+		streak = parseInt(String(localStorage.getItem('streak')));
+
+		//Set date for tomorrow.
+		let tomorrow: any = new Date();
+		tomorrow.setDate(tomorrow.getDate() + 1);
+		tomorrow = `${tomorrow.getFullYear()}-${tomorrow.getMonth() + 1}-${tomorrow.getDate()}`;
+		localStorage.setItem('tomorrow', tomorrow);
 	});
 
 	// Share function for thing
@@ -57,9 +55,6 @@
 	let date = new Date();
 	$: shareString = `Scattergories\n${date.toLocaleDateString()}\n${yesCount}✔️ ${12 - yesCount}❌`;
 </script>
-
-
-
 
 {#if scoresModalActive}
 	<div

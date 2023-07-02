@@ -12,20 +12,21 @@
 	export let form;
 
 	let currentDate: any = new Date();
-	let lastPlayed: string|null, tomorrow: string|null
+	currentDate = `${currentDate.getFullYear()}-${
+		currentDate.getMonth() + 1
+	}-${currentDate.getDate()}`;
+	let lastPlayed: string | null, tomorrow: string | null;
 	onMount(() => {
-		if (browser === true) {
 			lastPlayed = localStorage.getItem('lastPlayed');
-			tomorrow = localStorage.getItem('tomorrow')
-		}
+			tomorrow = localStorage.getItem('tomorrow');
 	});
 
 	// Show rules modal before each game. controls category blur and timer
 	let modalActive = true;
 	let scoresModalActive = false;
 
-	//
-	let time: number;
+
+	let time: number = 100;
 
 	// Manually click form element so it doesn't accidentally submit.
 	let answersSubmitted: boolean = false;
@@ -33,7 +34,7 @@
 	$: if (time === 0) {
 		const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
 		formElement.dispatchEvent(submitEvent);
-		answersSubmitted = true;
+		
 		// Change time to a loading symbol
 	}
 
@@ -269,16 +270,24 @@
 		return selectedCategories;
 	}
 
-	// Get input and output after submitting the form.
-	let inputArray: string[] = [];
-	$: inputArray = form?.input?.split('\n') || [];
-	let answerArray: string[] = [];
-	//two step process to get the answers that the user submitted
-	$: answerArray = inputArray.map((item) => item.split(':')[2].trim());
 
-	//Response is GPT's response to the answers.
+
+	let inputArray: string[] = [];
+	let answerArray: string[] = [];
 	let responseArray: string[] = [];
-	$: responseArray = form?.output?.split('\n') || [];
+	async function handleResponse(form: any) {
+		console.log("submitted");
+		console.log(form)
+		// Get input and output after submitting the form.
+		inputArray = form?.input?.split('\n') || [];
+		console.log(inputArray)
+		//two step process to get the answers that the user submitted
+		answerArray = inputArray.map((item) => item.split(':')[2].trim());
+		//Response is GPT's response to the answers.
+		responseArray = form?.output?.split('\n') || [];
+		answersSubmitted = true;
+	}
+
 
 	// Count up yes and no's for the share option.
 	let yesCount = 0;
@@ -298,6 +307,9 @@
 		11: 0,
 		12: 0
 	};
+
+
+	// Scores... maybe this little bit is not necessary
 	if (browser === true) {
 		if (!localStorage.getItem('scores')) {
 			localStorage.setItem('scores', JSON.stringify(scores));
@@ -305,6 +317,8 @@
 			scores = JSON.parse(String(localStorage.getItem('scores')));
 		}
 	}
+
+
 
 	$: for (let i = 0; i < responseArray.length; i++) {
 		if (
@@ -331,78 +345,88 @@
 </svelte:head>
 
 
-<div class="flex justify-center items-center flex-col">
-	<p class="md:text-3xl text-xl">{date.toLocaleDateString()}</p>
 
-	<!-- Worry about these always being seen on the phone version -->
-	<div
-		class="flex items-center justify-between py-4 md:w-1/3 border-b-2 md:border-none sticky md:static top-0 md:top-auto z-40 px-20 bg-white w-full"
-	>
-		<h3 class="lg:text-6xl md:text-4xl text-3xl flex flex-col justify-center items-center">
-			<p class="text-xl underline-offset-2 underline">Letter</p>
-			{letter}
-		</h3>
-		<!-- Kinda hacky but IDC -->
-		{#if !modalActive}
-			<h3 class="lg:text-6xl md:text-4xl text-3xl flex flex-col justify-center items-center">
-				<p class="text-xl underline-offset-2 underline">Time</p>
-				<Time bind:time />
-			</h3>
-		{:else}
-			<h3 class="lg:text-6xl md:text-4xl text-3xl flex flex-col justify-center items-center">
-				<p class="text-xl underline-offset-2 underline">Time</p>
-				100
-			</h3>
-		{/if}
-	</div>
-	<div class="flex items-center justify-center md:flex-row flex-col w-full relative md:mt-5">
-		<div class="flex flex-col mt-5 items-center relative {modalActive ? 'blur' : ''} w-full">
-			<form bind:this={formElement} method="POST" use:enhance class="lg:w-1/2 w-full">
-				<!-- Have this here, so the letter is sent with the form details. I'm sure theres a better way -->
-				<input type="text" value={letter} class="hidden" name="letter" />
-				{#each categories as category, index}
-					{#key responseArray}
-						<div class="my-1 w-full md:border-b-2" transition:slide={{ duration: 500 }}>
-							<Category
-								index={index + 1}
-								{category}
-								{letter}
-								valid={responseArray[index] ? responseArray[index].toLowerCase() : ''}
-								recordedAnswer={answerArray[index]}
-								{modalActive}
-								{answersSubmitted}
-							/>
-						</div>
-					{/key}
-				{/each}
-			</form>
+	<div class="flex justify-center items-center flex-col">
+		<p class="md:text-3xl text-xl">{date.toLocaleDateString()}</p>
 
-			{#if responseArray.length < 1}
-				<button
-					class="p-2 bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white md:w-1/2 w-full mb-5"
-					on:click={() => {
-						time = 0;
-					}}>Submit</button
-				>
-			{/if}
-			{#if responseArray.length > 1 && scoresModalActive === false}
-				<button
-					class="p-2 bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white md:w-1/2 w-full mb-5"
-					on:click={() => {
-						scoresModalActive = true;
-					}}>Show Results</button
-				>
+		<!-- Worry about these always being seen on the phone version -->
+		<div
+			class="flex items-center justify-between py-4 md:w-1/3 border-b-2 md:border-none sticky md:static top-0 md:top-auto z-40 px-20 bg-white w-full"
+		>
+			<h3 class="lg:text-6xl md:text-4xl text-3xl flex flex-col justify-center items-center">
+				<p class="text-xl underline-offset-2 underline">Letter</p>
+				{letter}
+			</h3>
+			<!-- Kinda hacky but IDC -->
+			{#if !modalActive}
+				<h3 class="lg:text-6xl md:text-4xl text-3xl flex flex-col justify-center items-center">
+					<p class="text-xl underline-offset-2 underline">Time</p>
+					<Time bind:time />
+				</h3>
+			{:else}
+				<h3 class="lg:text-6xl md:text-4xl text-3xl flex flex-col justify-center items-center">
+					<p class="text-xl underline-offset-2 underline">Time</p>
+					100
+				</h3>
 			{/if}
 		</div>
+		<div class="flex items-center justify-center md:flex-row flex-col w-full relative md:mt-5">
+			<div class="flex flex-col mt-5 items-center relative {modalActive ? 'blur' : ''} w-full">
+				<form
+					bind:this={formElement}
+					method="POST"
+					use:enhance={() => async ({ result, update }) => {
+						await update();
+						if (result.type === 'success') handleResponse(result.data); // `result.data` === `form`
+					  }}
+					class="lg:w-1/2 w-full"
+				>
+					<!-- Have this here, so the letter is sent with the form details. I'm sure theres a better way -->
+					<input type="text" value={letter} class="hidden" name="letter" />
+					{#each categories as category, index}
+						{#key responseArray}
+							<div class="my-1 w-full md:border-b-2" transition:slide={{ duration: 500 }}>
+								<Category
+									index={index + 1}
+									{category}
+									{letter}
+									valid={responseArray[index] ? responseArray[index].toLowerCase() : ''}
+									recordedAnswer={answerArray[index]}
+									{modalActive}
+									{answersSubmitted}
+								/>
+							</div>
+						{/key}
+					{/each}
+				</form>
+
+				{#if responseArray.length < 1}
+					<button
+						class="p-2 bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white md:w-1/2 w-full mb-5"
+						on:click={() => {
+							time = 0;
+						}}>Submit</button
+					>
+				{/if}
+				{#if responseArray.length > 1 && scoresModalActive === false}
+					<button
+						class="p-2 bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white md:w-1/2 w-full mb-5"
+						on:click={() => {
+							scoresModalActive = true;
+						}}>Show Results</button
+					>
+				{/if}
+			</div>
+		</div>
 	</div>
-</div>
-{#if modalActive}
-	<div class="absolute inset-0 p-2 mt-48 flex justify-center h-fit z-50">
-		<RulesModal bind:modalActive />
-	</div>
-{/if}
-{#if responseArray.length > 1 || scoresModalActive === true}
-	<div class="absolute inset-0 p-2 mt-48 flex justify-center h-fit z-50">
-		<Scores bind:scoresModalActive />
-	</div>
-{/if}
+	{#if modalActive}
+		<div class="absolute inset-0 p-2 mt-48 flex justify-center h-fit z-50">
+			<RulesModal bind:modalActive />
+		</div>
+	{/if}
+	{#if responseArray.length > 1 || scoresModalActive === true}
+		<div class="absolute inset-0 p-2 mt-48 flex justify-center h-fit z-50">
+			<Scores bind:scoresModalActive />
+		</div>
+	{/if}
+
