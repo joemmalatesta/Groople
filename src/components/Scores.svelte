@@ -36,6 +36,15 @@
 				localStorage.setItem('streak', String(0));
 			}
 		}
+		//If not played the day after or the same day.
+		else if (currentDate != localStorage.getItem('tomorrow') && currentDate != localStorage.getItem('lastPlayed')){
+			if (yesCount > 0){
+				localStorage.setItem('streak', String(1));
+			}
+			else{
+				localStorage.setItem('streak', String(0));
+			}
+		}
 		streak = parseInt(String(localStorage.getItem('streak')));
 
 		//Set date for tomorrow.
@@ -44,6 +53,12 @@
 		tomorrow = `${tomorrow.getFullYear()}-${tomorrow.getMonth() + 1}-${tomorrow.getDate()}`;
 		localStorage.setItem('tomorrow', tomorrow);
 	});
+
+	//Due to rebuttal, get the score and scores each time this is shown
+	$: if (browser && scoresModalActive == true){
+		scores = JSON.parse(String(localStorage.getItem('scores')));
+		yesCount = localStorage.getItem('yesCount');
+	}
 
 	// Share function for thing
 	let shared: boolean = false;

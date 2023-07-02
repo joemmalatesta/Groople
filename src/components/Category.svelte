@@ -50,8 +50,17 @@
 		rebuttalFinished = true;
 		if (rebuttalResponse === 'yes') {
 			rebuttalResponseEmoji = '✔️';
+			//add 1 to yesCount, remove 1 from previous scores array and add 1 to new scores array
 			if (browser) {
-				//add 1 to yesCount, remove 1 from previous scores array and add 1 to new scores array
+				let scores = JSON.parse(String(localStorage.getItem('scores')));
+				console.log(scores)
+				let yesCount = Number(localStorage.getItem('yesCount'))
+				scores[yesCount] -= 1;
+				scores[yesCount + 1] += 1;
+				localStorage.setItem('yesCount', String(yesCount + 1));				
+				localStorage.setItem('scores', JSON.stringify(scores));
+				console.log(JSON.parse(String(localStorage.getItem('scores'))))
+				
 			}
 		} else {
 			('❌');
