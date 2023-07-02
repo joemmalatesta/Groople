@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { enhance } from '$app/forms';
 	export let index: number,
 		category: string,
@@ -34,7 +35,8 @@
 	}
 
 	let rebuttalResponse: string;
-	let rebuttalResponseEmoji: string = "";
+	let rebuttalResponseEmoji: string = '';
+	let rebuttalFinished: boolean = false;
 	async function rebuttal() {
 		let response = await fetch('/api/rebuttal', {
 			method: 'POST',
@@ -45,9 +47,12 @@
 			}
 		});
 		rebuttalResponse = await response.json();
-		console.log(rebuttalResponse);
+		rebuttalFinished = true;
 		if (rebuttalResponse === 'yes') {
 			rebuttalResponseEmoji = '✔️';
+			if (browser) {
+				//add 1 to yesCount, remove 1 from previous scores array and add 1 to new scores array
+			}
 		} else {
 			('❌');
 		}
@@ -75,7 +80,9 @@
 				<span class="underline">{recordedAnswer}</span>
 				{rebuttalResponseEmoji !== '' ? rebuttalResponseEmoji : validResponse}
 			</p>
-			{#if recordedAnswer.toLowerCase().startsWith(letter.toLowerCase()) && valid !== 'yes'}
+			{#if recordedAnswer
+				.toLowerCase()
+				.startsWith(letter.toLowerCase()) && valid !== 'yes' && rebuttalFinished === false}
 				<button type="button" on:click={rebuttal}>Rebuttal</button>
 			{/if}
 		</div>

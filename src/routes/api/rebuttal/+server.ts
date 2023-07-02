@@ -12,11 +12,9 @@ const openAI = new OpenAIApi(
 export const POST = (async ({ request }) => {
     try {
       const { category, recordedAnswer } = await request.json();
-      console.log(category, recordedAnswer);
       let prompt = `You're the judge for the game Scattergories and you've been asked to reassess your answer.
-      The player answered ${recordedAnswer} for the category ${category} 
+      The player answered: ${recordedAnswer} for the category: ${category} 
       If you think this is a valid answer, reply with "Yes" and nothing more. Otherwise, reply with "No" and nothing more. There should be no other words in your response besides Yes or No.`;
-  
       const res = await openAI.createChatCompletion({
         model: 'gpt-3.5-turbo',
         messages: [
@@ -26,14 +24,14 @@ export const POST = (async ({ request }) => {
           },
         ],
       });
-      console.log("chat done")
+
       
       const response = res.data.choices[0].message?.content;
       if (response === undefined) {
         throw new Error('Failed to retrieve valid response from the AI model.');
       }
   
-      console.log(response);
+      console.log(`Rebuttal: ${prompt}\nResponse: ${response}`);
       return json(response.toLowerCase());
     } catch (error) {
       console.error(error);

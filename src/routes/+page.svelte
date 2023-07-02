@@ -276,11 +276,8 @@
 	let answerArray: string[] = [];
 	let responseArray: string[] = [];
 	async function handleResponse(form: any) {
-		console.log("submitted");
-		console.log(form)
 		// Get input and output after submitting the form.
 		inputArray = form?.input?.split('\n') || [];
-		console.log(inputArray)
 		//two step process to get the answers that the user submitted
 		answerArray = inputArray.map((item) => item.split(':')[2].trim());
 		//Response is GPT's response to the answers.
