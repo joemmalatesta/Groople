@@ -40,11 +40,13 @@
 	}
 
 	let rebuttalResponse: string;
+	let rebuttalClicked: boolean = false;
 	let rebuttalResponseEmoji: string = '';
 	let rebuttalFinished: boolean = false;
 
 	// Rebuttal Swag
 	async function rebuttal() {
+		rebuttalClicked = true;
 		let response = await fetch('/api/rebuttal', {
 			method: 'POST',
 			body: JSON.stringify({ category, recordedAnswer }),
@@ -104,7 +106,7 @@
 			</p>
 			{#if recordedAnswer
 				.toLowerCase()
-				.startsWith(letter.toLowerCase()) && valid !== 'yes' && rebuttalFinished === false}
+				.startsWith(letter.toLowerCase()) && valid !== 'yes' && rebuttalFinished === false && rebuttalClicked === false}
 				<button type="button" on:click={rebuttal}>Rebuttal</button>
 			{/if}
 		</div>
