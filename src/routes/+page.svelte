@@ -400,9 +400,6 @@
 
 	{#if currentDate != lastPlayed}
 		<div class="flex justify-center items-center flex-col">
-			<script>
-				console.log('running like a hoe');
-			</script>
 			<p class="md:text-3xl text-xl">{date.toLocaleDateString()}</p>
 
 			<!-- Worry about these always being seen on the phone version -->

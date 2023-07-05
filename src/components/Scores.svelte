@@ -36,8 +36,9 @@
 				localStorage.setItem('streak', String(0));
 			}
 		}
-		//If not played the day after or the same day.
-		else if (currentDate != localStorage.getItem('tomorrow') && currentDate != localStorage.getItem('lastPlayed')){
+
+		//If not played the day after
+		else if (currentDate != localStorage.getItem('tomorrow')){
 			if (yesCount > 0){
 				localStorage.setItem('streak', String(1));
 			}
@@ -45,6 +46,7 @@
 				localStorage.setItem('streak', String(0));
 			}
 		}
+
 		streak = parseInt(String(localStorage.getItem('streak')));
 
 		//Set date for tomorrow.
