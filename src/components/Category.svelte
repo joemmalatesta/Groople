@@ -7,9 +7,14 @@
 		valid: string,
 		recordedAnswer: string, //answer after submission
 		modalActive: boolean,
-		answersSubmitted: boolean;
+		answersSubmitted: boolean,
+		loading: Boolean = false;
 	let answer: string = ''; //answer before submission
 	let cssOutline: string = '';
+	$: if (!recordedAnswer && answersSubmitted) {
+		answer = '';
+		loading = true;
+	}
 
 	// Validate Based on
 	$: if (answer.toLowerCase().startsWith(letter.toLowerCase()) && answer.length >= 1) {
@@ -37,6 +42,8 @@
 	let rebuttalResponse: string;
 	let rebuttalResponseEmoji: string = '';
 	let rebuttalFinished: boolean = false;
+
+	// Rebuttal Swag
 	async function rebuttal() {
 		let response = await fetch('/api/rebuttal', {
 			method: 'POST',
@@ -53,31 +60,37 @@
 			//add 1 to yesCount, remove 1 from previous scores array and add 1 to new scores array
 			if (browser) {
 				let scores = JSON.parse(String(localStorage.getItem('scores')));
-				console.log(scores)
-				let yesCount = Number(localStorage.getItem('yesCount'))
+				let yesCount = Number(localStorage.getItem('yesCount'));
+				let localAnswers = JSON.parse(String(localStorage.getItem('answers')));
 				scores[yesCount] -= 1;
 				scores[yesCount + 1] += 1;
-				localStorage.setItem('yesCount', String(yesCount + 1));				
+				localStorage.setItem('yesCount', String(yesCount + 1));
 				localStorage.setItem('scores', JSON.stringify(scores));
-				console.log(JSON.parse(String(localStorage.getItem('scores'))))
-				
+				localAnswers[index - 1] = 'yes';
+				localStorage.setItem('answers', JSON.stringify(localAnswers));
 			}
 		} else {
-			('❌');
+			rebuttalResponseEmoji = '❌';
 		}
 	}
 </script>
 
-<div class="flex md:justify-between items-start mx-6 md:mx-0 md:items-center sm:flex-row flex-col">
-	<label class="p-1 text-xl" for="{index}Input">{index}: {category}</label>
-	{#if !recordedAnswer && answersSubmitted}
-		<img src="loading.svg" alt="response loading" class="md:w-20 w-10 h-8" />
-	{:else if !recordedAnswer}
+<div
+	class="flex sm:justify-between items-start mx-6 md:mx-0 md:items-center sm:flex-row flex-col {loading
+		? 'md:h-9'
+		: ''}"
+>
+	<label class="p-1 text-xl {loading ? 'skeleton skeleton-text' : 'hidden'}" for="{index}Input" />
+	<label class="p-1 text-xl {loading ? 'hidden' : ''}" for="{index}Input">{index}: {category}</label
+	>
+	{#if !recordedAnswer}
 		<input
 			bind:value={answer}
 			type="text"
-			placeholder="{letter}..."
-			class="focus:outline-none p-1 border-2 {cssOutline} rounded-md w-full md:w-fit"
+			placeholder={loading ? '' : `${letter}...`}
+			class="focus:outline-none p-1 rounded-md w-full sm:w-fit {loading
+				? 'skeleton'
+				: `${cssOutline} border-2`}"
 			name="{index} : {category}"
 			id="{index}Input"
 			autocomplete="off"
@@ -87,7 +100,7 @@
 		<div class="flex md:flex-col justify-end md:items-end">
 			<p class="text-xl">
 				<span class="underline">{recordedAnswer}</span>
-				{rebuttalResponseEmoji !== '' ? rebuttalResponseEmoji : validResponse}
+				{validResponse}{rebuttalResponseEmoji !== '' ? rebuttalResponseEmoji : ''}
 			</p>
 			{#if recordedAnswer
 				.toLowerCase()
@@ -97,3 +110,26 @@
 		</div>
 	{/if}
 </div>
+
+<style>
+	.skeleton {
+		animation: skeleton-loading 1s linear infinite alternate;
+		opacity: 0.75;
+	}
+
+	.skeleton-text {
+		width: 15rem;
+		height: 0.7rem;
+		margin: 0.25rem;
+		border-radius: 0.2rem;
+	}
+
+	@keyframes skeleton-loading {
+		0% {
+			background-color: hsl(200, 20%, 70%);
+		}
+		100% {
+			background-color: hsl(200, 20%, 95%);
+		}
+	}
+</style>
