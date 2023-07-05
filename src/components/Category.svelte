@@ -6,9 +6,9 @@
 		letter: string,
 		valid: string,
 		recordedAnswer: string, //answer after submission
-		modalActive: boolean,
 		answersSubmitted: boolean,
-		loading: Boolean = false;
+		loading: boolean = false,
+		forModal: boolean = false;
 	let answer: string = ''; //answer before submission
 	let cssOutline: string = '';
 	$: if (!recordedAnswer && answersSubmitted) {
@@ -90,7 +90,7 @@
 			bind:value={answer}
 			type="text"
 			placeholder={loading ? '' : `${letter}...`}
-			class="focus:outline-none p-1 rounded-md w-full sm:w-fit {loading
+			class="focus:outline-none p-1 rounded-md w-full sm:w-fit {forModal ? "text-black": ""} {loading
 				? 'skeleton'
 				: `${cssOutline} border-2`}"
 			name="{index} : {category}"

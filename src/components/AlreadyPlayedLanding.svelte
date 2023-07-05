@@ -4,7 +4,7 @@
     import Scores from "./Scores.svelte";
     import { slide } from "svelte/transition";
     let date = new Date();
-    export let categories: string[], letter: string, responseArray: any, localAnswers: any, localInputs: any, modalActive: boolean, answersSubmitted: any, scoresModalActive: boolean;
+    export let categories: string[], letter: string, responseArray: any, localAnswers: any, localInputs: any, answersSubmitted: any, scoresModalActive: boolean;
 
 </script>
 
@@ -42,7 +42,6 @@
                                 {letter}
                                 valid={localAnswers[index] ? localAnswers[index].trim().toLowerCase() : ''}
                                 recordedAnswer={localInputs[index].split(":")[2].trim()}
-                                {modalActive}
                                 {answersSubmitted}
                             />
                         </div>

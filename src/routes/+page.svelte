@@ -345,6 +345,7 @@
 
 <svelte:head>
 	<title>Groople</title>
+	<meta name="description" content="Play daily challenge!">
 </svelte:head>
 
 <!-- This logic is good. Wait until placeholder changes. and have loading while it does. -->
@@ -368,7 +369,6 @@
 									{letter}
 									valid={responseArray[index] ? responseArray[index].toLowerCase() : ''}
 									recordedAnswer={answerArray[index]}
-									{modalActive}
 									{answersSubmitted}
 									loading={true}
 								/>
@@ -393,7 +393,6 @@
 			{responseArray}
 			{localAnswers}
 			{localInputs}
-			{modalActive}
 			{scoresModalActive}
 		/>
 	{/if}
@@ -446,7 +445,6 @@
 										{letter}
 										valid={responseArray[index] ? responseArray[index].toLowerCase() : ''}
 										recordedAnswer={answerArray[index]}
-										{modalActive}
 										{answersSubmitted}
 									/>
 								</div>
@@ -476,7 +474,7 @@
 		</div>
 		{#if modalActive}
 			<div class="absolute inset-0 p-2 mt-48 flex justify-center h-fit z-50">
-				<RulesModal bind:modalActive />
+				<RulesModal bind:modalActive {letter}/>
 			</div>
 		{/if}
 		{#if responseArray.length > 1 || scoresModalActive === true}
