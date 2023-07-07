@@ -10,7 +10,11 @@ export async function loginWithGoogle() {
         provider: 'google',
     })
     console.log(data.url)
+    supabase.auth.onAuthStateChange((event, session) => {
+        console.log(event, session)
+    });
     throw redirect (303, String(data.url))
+    
 }
 
 

@@ -73,7 +73,7 @@ export const actions: Actions = {
 
 //Initialize supabase!
 //More like init user
-// import { supabase, loginWithGoogle } from "$lib/supabaseClient";
+// import { supabase } from "$lib/supabaseClient";
 
 //   export async function load() {
 // 	console.log("superbase")
