@@ -70,7 +70,7 @@
 	}
 
 	let date = new Date();
-	$: shareString = `Scattergories\n${date.toLocaleDateString()}\n${yesCount}✔️ ${12 - yesCount}❌`;
+	$: shareString = `Groople\n${date.toLocaleDateString()}\n${yesCount}✔️ ${12 - yesCount}❌`;
 </script>
 
 {#if scoresModalActive}
