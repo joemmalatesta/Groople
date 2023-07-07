@@ -69,3 +69,17 @@ export const actions: Actions = {
 		};
 	},
 };
+
+
+//Initialize supabase!
+//More like init user
+import { supabase } from "$lib/supabaseClient";
+
+  export async function load() {
+	console.log("superbase")
+    const { data } = await supabase.from("users").select();
+	console.log(data)
+    return {
+		users: data
+    };
+  }
