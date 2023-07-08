@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
 	import Category from './Category.svelte';
-	//Rules for the modal.
+	//examples for the modal.
 	const examples = [
 		{
 			category: 'Countries',
@@ -29,10 +29,11 @@
 		How to Play
 	</h3>
 	<p class="flex flex-col items-start text-base md:text-xl mb-2">
-		For each category, find a word that fits the category and starts with a "{letter}"
+		For each category, find a word that fits the category and starts with "{letter}"
 	</p>
 	<p class="text-center underline underline-offset-2 ">Try these</p>
 
+	<!-- Do something about the rebuttal rule here as well -->
 	{#each examples as example, index}
 		<div class="w-full flex flex-col md:px-20">
 			<Category

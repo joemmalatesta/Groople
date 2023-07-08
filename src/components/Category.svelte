@@ -107,7 +107,8 @@
 			{#if recordedAnswer
 				.toLowerCase()
 				.startsWith(letter.toLowerCase()) && valid !== 'yes' && rebuttalFinished === false && rebuttalClicked === false}
-				<button type="button" on:click={rebuttal}>Rebuttal</button>
+				<!-- Maybe I can make this a refresh logo as well. -->
+				<button class="px-2 py-0.5 bg-neutral-600 hover:bg-neutral-700 rounded-3xl text-white text-sm" type="button" on:click={rebuttal}>Rebuttal</button>
 			{/if}
 		</div>
 	{/if}
