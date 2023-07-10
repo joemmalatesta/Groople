@@ -27,17 +27,6 @@
 		type: 'bar',
 		data,
 		options: {
-			// You don't actually need this, it's kind of stupid. Just need indexAxis: 'y'
-			plugins: {
-				legend: {
-					labels: {
-						// This more specific font property overrides the global property
-						font: {
-							size:15
-						}
-					}
-				}
-			},
 			indexAxis: 'y'
 		}
 	};

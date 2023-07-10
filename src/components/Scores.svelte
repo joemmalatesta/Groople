@@ -78,11 +78,12 @@
 		class="bg-gradient-to-b from-neutral-700 to-neutral-800 text-neutral-100 ring-neutral-500 ring-2 rounded-lg md:p-8 p-4 drop-shadow-2xl"
 	>
 		<div class="w-full flex items-center flex-col">
-			<h2 class="text-2xl">Score today: {yesCount}</h2>
-			<h2 class="text-lg">Streak: {streak}{Number(streak) >= 10 ? ' 🔥' : ''}</h2>
+			<h2 class="text-xl underline underline-offset-4">Play again tomorrow!</h2>
+			<h3 class="text-xl">Score today: {yesCount}</h3>
+			<h3 class="text-lg">Streak: {streak}{Number(streak) >= 10 ? ' 🔥' : ''}</h3>
 		</div>
 		{#if scores !== null}
-			<div class="md:h-[30rem] md:w-[30rem] h-[20rem] w-[20rem]">
+			<div class="2xl:h-[30rem] 2xl:w-[30rem] h-[20rem] w-[20rem] md:h-[25rem] md:w-[25rem]">
 				<ScoreChart scoreData={scores} />
 			</div>
 		{/if}
