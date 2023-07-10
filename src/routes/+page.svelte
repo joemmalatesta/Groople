@@ -446,6 +446,7 @@
 										valid={responseArray[index] ? responseArray[index].toLowerCase() : ''}
 										recordedAnswer={answerArray[index]}
 										{answersSubmitted}
+										disabled={modalActive}
 									/>
 								</div>
 							{/key}
@@ -454,6 +455,7 @@
 
 					{#if responseArray.length < 1}
 						<button
+							disabled={modalActive}
 							class="p-2 bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white md:w-1/2 w-11/12 mb-5"
 							on:click={() => {
 								time = 0;

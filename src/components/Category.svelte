@@ -7,8 +7,10 @@
 		valid: string,
 		recordedAnswer: string, //answer after submission
 		answersSubmitted: boolean,
+		//Just some shit I needed added after the fact
 		loading: boolean = false,
-		forModal: boolean = false;
+		forRules: boolean = false,
+		disabled: boolean = false;
 	let answer: string = ''; //answer before submission
 	let cssOutline: string = '';
 	$: if (!recordedAnswer && answersSubmitted) {
@@ -87,10 +89,11 @@
 	>
 	{#if !recordedAnswer}
 		<input
+			disabled = {disabled}
 			bind:value={answer}
 			type="text"
 			placeholder={loading ? '' : `${letter}...`}
-			class="focus:outline-none p-1 rounded-md w-full sm:w-fit {forModal ? "text-black": ""} {loading
+			class="focus:outline-none p-1 rounded-md w-full sm:w-fit {forRules ? "text-black": ""} {loading
 				? 'skeleton'
 				: `${cssOutline} border-2`}"
 			name="{index} : {category}"

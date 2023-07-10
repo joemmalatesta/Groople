@@ -105,5 +105,5 @@
 			class="w-full underline-offset-2 underline hover:underline-offset-4 transition-all text-sm md:text-base"
 			>Dismiss</button
 		>
-	</div>
+		</div>
 {/if}

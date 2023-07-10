@@ -43,7 +43,7 @@
 				recordedAnswer={''}
 				valid={'yes'}
 				answersSubmitted={false}
-				forModal={true}
+				forRules={true}
 			/>
 		</div>
 	{/each}
