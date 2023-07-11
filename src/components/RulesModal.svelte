@@ -49,7 +49,7 @@
 	{/each}
 	<div class="flex flex-col items-center text-sm md:text-xl mt-2">
 		<p>Answers are judged by AI and either given a ✔️ or ❌</p>
-		<p>You have 100 seconds to answers 12 categories</p>
+		<p>You have 100 seconds to answer 12 categories</p>
 	</div>
 	<div class="flex justify-center items-center m-3">
 		<button
