@@ -32,8 +32,14 @@
 	$: if (valid !== '') {
 		if (valid === 'yes' && recordedAnswer.toLowerCase().startsWith(letter.toLowerCase())) {
 			validResponse = '✔️';
-		} else {
+		} else if (valid === 'no' || !recordedAnswer.toLowerCase().startsWith(letter.toLowerCase())){
 			validResponse = '❌';
+		}
+		else if (valid === 'noyes'){
+			validResponse = '❌✔️';
+		}
+		else if (valid === 'nono'){
+			validResponse = '❌❌';
 		}
 	}
 
@@ -70,10 +76,15 @@
 				scores[yesCount + 1] += 1;
 				localStorage.setItem('yesCount', String(yesCount + 1));
 				localStorage.setItem('scores', JSON.stringify(scores));
-				localAnswers[index - 1] = 'yes';
+				localAnswers[index - 1] += 'yes';
 				localStorage.setItem('answers', JSON.stringify(localAnswers));
 			}
 		} else {
+			if (browser){
+				let localAnswers = JSON.parse(String(localStorage.getItem('answers')));
+				localAnswers[index - 1] += 'no';
+				localStorage.setItem('answers', JSON.stringify(localAnswers));
+			}
 			rebuttalResponseEmoji = '❌';
 		}
 	}
@@ -109,7 +120,7 @@
 			</p>
 			{#if recordedAnswer
 				.toLowerCase()
-				.startsWith(letter.toLowerCase()) && valid !== 'yes' && rebuttalFinished === false && rebuttalClicked === false}
+				.startsWith(letter.toLowerCase()) && valid !== 'yes' && rebuttalFinished === false && rebuttalClicked === false && valid !== "noyes" && valid !== 'nono'}
 				<!-- Maybe I can make this a refresh logo as well. -->
 				<button class="px-2 py-0.5 bg-neutral-600 hover:bg-neutral-700 rounded-3xl text-white text-sm" type="button" on:click={rebuttal}>Rebuttal</button>
 			{/if}
