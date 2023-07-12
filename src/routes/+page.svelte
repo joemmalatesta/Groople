@@ -69,9 +69,9 @@
 	let answerArray: string[] = [];
 	let responseArray: string[] = [];
 	async function handleResponse(form: any) {
-		answersSubmitted = true;
 
-		
+
+
 		// Get input and output after submitting the form.
 		inputArray = form?.input?.split('\n') || [];
 		//two step process to get the answers that the user submitted
@@ -86,7 +86,7 @@
 			localStorage.setItem('answers', JSON.stringify(responseArray));
 		}
 
-		
+		answersSubmitted = true;
 	}
 
 	// Count up yes and no's for the share option.
