@@ -38,11 +38,10 @@
 		}
 
 		//If not played the day after
-		else if (currentDate != localStorage.getItem('tomorrow')){
-			if (yesCount > 0){
+		else if (currentDate != localStorage.getItem('tomorrow')) {
+			if (yesCount > 0) {
 				localStorage.setItem('streak', String(1));
-			}
-			else{
+			} else {
 				localStorage.setItem('streak', String(0));
 			}
 		}
@@ -57,20 +56,33 @@
 	});
 
 	//Due to rebuttal, get the score and scores each time this is shown
-	$: if (browser && scoresModalActive == true){
+	$: if (browser && scoresModalActive == true) {
 		scores = JSON.parse(String(localStorage.getItem('scores')));
 		yesCount = localStorage.getItem('yesCount');
 	}
 
-	// Share function for thing
+	// Share function for sharing thing
 	let shared: boolean = false;
 	function shareClicked() {
+		let shareString = `Groople\n${date.toLocaleDateString()}\n`;
+		//Make share string more detailed.
+		if (browser) {
+			let localAnswers = JSON.parse(String(localStorage.getItem('answers')));
+			for (let i = 0; i < localAnswers.length; i++) {
+				let answer = localAnswers[i].toLowerCase();
+				if (answer === 'yes' || answer === 'noyes') {
+			shareString+='✔️';
+		} else if (answer === 'no' || answer === 'nono'){
+			shareString+='❌';
+		}
+			}
+		}
+		shareString+= '\nPlay Groople! - https://groople.xyz'
 		navigator.clipboard.writeText(shareString);
 		shared = true;
 	}
 
 	let date = new Date();
-	$: shareString = `Groople\n${date.toLocaleDateString()}\n${yesCount}✔️ ${12 - yesCount}❌`;
 </script>
 
 {#if scoresModalActive}
@@ -106,5 +118,5 @@
 			class="w-full underline-offset-2 underline hover:underline-offset-4 transition-all text-sm md:text-base"
 			>Dismiss</button
 		>
-		</div>
+	</div>
 {/if}
