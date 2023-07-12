@@ -9,6 +9,22 @@
 	import { onMount } from 'svelte';
 	import AlreadyPlayedLanding from '../components/AlreadyPlayedLanding.svelte';
 
+
+	//get daily challenge data from the +page.ts and populate the screen!
+	export let data: any;
+	let letter: string = ""
+	let categories: string[] = []
+	//Don't know why this is necessary now and not before, but... data.data prevents 500 error
+	//It just makes sure all is loaded before we start trying to get silly
+	$: letter = (data.data ? data.data[0].letter: "")
+	$: categories = (data.data ? Object.values(data.data[0].categories): [])
+
+
+
+
+
+	//Set up board for days already played. 
+	//Answers are Checks or X's, inputs are the recorded answers
 	let localAnswers: any, localInputs: any;
 	let currentDate: any = new Date();
 	currentDate = `${currentDate.getFullYear()}-${
@@ -27,258 +43,35 @@
 		}
 	});
 
+
+
 	// Show rules modal before each game. controls category blur and timer
-	let modalActive = true;
+	let modalActive = true; //rules modal
 	let scoresModalActive = false;
 
-	let time: number = 100;
 
+
+	//Submit the form when time = 0, and pressing submit makes the time 0.
+	let time: number = 100;
 	// Manually click form element so it doesn't accidentally submit.
 	let answersSubmitted: boolean = false;
 	let formElement: any;
 	$: if (time === 0) {
 		const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
 		formElement.dispatchEvent(submitEvent);
-
-		// Change time to a loading symbol
 	}
 
-	//List of 250 categories. Chose 12 random. won't be the case for always though
-	const allCategories: string[] = [
-		"A Boy's Name",
-		'U.S. Cities',
-		'Things That Are Cold',
-		'School Supplies',
-		'Pro Sports Teams',
-		'Insects',
-		'Breakfast Foods',
-		'Furniture',
-		'T.V. Shows',
-		'Things That Are Found in the Ocean',
-		'Presidents',
-		'Product Names',
-		'Appliances',
-		'Types of Drink',
-		'Personality Traits',
-		'Articles of Clothing',
-		'Desserts',
-		'Car Parts',
-		'Things Found on a Map',
-		'Athletes',
-		'4-Letter Words',
-		'Items in a Refrigerator',
-		'Farm Animals',
-		'Street Names',
-		'Things on a Beach',
-		'Colors',
-		'Tools',
-		"A Girl's Name",
-		'Villains/Monsters',
-		'Footwear',
-		"Something You're Afraid Of",
-		'Terms of Measurement',
-		'Book Titles',
-		'Heroes',
-		'Gifts/Presents',
-		'Kinds of Dances',
-		'Things That Are Black',
-		'Vehicles',
-		'Tropical Locations',
-		'College Majors',
-		'Dairy Products',
-		'Things in a Souvenir Shop',
-		'Items in Your Purse/Wallet',
-		'Famous Females',
-		'Medicine/Drugs',
-		'Things Made of Metal',
-		'Hobbies',
-		'People in Uniform',
-		'Things You Plug In',
-		'Animals',
-		'Languages',
-		'Names Used in the Bible',
-		'Junk Food',
-		'Things That Grow',
-		'Companies',
-		'Video Games',
-		'Electronic Gadgets',
-		'Board Games',
-		'Things That Use a Remote',
-		'Card Games',
-		'Internet Lingo',
-		'Offensive Words',
-		'Wireless Things',
-		'Computer Parts',
-		'Software',
-		'Websites',
-		'Game Terms',
-		'Things in a Grocery Store',
-		'Reasons to Quit Your Job',
-		'Things That Have Stripes',
-		'Tourist Attractions',
-		'Diet Foods',
-		'Things Found in a Hospital',
-		'Food/Drink That Is Green',
-		'Weekend Activities',
-		'Acronyms',
-		'Seafood',
-		'Christmas Songs',
-		'Words Ending in -N',
-		'Words With Double Letters',
-		`Children's Books`,
-		'Things Found at a Bar',
-		'Sports Played Indoors',
-		'Names Used in Songs',
-		'Foods You Eat Raw',
-		'Places in Europe',
-		'Olympic Events',
-		'Things You See at the Zoo',
-		'Math Terms',
-		'Animals in Books or Movies',
-		'Things to Do at a Party',
-		'Sandwiches',
-		'Items in a Catalog',
-		'World Leaders/Politicians',
-		'School Subjects',
-		'Excuses for Being Late',
-		'Ice Cream Flavors',
-		'Things That Jump/Bounce',
-		'Television Stars',
-		'Things in a Park',
-		'Foreign Cities',
-		'Stones/Gems',
-		'Musical Instruments',
-		'Nicknames',
-		'Things in the Sky',
-		'Pizza Toppings',
-		'Colleges/Universities',
-		'Fish',
-		'Countries',
-		'Things That Have Spots',
-		'Historical Figures',
-		'Terms of Endearment',
-		'Items in This Room',
-		'Fictional Characters',
-		'Menu Items',
-		'Magazines',
-		'Capitals',
-		'Kinds of Candy',
-		'Items You Save Up to Buy',
-		'Something You Keep Hidden',
-		'Items in a Suitcase',
-		'Things With Tails',
-		'Sports Equipment',
-		'Crimes',
-		'Things That Are Sticky',
-		'Awards/Ceremonies',
-		'Cars',
-		'Spices/Herbs',
-		'Bad Habits',
-		'Cosmetics/Toiletries',
-		'Celebrities',
-		'Cooking Utensils',
-		'Reptiles/Amphibians',
-		'Parks',
-		'Leisure Activities',
-		"Things You're Allergic To",
-		'Restaurants',
-		'Notorious People',
-		'Fruits',
-		'Things in a Medicine Cabinet',
-		'Toys',
-		'Household Chores',
-		'Bodies of Water',
-		'Authors',
-		'Halloween Costumes',
-		'Weapons',
-		'Things That Are Round',
-		'Words Associated With Exercise',
-		'Sports',
-		'Song Titles',
-		'Parts of the Body',
-		'Ethnic Foods',
-		'Things You Shout',
-		'Birds',
-		'Methods of Transportation',
-		'Items in a Kitchen',
-		'Flowers',
-		'Things You Replace',
-		'Famous Duos and Trios',
-		'Things Found in a Desk',
-		'Vacation Spots',
-		'Diseases',
-		'Words Associated With Money',
-		'Items in a Vending Machine',
-		'Movie Titles',
-		'Games',
-		'Things That You Wear',
-		'Beers',
-		'Things at a Circus',
-		'Vegetables',
-		'States',
-		'Things You Throw Away',
-		'Occupations',
-		'Cartoon Characters',
-		'Types of Drinks',
-		'Musical Groups',
-		'Store Names',
-		'Things at a Football Game',
-		'Trees',
-		'Kinds of Soup',
-		'Things Found in New York',
-		'Things You Get Tickets For',
-		'Things You Do at Work',
-		'Foreign Words Used in English',
-		"Things You Shouldn't Touch",
-		'Spicy Foods',
-		'Things at a Carnival',
-		'Things You Make',
-		'Places to Hang Out',
-		'Honeymoon Spots',
-		'Things You Buy for Kids',
-		'Reasons to Take Out a Loan',
-		'Things to Do on a Date',
-		'Historic Events',
-		'Things You Do Every Day',
-		'Things You Get in the Mail',
-		'Things You Sit On',
-		'Reasons to Make a Phone Call',
-		'Titles People Can Have',
-		'Things That Have Buttons',
-		'Things That Have Wheels',
-		'Reasons to Call 911',
-		'Ways to Kill Time',
-		'Things That Can Get You Fired'
-	];
 
-	//Get random letter
-	let letter: string = randomLetter();
-	function randomLetter() {
-		//Only scattergories letters
-		const characters = 'abcdefghijklmnoprstw';
-		return characters.charAt(Math.floor(Math.random() * characters.length)).toUpperCase();
-	}
 
-	//For getting new categories. All this isn't necessary but refactor once I get daily.
-	let possibleCategories: string[] = allCategories;
-	let categories: string[] = refreshCategories();
-	function refreshCategories() {
-		//Refresh the letter as well on list refresh
-		letter = randomLetter();
-		let selectedCategories = [];
-		for (let i = 0; i < 12; i++) {
-			const randomIndex = Math.floor(Math.random() * possibleCategories.length);
-			const selectedCategory = possibleCategories[randomIndex];
-			possibleCategories.splice(randomIndex, 1);
-			selectedCategories.push(selectedCategory);
-		}
-		return selectedCategories;
-	}
 
+	//THIS IS FOR WHEN YOU SUBMIT THE FORM
 	let inputArray: string[] = [];
 	let answerArray: string[] = [];
 	let responseArray: string[] = [];
 	async function handleResponse(form: any) {
+		answersSubmitted = true;
+
+		
 		// Get input and output after submitting the form.
 		inputArray = form?.input?.split('\n') || [];
 		//two step process to get the answers that the user submitted
@@ -292,7 +85,8 @@
 			localStorage.setItem('input', JSON.stringify(inputArray));
 			localStorage.setItem('answers', JSON.stringify(responseArray));
 		}
-		answersSubmitted = true;
+
+		
 	}
 
 	// Count up yes and no's for the share option.
@@ -349,7 +143,7 @@
 </svelte:head>
 
 <!-- This logic is good. Wait until placeholder changes. and have loading while it does. -->
-{#if lastPlayed == 'placeholder'}
+{#if lastPlayed == 'placeholder' || letter === ""}
 	<!-- should be a correctly sized box with the loading stripe you know what I mean.. the shimmer -->
 	<div class="flex justify-center items-center flex-col">
 		<p class="md:text-3xl text-xl">{date.toLocaleDateString()}</p>

@@ -33,7 +33,6 @@ export const actions: Actions = {
 			.select();
 
 		console.log(`${respondentName.value} added some new categories ${filteredArray.map(item => item.value)}`)
-		console.log(data)
 		return {
 			output: 'success'
 		};

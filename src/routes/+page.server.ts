@@ -71,16 +71,21 @@ export const actions: Actions = {
 };
 
 
-//Initialize supabase!
-//More like init user
-// import { supabase } from "$lib/supabaseClient";
+//Get daily challenge details using server time.
+//Can fall back on this if I need to but.
 
-//   export async function load() {
-// 	console.log("superbase")
-// 	await loginWithGoogle();
-//     const { data } = await supabase.from("users").select();
-// 	console.log(data)
-//     return {
-// 		users: data
-//     };
-//   }
+/* import { supabase } from "$lib/supabaseClient";
+
+  export async function load() {
+	// Gotta get the date locally is a problem. 
+	const currentDate = new Date().toISOString().split('T')[0];
+    const { data } = await supabase.from("dailyChallenge").select().eq("date", currentDate);
+	if (!data){
+		// Make some random categories and letter.
+	}
+    return {
+		data
+    };
+  }
+
+*/
