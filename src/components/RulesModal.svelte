@@ -42,7 +42,7 @@
 			/>
 		</div>
 	{/each}
-	<div class="flex flex-col items-center mx-20 text-sm md:text-xl mt-2">
+	<div class="flex flex-col items-center text-sm md:text-xl mt-2">
 		<p>Answers are judged by AI and either given a ✔️ or ❌</p>
 		<p class="gap-2 flex items-center">For incorrect answers, you can <span class="px-2 py-0.5 bg-neutral-600 hover:bg-neutral-700 rounded-3xl text-white text-sm cursor-pointer" >Rebuttal</span> the AI
 		</p>
