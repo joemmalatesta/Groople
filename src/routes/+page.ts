@@ -2,13 +2,12 @@ import { browser } from '$app/environment';
 
 export async function load() {
 	if (browser) {
-		//local date, hell yeah
-		const currentDate = new Date().toISOString().split('T')[0];
-		const localDate = new Date(currentDate).toLocaleDateString();
+        //local date, hell yeah
+		const localDate = new Date().toLocaleDateString();
 		//Call API to keep everything spooky on the server
 		let response = await fetch('/api/getGameDetails', {
 			method: 'POST',
-			body: JSON.stringify({ date: localDate }),
+			body: JSON.stringify({ date: localDate}),
 			headers: {
 				'content-type': 'application/json',
 				accept: 'application/json'

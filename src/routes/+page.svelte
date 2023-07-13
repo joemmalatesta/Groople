@@ -57,8 +57,18 @@
 	let answersSubmitted: boolean = false;
 	let formElement: any;
 	$: if (time === 0) {
+		//Submit form
 		const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
 		formElement.dispatchEvent(submitEvent);
+		//Increment play count today.
+		fetch('/api/incrementScore', {
+			method: 'POST',
+			body: JSON.stringify({ date: currentDate }),
+			headers: {
+				'content-type': 'application/json',
+				accept: 'application/json'
+			}
+		});
 	}
 
 

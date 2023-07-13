@@ -21,7 +21,9 @@ export const actions: Actions = {
 
 		// Display the formatted data in the console
 		let useableData = dataArray
-			.map(({ index, value }) => `${index}: ${value && String(value).length < 45 ? value : 'ZZZZZZ'}`)
+			.map(
+				({ index, value }) => `${index}: ${value && String(value).length < 45 ? value : 'ZZZZZZ'}`
+			)
 			.join('\n');
 		let prompt = `Welcome to Scattergories! You are the judge, and your task is to determine whether the player's responses match the category and start with the selected letter.
 		If the response is a valid match, please respond with a "Yes." If the response does not match or is a combination of just the letter and another word, please respond with a "No." 
@@ -60,32 +62,12 @@ export const actions: Actions = {
 			]
 		});
 		const answerArray = res.data.choices[0].message?.content;
-		console.log("Prompt:" +prompt);
-		console.log("Answers:" + answerArray);
+		console.log('Prompt:' + prompt);
+		console.log('Answers:' + answerArray);
 		return {
 			// Useable Data should be dataArray it makes more sense but whatever
 			input: useableData,
 			output: answerArray
 		};
-	},
-};
-
-
-//Get daily challenge details using server time.
-//Can fall back on this if I need to but.
-
-/* import { supabase } from "$lib/supabaseClient";
-
-  export async function load() {
-	// Gotta get the date locally is a problem. 
-	const currentDate = new Date().toISOString().split('T')[0];
-    const { data } = await supabase.from("dailyChallenge").select().eq("date", currentDate);
-	if (!data){
-		// Make some random categories and letter.
 	}
-    return {
-		data
-    };
-  }
-
-*/
+};
