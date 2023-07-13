@@ -7,7 +7,7 @@ import type { RequestHandler } from './$types';
 export const POST = (async ({ request }) => {
 	const { date } = await request.json();
 	let { data } = await supabase.from('dailyChallenge').select().eq('date', date);
-    //Use silly data if nothing is found
+	//Use silly data if nothing is found
 	if (!data) {
 		console.log('data not retrieved.. using backup shit');
 		data = [
