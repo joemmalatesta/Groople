@@ -7,7 +7,7 @@ import type { RequestHandler } from './$types';
 export const POST = (async ({ request }) => {
 	const { date } = await request.json();
 	//If it says so, add one to the play counter.
-	console.log('Incrementing Score');
+	console.log(`Incrementing Score for ${date}`);
 	await incrementScore(date);
 	return json('success');
 }) satisfies RequestHandler;
