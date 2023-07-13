@@ -30,5 +30,7 @@ export const POST = (async ({ request }) => {
 			}
 		];
 	}
+
+	console.log(`game data successfully retrieved for ${date}\nData:${data}`)
 	return json(data);
 }) satisfies RequestHandler;

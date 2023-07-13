@@ -7,7 +7,6 @@ import type { RequestHandler } from './$types';
 export const POST = (async ({ request }) => {
 	const { date } = await request.json();
 	//If it says so, add one to the play counter.
-	console.log(`Incrementing Score for ${date}`);
 	await incrementScore(date);
 	return json('success');
 }) satisfies RequestHandler;
@@ -23,7 +22,7 @@ async function incrementScore(date: string) {
 		.eq('date', date);
 
 	if (error) {
-		// Handle error
+		console.log(`Was not able to retrieve score for ${date}\nError: ${error}`)
 	} else {
 		// Increment the plays locally
 		const existingPlays = existingData[0]?.plays;
@@ -36,9 +35,9 @@ async function incrementScore(date: string) {
 			.eq('date', date);
 
 		if (updateError) {
-			// Handle update error
+			console.log(`Was not able to update score for ${date}\nError: ${updateError}`)
 		} else {
-			// plays updated successfully
+			console.log(`Score for ${date} incremented.`)
 		}
 	}
 }
