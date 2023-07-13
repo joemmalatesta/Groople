@@ -9,7 +9,7 @@ export const POST = (async ({ request }) => {
 	let { data, error } = await supabase.from('dailyChallenge').select().eq('date', date);
 	//Use silly data if nothing is found
 	if (!data) {
-		console.log(`data not retrieved for ${date}.. using backup shit\nError: ${error}`);
+		console.log(`data not retrieved for ${date}.. using backup shit\nError Message: ${error?.message}\nError Code: ${error?.code}\nError Details: ${error?.details}\n Error Hint: ${error?.hint}`);
 		data = [
 			{
 				letter: 'E',
@@ -29,8 +29,9 @@ export const POST = (async ({ request }) => {
 				]
 			}
 		];
+		return json(data);
 	}
 
-	console.log(`game data successfully retrieved for ${date}}`)
+	console.log(`game data successfully retrieved for ${date}`)
 	return json(data);
 }) satisfies RequestHandler;
