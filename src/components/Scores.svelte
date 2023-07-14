@@ -64,7 +64,7 @@
 	// Share function for sharing thing
 	let shared: boolean = false;
 	function shareClicked() {
-		let shareString = `Groople\n${date.toLocaleDateString()}\n`;
+		let shareString = `Groople - ${yesCount}/12 ✔️\n${date.toLocaleDateString()}\n`;
 		//Make share string more detailed.
 		if (browser) {
 			let localAnswers = JSON.parse(String(localStorage.getItem('answers')));

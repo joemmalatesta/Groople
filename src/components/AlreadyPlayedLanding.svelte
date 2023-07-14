@@ -50,7 +50,7 @@
             </div>
 
             <button
-                class="p-2 bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white md:w-1/2 w-11/12 mb-5"
+                class="p-2 bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white md:w-1/2 w-11/12 mb-2"
                 on:click={() => {
                     scoresModalActive = true;
                 }}>Show Results</button

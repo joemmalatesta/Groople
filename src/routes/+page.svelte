@@ -181,7 +181,7 @@
 					{/each}
 				</div>
 				<button
-					class="p-2 opacity-90 bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white md:w-1/2 w-11/12 mb-5 animate-pulse h-9"
+					class="p-2 opacity-90 bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white md:w-1/2 w-11/12 mb-2 animate-pulse h-9"
 					></button
 				>
 			</div>
@@ -260,7 +260,7 @@
 					{#if responseArray.length < 1}
 						<button
 							disabled={modalActive}
-							class="p-2 bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white md:w-1/2 w-11/12 mb-5"
+							class="p-2 bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white md:w-1/2 w-11/12 mb-2"
 							on:click={() => {
 								time = 0;
 								answersSubmitted = true
@@ -269,7 +269,7 @@
 					{/if}
 					{#if responseArray.length > 1 && scoresModalActive === false}
 						<button
-							class="p-2 bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white md:w-1/2 w-11/12 mb-5"
+							class="p-2 bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white md:w-1/2 w-11/12 mb-2"
 							on:click={() => {
 								scoresModalActive = true;
 							}}>Show Results</button
