@@ -281,7 +281,9 @@
 							}}>Show Results</button
 						>
 					{/if}
-					<p class="text-xs">Todays list by {creator}</p>
+					{#if creator}
+					<p class="text-xs">Todays categories by {creator}</p>
+					{/if}
 				</div>
 			</div>
 		</div>
