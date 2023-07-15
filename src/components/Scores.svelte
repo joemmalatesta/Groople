@@ -65,7 +65,7 @@
 	// Share function for sharing thing
 	let shared: boolean = false;
 	function shareClicked() {
-		va.track("share")
+		va.track('share');
 		let shareString = `Groople - ${yesCount}/12 ✔️\n${date.toLocaleDateString()}\n`;
 		//Make share string more detailed.
 		if (browser) {
@@ -73,13 +73,13 @@
 			for (let i = 0; i < localAnswers.length; i++) {
 				let answer = localAnswers[i].toLowerCase();
 				if (answer === 'yes' || answer === 'noyes') {
-			shareString+='✔️';
-		} else if (answer === 'no' || answer === 'nono'){
-			shareString+='❌';
-		}
+					shareString += '✔️';
+				} else if (answer === 'no' || answer === 'nono') {
+					shareString += '❌';
+				}
 			}
 		}
-		shareString+= '\nPlay Groople! - https://groople.xyz'
+		shareString += '\nPlay Groople! - https://groople.xyz';
 		navigator.clipboard.writeText(shareString);
 		shared = true;
 	}
@@ -104,8 +104,12 @@
 		<div class="flex gap-2 justify-center w-full">
 			<button
 				on:click={shareClicked}
-				class="bg-neutral-800 hover:bg-neutral-900 text-white ring-1 ring-neutral-500/20 p-2 rounded-md w-full mb-2"
-				>{!shared ? 'Share' : 'Copied!'}</button
+				class="flex justify-center items-center gap-2 shadow-white bg-neutral-800 hover:bg-neutral-900 text-white ring-1 ring-neutral-500/20 p-2 rounded-md w-full mb-2"
+				>{!shared ? 'Share' : 'Copied'}<img
+					src="copy.svg"
+					alt="copy to clipboard"
+					class="w-5"
+				/></button
 			>
 			<a
 				href="/create"
@@ -122,3 +126,4 @@
 		>
 	</div>
 {/if}
+
