@@ -13,15 +13,12 @@ export const actions: Actions = {
 				output: 'empty'
 			};
 		}
+		let respondentName: string = "None provided"
+		if (filteredArray.find(element => element.index == "name")){
+			respondentName = String(filteredArray.shift()?.value);
+		}
 		//get the name from that jawn, assuming it exists, which it will! remove it from the list
-		let respondentName = filteredArray.shift();
-        if (respondentName?.index != "name"){
-            return {
-                output: 'no name'
-            }
-        }
 		//now if there's no categories, you doing something wrong
-		console.log(filteredArray)
 		if (filteredArray.length === 0){
 			return {
 				output: 'no categories'
@@ -29,10 +26,10 @@ export const actions: Actions = {
 		}
 		const { data, error } = await supabase
 			.from('createListResponses')
-			.insert([{ respondentName: respondentName.value , categories: filteredArray.map(item => item.value) }])
+			.insert([{ respondentName: respondentName , categories: filteredArray.map(item => item.value) }])
 			.select();
 
-		console.log(`${respondentName.value} added some new categories ${filteredArray.map(item => item.value)}`)
+		console.log(`${respondentName} added some new categories ${filteredArray.map(item => item.value)}`)
 		return {
 			output: 'success'
 		};

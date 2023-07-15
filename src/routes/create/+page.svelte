@@ -13,9 +13,7 @@
 
 <div class="md:mt-10 mt-2 flex flex-col lg:mx-64 xl:mx-80 mx-5">
 	<h1 class="text-4xl">Create A List</h1>
-	{#if form?.output == 'no name'}
-		<p class="text-red-500 text-sm">Name cannot be missing</p>
-	{:else if form?.output == 'no categories'}
+	{#if form?.output == 'no categories'}
 		<p class="text-red-500 text-sm">Must submit at least 1 category</p>
 	{/if}
 	<form class="flex flex-col w-full" method="POST" use:enhance>
