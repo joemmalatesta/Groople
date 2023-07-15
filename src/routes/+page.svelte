@@ -9,25 +9,18 @@
 	import { onMount } from 'svelte';
 	import AlreadyPlayedLanding from '../components/AlreadyPlayedLanding.svelte';
 
-
 	//get daily challenge data from the +page.ts and populate the screen!
 	export let data: any;
-	let letter: string = ""
-	let categories: string[] = []
-	let creator: string = ""
+	let letter: string = '';
+	let categories: string[] = [];
+	let creator: string = '';
 	//Don't know why this is necessary now and not before, but... data.data prevents 500 error
 	//It just makes sure all is loaded before we start trying to get silly
-	$: letter = (data.data ? data.data[0].letter: "")
-	$: categories = (data.data ? Object.values(data.data[0].categories): [])
-	$: creator = (data.data ? data.data[0].creator: "")
+	$: letter = data.data ? data.data[0].letter : '';
+	$: categories = data.data ? Object.values(data.data[0].categories) : [];
+	$: creator = data.data ? data.data[0].creator : '';
 
-	
-
-
-
-
-
-	//Set up board for days already played. 
+	//Set up board for days already played.
 	//Answers are Checks or X's, inputs are the recorded answers
 	let localAnswers: any, localInputs: any;
 	let currentDate: any = new Date();
@@ -47,13 +40,9 @@
 		}
 	});
 
-
-
 	// Show rules modal before each game. controls category blur and timer
 	let modalActive = true; //rules modal
 	let scoresModalActive = false;
-
-
 
 	//Submit the form when time = 0, and pressing submit makes the time 0.
 	let time: number = 100;
@@ -75,17 +64,11 @@
 		});
 	}
 
-
-
-
 	//THIS IS FOR WHEN YOU SUBMIT THE FORM
 	let inputArray: string[] = [];
 	let answerArray: string[] = [];
 	let responseArray: string[] = [];
 	async function handleResponse(form: any) {
-
-
-
 		// Get input and output after submitting the form.
 		inputArray = form?.input?.split('\n') || [];
 		//two step process to get the answers that the user submitted
@@ -149,48 +132,50 @@
 		scores[yesCount] += 1;
 		localStorage.setItem('scores', JSON.stringify(scores));
 	}
+
+	let progressPercent: number = 0;
+	$: progressPercent = 100 - time;
+
 </script>
 
 <svelte:head>
 	<title>Groople</title>
-	<meta name="description" content="Play daily challenge!">
+	<meta name="description" content="Play daily challenge!" />
 </svelte:head>
 
 <!-- This logic is good. Wait until placeholder changes. and have loading while it does. -->
-{#if lastPlayed == 'placeholder' || letter === ""}
+{#if lastPlayed == 'placeholder' || letter === ''}
 	<!-- should be a correctly sized box with the loading stripe you know what I mean.. the shimmer -->
 	<div class="flex justify-center items-center flex-col">
 		<p class="md:text-3xl text-xl">{date.toLocaleDateString()}</p>
-		</div>
-		<div class="md:mb-[6.5rem]"></div>
-		<div class="flex items-center justify-center md:flex-row flex-col w-full relative md:mt-5 ">
-			<div class="flex flex-col mt-5 items-center relative w-full ">
-				<div class="lg:w-1/2 w-full">
-					<!-- Have this here, so the letter is sent with the form details. I'm sure theres a better way -->
-					<input type="text" value={letter} class="hidden" name="letter" />
-					{#each [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as category, index}
-						{#key responseArray}
-							<div class="my-1 w-full md:border-b-2">
-								<Category
-									index={index + 1}
-									category={String(category)}
-									{letter}
-									valid={responseArray[index] ? responseArray[index].toLowerCase() : ''}
-									recordedAnswer={answerArray[index]}
-									{answersSubmitted}
-									loading={true}
-								/>
-							</div>
-						{/key}
-					{/each}
-				</div>
-				<button
-					class="p-2 opacity-90 bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white md:w-1/2 w-11/12 mb-2 animate-pulse h-9"
-					></button
-				>
+	</div>
+	<div class="md:mb-[6.5rem]" />
+	<div class="flex items-center justify-center md:flex-row flex-col w-full relative md:mt-5">
+		<div class="flex flex-col mt-5 items-center relative w-full">
+			<div class="lg:w-1/2 w-full">
+				<!-- Have this here, so the letter is sent with the form details. I'm sure theres a better way -->
+				<input type="text" value={letter} class="hidden" name="letter" />
+				{#each [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as category, index}
+					{#key responseArray}
+						<div class="my-1 w-full md:border-b-2">
+							<Category
+								index={index + 1}
+								category={String(category)}
+								{letter}
+								valid={responseArray[index] ? responseArray[index].toLowerCase() : ''}
+								recordedAnswer={answerArray[index]}
+								{answersSubmitted}
+								loading={true}
+							/>
+						</div>
+					{/key}
+				{/each}
 			</div>
+			<button
+				class="p-2 opacity-90 bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white md:w-1/2 w-11/12 mb-2 animate-pulse h-9"
+			/>
 		</div>
-
+	</div>
 {:else}
 	<!-- If you played today, go view your scores, you can't play again today -->
 	{#if currentDate == lastPlayed}
@@ -206,7 +191,13 @@
 		/>
 	{/if}
 
+	<!-- ACTUAL GAMEPLAY HERE -->
 	{#if currentDate != lastPlayed}
+		<!-- Progress bar -->
+		<div
+			class="fixed top-0 left-0 right-0 h-3 bg-gradient-to-r from-black to-neutral-600 z-50 transition-all duration-700"
+			style="width: {progressPercent}%;"
+		/>
 		<div class="flex justify-center items-center flex-col">
 			<p class="md:text-3xl text-xl">{date.toLocaleDateString()}</p>
 
@@ -262,14 +253,13 @@
 						{/each}
 					</form>
 
-
 					{#if responseArray.length < 1}
 						<button
 							disabled={modalActive}
 							class="p-2 bg-neutral-800 hover:bg-neutral-900 drop-shadow-md rounded-md text-white md:w-1/2 w-11/12 mb-2"
 							on:click={() => {
 								time = 0;
-								answersSubmitted = true
+								answersSubmitted = true;
 							}}>Submit</button
 						>
 					{/if}
@@ -282,19 +272,19 @@
 						>
 					{/if}
 					{#if creator}
-					<p class="text-xs">Todays categories by {creator}</p>
+						<p class="text-xs">Todays categories by {creator}</p>
 					{/if}
 				</div>
 			</div>
 		</div>
 		{#if modalActive}
 			<div class="absolute inset-0 p-2 mt-48 flex justify-center h-fit z-50">
-				<RulesModal bind:modalActive {letter}/>
+				<RulesModal bind:modalActive {letter} />
 			</div>
 		{/if}
 		{#if responseArray.length > 1 || scoresModalActive === true}
 			<div class="absolute inset-0 p-2 mt-48 flex justify-center h-fit z-50">
-				<Scores bind:scoresModalActive/>
+				<Scores bind:scoresModalActive />
 			</div>
 		{/if}
 	{/if}
