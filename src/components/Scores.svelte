@@ -1,4 +1,5 @@
 <script lang="ts">
+	import va from '@vercel/analytics';
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import ScoreChart from './ScoreChart.svelte';
@@ -64,6 +65,7 @@
 	// Share function for sharing thing
 	let shared: boolean = false;
 	function shareClicked() {
+		va.track("share")
 		let shareString = `Groople - ${yesCount}/12 ✔️\n${date.toLocaleDateString()}\n`;
 		//Make share string more detailed.
 		if (browser) {

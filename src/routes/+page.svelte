@@ -14,10 +14,14 @@
 	export let data: any;
 	let letter: string = ""
 	let categories: string[] = []
+	let creator: string = ""
 	//Don't know why this is necessary now and not before, but... data.data prevents 500 error
 	//It just makes sure all is loaded before we start trying to get silly
 	$: letter = (data.data ? data.data[0].letter: "")
 	$: categories = (data.data ? Object.values(data.data[0].categories): [])
+	$: creator = (data.data ? data.data[0].creator: "")
+
+	
 
 
 
@@ -193,6 +197,7 @@
 		<AlreadyPlayedLanding
 			{categories}
 			{letter}
+			{creator}
 			{answersSubmitted}
 			{responseArray}
 			{localAnswers}
@@ -257,6 +262,7 @@
 						{/each}
 					</form>
 
+
 					{#if responseArray.length < 1}
 						<button
 							disabled={modalActive}
@@ -275,6 +281,7 @@
 							}}>Show Results</button
 						>
 					{/if}
+					<p class="text-xs">Todays list by {creator}</p>
 				</div>
 			</div>
 		</div>
@@ -285,7 +292,7 @@
 		{/if}
 		{#if responseArray.length > 1 || scoresModalActive === true}
 			<div class="absolute inset-0 p-2 mt-48 flex justify-center h-fit z-50">
-				<Scores bind:scoresModalActive />
+				<Scores bind:scoresModalActive/>
 			</div>
 		{/if}
 	{/if}

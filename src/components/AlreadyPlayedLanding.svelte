@@ -4,7 +4,7 @@
     import Scores from "./Scores.svelte";
     import { slide } from "svelte/transition";
     let date = new Date();
-    export let categories: string[], letter: string, responseArray: any, localAnswers: any, localInputs: any, answersSubmitted: any, scoresModalActive: boolean;
+    export let categories: string[], letter: string, responseArray: any, localAnswers: any, localInputs: any, answersSubmitted: any, scoresModalActive: boolean, creator: string ="";
 
 </script>
 
@@ -47,6 +47,8 @@
                         </div>
                     {/key}
                 {/each}
+                
+
             </div>
 
             <button
@@ -55,6 +57,7 @@
                     scoresModalActive = true;
                 }}>Show Results</button
             >
+            <p class="text-xs">Todays list by {creator}</p>
         </div>
     </div>
 </div>
