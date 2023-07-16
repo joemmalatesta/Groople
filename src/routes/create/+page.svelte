@@ -40,7 +40,7 @@
 			</div>
 		{/each}
 		<button
-			class="px-3 py-1 mb-5 bg-neutral-800 hover:bg-neutral-900 text-2xl border-2 rounded-md w-full text-white"
+			class="px-3 py-1 mb-2 bg-neutral-800 hover:bg-neutral-900 text-2xl border-2 rounded-md w-full text-white"
 			>{form?.output == 'success' ? "Submitted!" :"Submit List"}</button
 		>
 	</form>
