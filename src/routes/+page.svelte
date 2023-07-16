@@ -54,7 +54,7 @@
 		const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
 		formElement.dispatchEvent(submitEvent);
 		//Increment play count today.
-		fetch('/api/incrementScore', {
+		fetch('/api/incrementPlayCount', {
 			method: 'POST',
 			body: JSON.stringify({ date: currentDate }),
 			headers: {

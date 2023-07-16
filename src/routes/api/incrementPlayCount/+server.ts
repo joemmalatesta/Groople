@@ -7,14 +7,14 @@ import type { RequestHandler } from './$types';
 export const POST = (async ({ request }) => {
 	const { date } = await request.json();
 	//If it says so, add one to the play counter.
-	await incrementScore(date);
+	await incrementPlayCount(date);
 	return json('success');
 }) satisfies RequestHandler;
 
 
 
 //Increment tha score!
-async function incrementScore(date: string) {
+async function incrementPlayCount(date: string) {
 	// Retrieve the existing plays value
 	const { data: existingData, error } = await supabase
 		.from('dailyChallenge')
