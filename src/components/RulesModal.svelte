@@ -15,9 +15,13 @@
 
 	export let modalActive: boolean = true;
 	export let letter: string;
+
+	let dialog: HTMLDialogElement;
+	$: if (dialog && modalActive) dialog.showModal();
 </script>
 
-<div
+<dialog
+bind:this={dialog}
 	class=" bg-gradient-to-b from-neutral-700 to-neutral-800 text-neutral-100 ring-neutral-500 ring-2 rounded-lg md:p-12 p-2 drop-shadow-2xl"
 >
 	<!-- How to Play -->
@@ -57,4 +61,4 @@
 			}}>Start Daily Challenge</button
 		>
 	</div>
-</div>
+</dialog>

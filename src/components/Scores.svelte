@@ -85,11 +85,15 @@
 	}
 
 	let date = new Date();
+
+	let dialog: HTMLDialogElement;
+	$: if (dialog && scoresModalActive) dialog.showModal();
 </script>
 
 {#if scoresModalActive}
-	<div
-		class="bg-gradient-to-b from-neutral-700 to-neutral-800 text-neutral-100 ring-neutral-500 ring-2 rounded-lg md:p-8 p-4 drop-shadow-2xl"
+	<dialog
+	bind:this={dialog}
+		class="bg-gradient-to-b from-neutral-700 to-neutral-800 text-neutral-100 ring-neutral-500 ring-2 rounded-lg md:p-8 p-4 drop-shadow-2xl overflow-x-hidden"
 	>
 		<div class="w-full flex items-center flex-col">
 			<h2 class="text-xl underline underline-offset-4">Play again tomorrow!</h2>
@@ -124,6 +128,6 @@
 			class="w-full underline-offset-2 underline hover:underline-offset-4 transition-all text-sm md:text-base"
 			>Dismiss</button
 		>
-	</div>
+		</dialog>
 {/if}
 
