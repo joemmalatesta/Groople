@@ -13,6 +13,7 @@
 		disabled: boolean = false;
 	let answer: string = ''; //answer before submission
 	let cssOutline: string = '';
+	let yesCount: number
 	$: if (!recordedAnswer && answersSubmitted) {
 		answer = '';
 		loading = true;
@@ -69,8 +70,15 @@
 			rebuttalResponseEmoji = '✔️';
 			//add 1 to yesCount, remove 1 from previous scores array and add 1 to new scores array
 			if (browser) {
+
+				
+				
+
+				//update local storage scores and yes/no array
 				let scores = JSON.parse(String(localStorage.getItem('scores')));
-				let yesCount = Number(localStorage.getItem('yesCount'));
+				yesCount = Number(localStorage.getItem('yesCount'));
+				// change supabase scores, such a hassle for a silly feature.
+				updateSupabaseScore(new Date().toLocaleDateString('en-US'), yesCount)
 				let localAnswers = JSON.parse(String(localStorage.getItem('answers')));
 				scores[yesCount] -= 1;
 				scores[yesCount + 1] += 1;
@@ -88,6 +96,26 @@
 			rebuttalResponseEmoji = '❌';
 		}
 	}
+
+
+
+
+
+	//Update score in Supabase.
+	async function updateSupabaseScore(date: string, score: number) {
+		//this is first time, so no need to pass previous count.
+		let response = await fetch('/api/updateSupabaseScores', {
+			method: 'POST',
+			//Since it responded yes, add one to score+1 and remove one from current score -- yesCount local is updated, so this should work always.
+			body: JSON.stringify({ date, score: score+1, previousScore: score }),
+			headers: {
+				'content-type': 'application/json',
+				accept: 'application/json'
+			}
+		});
+		return await response.json();
+	}
+
 </script>
 
 <div

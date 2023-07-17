@@ -11,17 +11,24 @@
 	onMount(() => {
 		scoresModalActive = true;
 		// Get scores and todays score
-		scores = JSON.parse(String(localStorage.getItem('scores')));
-		yesCount = localStorage.getItem('yesCount');
+		scores = JSON.parse(String(localStorage.getItem('scores'))); //scores array
+		yesCount = localStorage.getItem('yesCount'); //today score
 
 		//Set played for today
 		let currentDate: any = new Date();
 		currentDate = `${currentDate.getFullYear()}-${
 			currentDate.getMonth() + 1
 		}-${currentDate.getDate()}`;
+
+		//update score, if today != lastPlayed 
+		if (localStorage.getItem('lastPlayed') != currentDate)
+		updateSupabaseScore(new Date().toLocaleDateString('en-US'));
+
+
+		//set new lastPlayed as today.
 		localStorage.setItem('lastPlayed', currentDate);
 
-		//Make a streak if there isn't one
+		//Make a streak if there isn't one..
 		if (!localStorage.getItem('streak') && yesCount > 0) {
 			localStorage.setItem('streak', String(1));
 		} else if (!localStorage.getItem('streak') && yesCount == 0) {
@@ -47,6 +54,7 @@
 			}
 		}
 
+		//Get current streak.
 		streak = parseInt(String(localStorage.getItem('streak')));
 
 		//Set date for tomorrow.
@@ -84,15 +92,28 @@
 		shared = true;
 	}
 
-	let date = new Date();
+	//Update score in Supabase.
+	async function updateSupabaseScore(date: string) {
+		//this is first time, so no need to pass previous count.
+		let response = await fetch('/api/updateSupabaseScores', {
+			method: 'POST',
+			body: JSON.stringify({ date, score: yesCount }),
+			headers: {
+				'content-type': 'application/json',
+				accept: 'application/json'
+			}
+		});
+		return await response.json();
+	}
 
+	let date = new Date();
 	let dialog: HTMLDialogElement;
 	$: if (dialog && scoresModalActive) dialog.showModal();
 </script>
 
 {#if scoresModalActive}
 	<dialog
-	bind:this={dialog}
+		bind:this={dialog}
 		class="bg-gradient-to-b from-neutral-700 to-neutral-800 text-neutral-100 ring-neutral-500 ring-2 rounded-lg md:p-8 p-4 drop-shadow-2xl overflow-x-hidden"
 	>
 		<div class="w-full flex items-center flex-col">
@@ -128,6 +149,5 @@
 			class="w-full underline-offset-2 underline hover:underline-offset-4 transition-all text-sm md:text-base"
 			>Dismiss</button
 		>
-		</dialog>
+	</dialog>
 {/if}
-
