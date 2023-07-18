@@ -3,15 +3,22 @@ import { supabase } from '$lib/supabaseClient';
 
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
+import { get } from 'svelte/store';
 
+
+//Set new scores, or update list of scores
 export const POST = (async ({ request }) => {
 	const { date, score, previousScore } = await request.json();
-	//If it says so, add one to the play counter.
-	await updateScores(date, score, previousScore);
-	return json('success');
+	let response = await updateScores(date, score, previousScore);
+	return json(response);
 }) satisfies RequestHandler;
 
 
+//Get scores.. simple enough.
+export const GET = (async ({ request, url }) => {
+	let date = url.searchParams.get('date') as string
+    return json(await getScores(date))
+}) satisfies RequestHandler;
 
 
 
@@ -32,6 +39,7 @@ async function updateScores(date: string, score: number, previousScore?: number)
 
 	if (error) {
 		console.log(`Was not able to retrieve scores for ${date}\nError: ${error}`)
+		return json('failure')
 	} else {
 		// Increment the plays locally
 		const existingScores = existingData[0]?.scores;
@@ -47,8 +55,31 @@ async function updateScores(date: string, score: number, previousScore?: number)
 
 		if (updateError) {
 			console.log(`Was not able to update scores for ${date}\nError: ${updateError}`)
+			return json('failure')
 		} else {
 			console.log(`Scores for ${date} updated.`)
+			return json("success")
 		}
 	}
 }
+
+
+
+
+
+async function getScores(date: string) {
+	// Retrieve the existing scores value
+	const { data, error } = await supabase
+		.from('dailyChallenge')
+		.select('scores')
+		.eq('date', date);
+
+	if (error) {
+		console.log(`Was not able to retrieve scores for ${date}\nError: ${error.message}`)
+		return json('failure')
+	}else{
+			console.log(`retrieved scores for ${date}`)
+			return data[0]?.scores;
+		}
+	};
+

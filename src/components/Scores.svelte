@@ -7,7 +7,8 @@
 	let yesCount: any;
 	export let scoresModalActive: boolean;
 	let streak: number | null;
-
+	let supabaseScores: { [key: number]: number };
+	let scorePercentile: number;
 	onMount(() => {
 		scoresModalActive = true;
 		// Get scores and todays score
@@ -20,10 +21,33 @@
 			currentDate.getMonth() + 1
 		}-${currentDate.getDate()}`;
 
-		//update score, if today != lastPlayed 
-		if (localStorage.getItem('lastPlayed') != currentDate)
-		updateSupabaseScore(new Date().toLocaleDateString('en-US'));
+		//update score, if today != lastPlayed
+		if (localStorage.getItem('lastPlayed') != currentDate) {
+			updateSupabaseScore(new Date().toLocaleDateString('en-US'));
+		}
 
+		//get all scores and get the percentile the user scored in
+		
+		getSupabaseScores(new Date().toLocaleDateString('en-US')).then((result) => {
+			supabaseScores = result;
+			// Step 1: Get all the scores
+			const allScores = Object.values(supabaseScores).map((score) => Number(score));
+			let totalSum = 0;
+			for (const score of allScores) {
+				totalSum += score;
+			}
+
+			let scored = Number(yesCount) + 1
+			allScores.splice(scored);
+			let scoresBelowSum: number = 0;
+			for (const score of allScores) {
+				scoresBelowSum += score;
+			}
+
+
+			scorePercentile = Math.round((scoresBelowSum / totalSum) * 100);
+
+		});
 
 		//set new lastPlayed as today.
 		localStorage.setItem('lastPlayed', currentDate);
@@ -105,6 +129,17 @@
 		});
 		return await response.json();
 	}
+	async function getSupabaseScores(date: string) {
+		//this is first time, so no need to pass previous count.
+		let response = await fetch(`/api/updateSupabaseScores/?date=${date}`, {
+			method: 'GET',
+			headers: {
+				'content-type': 'application/json',
+				accept: 'application/json'
+			}
+		});
+		return await response.json();
+	}
 
 	let date = new Date();
 	let dialog: HTMLDialogElement;
@@ -117,8 +152,12 @@
 		class="bg-gradient-to-b from-neutral-700 to-neutral-800 text-neutral-100 ring-neutral-500 ring-2 rounded-lg md:p-8 p-4 drop-shadow-2xl overflow-x-hidden"
 	>
 		<div class="w-full flex items-center flex-col">
-			<h2 class="text-xl underline underline-offset-4">Play again tomorrow!</h2>
-			<h3 class="text-xl">Score today: {yesCount}</h3>
+			<h2 class="text-xl font-bold font-serif">Play again tomorrow!</h2>
+			<h3 class="text-xl flex items-center justify-center gap-2 w-full">Score: {yesCount} 
+				{#if scorePercentile}
+				<span class="text-sm font-sans">top ({scorePercentile}%)</span>
+				{/if}
+			</h3>
 			<h3 class="text-lg">Streak: {streak}{Number(streak) >= 10 ? ' 🔥' : ''}</h3>
 		</div>
 		{#if scores !== null}
