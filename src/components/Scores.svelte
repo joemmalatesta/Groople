@@ -8,7 +8,7 @@
 	export let scoresModalActive: boolean;
 	let streak: number | null;
 	let supabaseScores: { [key: number]: number };
-	let scorePercentile: number;
+	let scorePercentile: string;
 	onMount(() => {
 		scoresModalActive = true;
 		// Get scores and todays score
@@ -26,8 +26,9 @@
 			updateSupabaseScore(new Date().toLocaleDateString('en-US'));
 		}
 
+
+
 		//get all scores and get the percentile the user scored in
-		
 		getSupabaseScores(new Date().toLocaleDateString('en-US')).then((result) => {
 			supabaseScores = result;
 			// Step 1: Get all the scores
@@ -37,16 +38,15 @@
 				totalSum += score;
 			}
 
-			let scored = Number(yesCount)
+			let scored = Number(yesCount) + 1;
 			allScores.splice(scored);
 			let scoresBelowSum: number = 0;
 			for (const score of allScores) {
 				scoresBelowSum += score;
 			}
 
-
-			scorePercentile = Math.round((scoresBelowSum / totalSum) * 100);
-
+			scorePercentile = String(Math.round((scoresBelowSum / totalSum) * 100));
+			scorePercentile = appendPercentileSuffix(scorePercentile);
 		});
 
 		//set new lastPlayed as today.
@@ -88,10 +88,33 @@
 		localStorage.setItem('tomorrow', tomorrow);
 	});
 
-	//Due to rebuttal, get the score and scores each time this is shown
-	$: if (browser && scoresModalActive == true) {
+	//Due to rebuttal, get the score localScores, and supabase scores each time this is called.
+	$: if (scoresModalActive == true && browser) {
 		scores = JSON.parse(String(localStorage.getItem('scores')));
+		let previousYesCount = yesCount
 		yesCount = localStorage.getItem('yesCount');
+		if (previousYesCount != yesCount){
+			getSupabaseScores(new Date().toLocaleDateString('en-US')).then((result) => {
+			supabaseScores = result;
+			// Step 1: Get all the scores
+			const allScores = Object.values(supabaseScores).map((score) => Number(score));
+			let totalSum = 0;
+			for (const score of allScores) {
+				totalSum += score;
+			}
+
+			let scored = Number(yesCount) + 1;
+			allScores.splice(scored);
+			let scoresBelowSum: number = 0;
+			for (const score of allScores) {
+				scoresBelowSum += score;
+			}
+
+			scorePercentile = String(Math.round((scoresBelowSum / totalSum) * 100));
+			scorePercentile = appendPercentileSuffix(scorePercentile);
+		});
+		}
+
 	}
 
 	// Share function for sharing thing
@@ -129,6 +152,7 @@
 		});
 		return await response.json();
 	}
+	//Get scores from SUPER BASE.
 	async function getSupabaseScores(date: string) {
 		//this is first time, so no need to pass previous count.
 		let response = await fetch(`/api/updateSupabaseScores/?date=${date}`, {
@@ -139,6 +163,28 @@
 			}
 		});
 		return await response.json();
+	}
+
+	//Format percentile to actually format like A G 
+	function appendPercentileSuffix(scorePercentile: string) {
+		const lastDigit = parseInt(scorePercentile.slice(-1));
+		const secondLastDigit = parseInt(scorePercentile.slice(-2, -1));
+
+		// Special case for 11, 12, and 13
+		if (secondLastDigit == 1) {
+			return scorePercentile + 'th';
+		}
+
+		switch (lastDigit) {
+			case 1:
+				return scorePercentile + 'st';
+			case 2:
+				return scorePercentile + 'nd';
+			case 3:
+				return scorePercentile + 'rd';
+			default:
+				return scorePercentile + 'th';
+		}
 	}
 
 	let date = new Date();
@@ -153,9 +199,10 @@
 	>
 		<div class="w-full flex items-center flex-col">
 			<h2 class="text-xl font-bold font-serif">Play again tomorrow!</h2>
-			<h3 class="text-xl flex items-center justify-center gap-2 w-full">Score: {yesCount} 
+			<h3 class="text-xl flex items-center justify-center gap-2 w-full">
+				Score: {yesCount}
 				{#if scorePercentile}
-				<span class="text-sm font-sans">(top {100-scorePercentile}%)</span>
+					<span class="text-sm font-sans">({scorePercentile} percentile)</span>
 				{/if}
 			</h3>
 			<h3 class="text-lg">Streak: {streak}{Number(streak) >= 10 ? ' 🔥' : ''}</h3>

@@ -12,6 +12,7 @@ const openAI = new OpenAIApi(
 export const POST = (async ({ request }) => {
     try {
       const { category, recordedAnswer } = await request.json();
+      //Already checked, but just so someone can't run up a check manually hitting the endpoint
       if (recordedAnswer.length > 45){
         console.log("someone's trying to fuck around...")
         return new Response("You really shouldn't be doing that.", { status: 500 });
