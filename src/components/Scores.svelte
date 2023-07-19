@@ -37,7 +37,7 @@
 				totalSum += score;
 			}
 
-			let scored = Number(yesCount) + 1
+			let scored = Number(yesCount)
 			allScores.splice(scored);
 			let scoresBelowSum: number = 0;
 			for (const score of allScores) {
@@ -155,7 +155,7 @@
 			<h2 class="text-xl font-bold font-serif">Play again tomorrow!</h2>
 			<h3 class="text-xl flex items-center justify-center gap-2 w-full">Score: {yesCount} 
 				{#if scorePercentile}
-				<span class="text-sm font-sans">top ({scorePercentile}%)</span>
+				<span class="text-sm font-sans">(top {100-scorePercentile}%)</span>
 				{/if}
 			</h3>
 			<h3 class="text-lg">Streak: {streak}{Number(streak) >= 10 ? ' 🔥' : ''}</h3>
