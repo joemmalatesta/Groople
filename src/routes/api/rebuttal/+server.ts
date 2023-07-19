@@ -12,6 +12,10 @@ const openAI = new OpenAIApi(
 export const POST = (async ({ request }) => {
     try {
       const { category, recordedAnswer } = await request.json();
+      if (recordedAnswer.length > 45){
+        console.log("someone's trying to fuck around...")
+        return new Response("You really shouldn't be doing that.", { status: 500 });
+      }
       let prompt = `Does the response "${recordedAnswer}" fit in the category "${category}"? There should be no other words in your response besides Yes or No, no explanation should be provided`;
       const res = await openAI.createChatCompletion({
         model: 'gpt-3.5-turbo',
