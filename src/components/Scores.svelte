@@ -3,12 +3,12 @@
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import ScoreChart from './ScoreChart.svelte';
-	let scores: any = null;
-	let yesCount: any;
+	let scores: any = null; // local, personal, scores
+	let yesCount: any; // Amount of correct answers
 	export let scoresModalActive: boolean;
-	let streak: number | null;
-	let supabaseScores: { [key: number]: number };
-	let scorePercentile: string;
+	let streak: number | null; //Current streak
+	let supabaseScores: { [key: number]: number }; // scores from everyone for the day.
+	let scorePercentile: string; //What percentile your score is in, compared to everyone else
 	onMount(() => {
 		scoresModalActive = true;
 		// Get scores and todays score
@@ -25,8 +25,6 @@
 		if (localStorage.getItem('lastPlayed') != currentDate) {
 			updateSupabaseScore(new Date().toLocaleDateString('en-US'));
 		}
-
-
 
 		//get all scores and get the percentile the user scored in
 		getSupabaseScores(new Date().toLocaleDateString('en-US')).then((result) => {
@@ -91,30 +89,29 @@
 	//Due to rebuttal, get the score localScores, and supabase scores each time this is called.
 	$: if (scoresModalActive == true && browser) {
 		scores = JSON.parse(String(localStorage.getItem('scores')));
-		let previousYesCount = yesCount
+		let previousYesCount = yesCount;
 		yesCount = localStorage.getItem('yesCount');
-		if (previousYesCount != yesCount){
+		if (previousYesCount != yesCount) {
 			getSupabaseScores(new Date().toLocaleDateString('en-US')).then((result) => {
-			supabaseScores = result;
-			// Step 1: Get all the scores
-			const allScores = Object.values(supabaseScores).map((score) => Number(score));
-			let totalSum = 0;
-			for (const score of allScores) {
-				totalSum += score;
-			}
+				supabaseScores = result;
+				// Step 1: Get all the scores
+				const allScores = Object.values(supabaseScores).map((score) => Number(score));
+				let totalSum = 0;
+				for (const score of allScores) {
+					totalSum += score;
+				}
 
-			let scored = Number(yesCount) + 1;
-			allScores.splice(scored);
-			let scoresBelowSum: number = 0;
-			for (const score of allScores) {
-				scoresBelowSum += score;
-			}
+				let scored = Number(yesCount) + 1;
+				allScores.splice(scored);
+				let scoresBelowSum: number = 0;
+				for (const score of allScores) {
+					scoresBelowSum += score;
+				}
 
-			scorePercentile = String(Math.round((scoresBelowSum / totalSum) * 100));
-			scorePercentile = appendPercentileSuffix(scorePercentile);
-		});
+				scorePercentile = String(Math.round((scoresBelowSum / totalSum) * 100));
+				scorePercentile = appendPercentileSuffix(scorePercentile);
+			});
 		}
-
 	}
 
 	// Share function for sharing thing
@@ -165,7 +162,7 @@
 		return await response.json();
 	}
 
-	//Format percentile to actually format like A G 
+	//Format percentile to actually format like A G
 	function appendPercentileSuffix(scorePercentile: string) {
 		const lastDigit = parseInt(scorePercentile.slice(-1));
 		const secondLastDigit = parseInt(scorePercentile.slice(-2, -1));
@@ -187,9 +184,11 @@
 		}
 	}
 
+	//Simple stuff really.
 	let date = new Date();
 	let dialog: HTMLDialogElement;
 	$: if (dialog && scoresModalActive) dialog.showModal();
+	let showSupabaseData: boolean = false;
 </script>
 
 {#if scoresModalActive}
@@ -201,23 +200,39 @@
 			<h2 class="text-xl font-bold font-serif">Play again tomorrow!</h2>
 			<h3 class="text-xl flex items-center justify-center gap-2 w-full">
 				Score: {yesCount}
-				{#if scorePercentile}
-					<span class="text-sm font-sans">({scorePercentile} percentile)</span>
-				{/if}
 			</h3>
-			<h3 class="text-lg">Streak: {streak}{Number(streak) >= 10 ? ' 🔥' : ''}</h3>
+			{#if showSupabaseData}
+				<span class="text-lg">{scorePercentile} percentile</span>
+			{:else}
+				<h3 class="text-lg">Streak: {streak}{Number(streak) >= 10 ? ' 🔥' : ''}</h3>
+			{/if}
 		</div>
-		{#if scores !== null}
-			<div class="2xl:h-[30rem] 2xl:w-[30rem] h-[20rem] w-[20rem] md:h-[25rem] md:w-[25rem]">
-				<ScoreChart scoreData={scores} />
-			</div>
+		
+
+		<div class="2xl:h-[30rem] 2xl:w-[30rem] h-[20rem] w-[20rem] md:h-[25rem] md:w-[25rem] relative">
+			{#if supabaseScores !== null}
+			<button
+				class="absolute right-0 rounded-3xl px-2 py-1 bg-neutral-800 hover:bg-neutral-900 text-sm"
+				type="button"
+				on:click={() => {
+					showSupabaseData = !showSupabaseData;
+				}}>{showSupabaseData ? 'see your graph' : 'see todays graph'}</button
+			>
 		{/if}
+			{#if scores !== null && !showSupabaseData}
+				<ScoreChart sourceData={scores} />
+			{/if}
+			{#if supabaseScores !== null && showSupabaseData}<ScoreChart
+					sourceData={Object.values(supabaseScores)}
+				/>
+			{/if}
+		</div>
 		<div class="flex gap-2 justify-center w-full">
 			<button
 				on:click={shareClicked}
 				class="flex justify-center items-center gap-2 shadow-white bg-neutral-800 hover:bg-neutral-900 text-white ring-1 ring-neutral-500/20 p-2 rounded-md w-full mb-2"
 				>{!shared ? 'Share' : 'Copied'}<img
-					src="copy.svg"
+					src="share.svg"
 					alt="copy to clipboard"
 					class="w-5"
 				/></button
