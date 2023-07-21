@@ -212,7 +212,7 @@
 		<div class="2xl:h-[30rem] 2xl:w-[30rem] h-[20rem] w-[20rem] md:h-[25rem] md:w-[25rem] relative">
 			{#if supabaseScores !== null}
 			<button
-				class="absolute right-0 rounded-3xl px-2 py-1 bg-neutral-800 hover:bg-neutral-900 text-sm"
+				class="absolute sm:right-0 left-0 rounded-3xl px-2 py-1 bg-neutral-800 hover:bg-neutral-900 text-xs sm:text-sm"
 				type="button"
 				on:click={() => {
 					showSupabaseData = !showSupabaseData;
