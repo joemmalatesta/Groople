@@ -211,13 +211,14 @@
 
 		<div class="2xl:h-[30rem] 2xl:w-[30rem] h-[20rem] w-[20rem] md:h-[25rem] md:w-[25rem] relative">
 			{#if supabaseScores !== null}
+			<div class="w-full flex justify-center">
 			<button
-				class="absolute sm:right-0 left-0 rounded-3xl px-2 py-1 bg-neutral-800 hover:bg-neutral-900 text-xs sm:text-sm"
+				class="absolute w-2/5 rounded-md p-1 bg-neutral-800 hover:bg-neutral-900 text-xs sm:text-sm ring-1 ring-neutral-500/20"
 				type="button"
 				on:click={() => {
 					showSupabaseData = !showSupabaseData;
-				}}>{showSupabaseData ? 'see your graph' : 'see todays graph'}</button
-			>
+				}}>{showSupabaseData ? 'See your graph' : 'See todays graph'}</button
+			></div>
 		{/if}
 			{#if scores !== null && !showSupabaseData}
 				<ScoreChart sourceData={scores} />
