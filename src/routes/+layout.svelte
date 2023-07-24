@@ -8,7 +8,9 @@
 
 <header class="flex justify-center items-center flex-col relative">
 	<div class="absolute md:left-20 left-2">
-		<img src="favicon.svg" alt="Groople Logo" class="md:w-20 w-16 mt-2" />
+		<a href="/">
+			<img src="favicon.svg" alt="Groople Logo" class="md:w-20 w-16 mt-2" />
+		</a>
 	</div>
 	<h1>
 		<a
