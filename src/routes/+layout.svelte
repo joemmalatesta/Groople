@@ -6,7 +6,10 @@
 	inject({ mode: dev ? 'development' : 'production' });
 </script>
 
-<header class="flex justify-center items-center flex-col">
+<header class="flex justify-center items-center flex-col relative">
+	<div class="absolute md:left-20 left-2">
+		<img src="favicon.svg" alt="Groople Logo" class="md:w-20 w-16 mt-2" />
+	</div>
 	<h1>
 		<a
 			href="/"
@@ -22,7 +25,8 @@
 	<h4 class="text-sm font-sans">
 		Created by <a
 			href="https://joemmalatesta.com"
-			class="underline underline-offset-2 hover:underline-offset-4 transition-all font-sans">Joe Malatesta</a
+			class="underline underline-offset-2 hover:underline-offset-4 transition-all font-sans"
+			>Joe Malatesta</a
 		>
 	</h4>
 </footer>
