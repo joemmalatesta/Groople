@@ -140,7 +140,7 @@
 
 <svelte:head>
 	<title>Groople</title>
-	<meta name="description" content="Play daily challenge!" />
+	<meta name="description" content="Play daily challenge! Answer 12 Categories starting with the letter {letter} in 100 seconds. Share your results!" />
 </svelte:head>
 
 <!-- This logic is good. Wait until placeholder changes. and have loading while it does. -->
