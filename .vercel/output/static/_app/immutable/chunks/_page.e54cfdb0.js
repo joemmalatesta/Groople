@@ -1,0 +1,1 @@
+async function t(){{const e=new Date().toLocaleDateString("en-US");return{data:await(await fetch("/api/getGameDetails",{method:"POST",body:JSON.stringify({date:e}),headers:{"content-type":"application/json",accept:"application/json"}})).json()}}}const n=Object.freeze(Object.defineProperty({__proto__:null,load:t},Symbol.toStringTag,{value:"Module"}));export{n as _,t as l};
