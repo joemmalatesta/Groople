@@ -2,7 +2,11 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/favicon.svg"/>
+		<meta name="theme-color" content="#ffffff" />
+		<link rel="apple-touch-icon" href="favicon.svg">
+		<link rel="icon" href="%sveltekit.assets%/favicon-light.svg" media="(prefers-color-scheme: light)"/>
+		<link rel="icon" href="%sveltekit.assets%/favicon.svg" media="(prefers-color-scheme: dark)"/>
+		<link rel="manifest" href="/src/manifest.json">
 		<meta name="viewport" content="width=device-width" />
 		%sveltekit.head%
 	</head>

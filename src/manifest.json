@@ -1,0 +1,17 @@
+{
+	"name": "Groople",
+	"short_name": "Groople",
+	"start_url": "/?source=pwa",
+	"background_color": "#ffffff",
+	"theme_color": "#ffffff",
+	"icons": [
+		{
+			"src": "/favicon.svg",
+			"type": "image/svg+xml",
+			"sizes": "any"
+		}
+	],
+	"id": "/?source=pwa",
+	"display": "standalone",
+	"scope": "/"
+}
