@@ -6,18 +6,13 @@
 </script>
 
 <header class="flex justify-center items-center flex-col relative">
-	<div class="absolute md:left-20 left-2">
-		<a href="/">
-			<img src="favicon.svg" alt="Groople Logo" class="md:w-20 w-16 mt-1" />
-		</a>
-	</div>
 	<h1>
 		<a
 			href="/"
 			class="md:text-7xl text-5xl font-semibold text-transparent bg-black bg-clip-text p-3 flex items-center"
 		>
-			<!-- <img src="svelteLogo.png" alt="Svelte Logo" class="md:w-16 w-12 mr-1" /> -->
-			Groople
+			<img src="favicon.svg" alt="Groople Logo" class="md:w-28 w-20 mr-1 mt-2" />
+			roople
 		</a>
 	</h1>
 </header>
