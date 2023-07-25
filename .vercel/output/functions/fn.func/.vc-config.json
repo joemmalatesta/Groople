@@ -1,6 +1,0 @@
-{
-	"runtime": "nodejs16.x",
-	"handler": "..\\..\\..\\Real Projects\\Scatter Game\\.svelte-kit\\vercel-tmp\\index.js",
-	"launcherType": "Nodejs",
-	"experimentalResponseStreaming": true
-}
