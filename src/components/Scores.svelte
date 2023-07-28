@@ -188,7 +188,12 @@
 	let date = new Date();
 	let dialog: HTMLDialogElement;
 	$: if (dialog && scoresModalActive) dialog.showModal();
-	let showSupabaseData: boolean = false;
+
+
+	//Chose between seeing your scores, today's scores, or scores of the group
+	let youSelected: boolean = true
+	let todaySelected: boolean = false;
+	let groupSelected: boolean = false
 </script>
 
 {#if scoresModalActive}
@@ -201,7 +206,7 @@
 			<h3 class="text-xl flex items-center justify-center gap-2 w-full">
 				Score: {yesCount}
 			</h3>
-			{#if showSupabaseData}
+			{#if todaySelected}
 				<span class="text-lg">{scorePercentile} percentile</span>
 			{:else}
 				<h3 class="text-lg">Streak: {streak}{Number(streak) >= 10 ? ' 🔥' : ''}</h3>
@@ -209,21 +214,31 @@
 		</div>
 		
 
-		<div class="2xl:h-[30rem] 2xl:w-[30rem] h-[20rem] w-[20rem] md:h-[25rem] md:w-[25rem] relative">
+		<div class="2xl:h-[30rem] 2xl:w-[30rem] h-[20rem] w-[20rem] md:h-[25rem] md:w-[25rem] relative mb-12">
 			{#if supabaseScores !== null}
-			<div class="w-full flex justify-center">
-			<button
-				class="absolute w-2/5 rounded-md p-1 bg-neutral-800 hover:bg-neutral-900 text-xs sm:text-sm ring-1 ring-neutral-500/20"
-				type="button"
-				on:click={() => {
-					showSupabaseData = !showSupabaseData;
-				}}>{showSupabaseData ? 'See your graph' : 'See todays graph'}</button
-			></div>
+			<!-- Buttons for selecting different graphs. -->
+			<div class="w-full flex justify-center border-b-2 pt-2 border-neutral-100/20">
+				<button class="w-1/3 text-sm md:text-base {youSelected ? "bg-gradient-to-t from-neutral-100/20 via-neutral-300/10 to-transparent pb-0.5": ""}" on:click={() => {
+					youSelected = true;
+					todaySelected = false;
+					groupSelected = false;
+				}}>You</button>
+				<button class="w-1/3 text-sm md:text-base {todaySelected ? "bg-gradient-to-t from-neutral-100/20 via-neutral-300/10 to-transparent pb-0.5": ""}" on:click={() => {
+					youSelected = false;
+					todaySelected = true;
+					groupSelected = false;
+				}}>Today</button>
+				<button class="w-1/3 text-sm md:text-base {groupSelected ? "bg-gradient-to-t from-neutral-100/20 via-neutral-300/10 to-transparent pb-0.5": ""}" on:click={() => {
+					youSelected = false;
+					todaySelected = false;
+					groupSelected = true;
+				}}>Group *soon*</button>
+		</div>
 		{/if}
-			{#if scores !== null && !showSupabaseData}
+			{#if scores !== null && !todaySelected}
 				<ScoreChart sourceData={scores} />
 			{/if}
-			{#if supabaseScores !== null && showSupabaseData}<ScoreChart
+			{#if supabaseScores !== null && todaySelected}<ScoreChart
 					sourceData={Object.values(supabaseScores)}
 				/>
 			{/if}

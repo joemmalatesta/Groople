@@ -14,7 +14,7 @@
 		datasets: [
 			{
 				axis: 'y',
-				label: 'Times Scored',
+				label: "Times Scored",
 				data: sourceData,
 				fill: false,
 				backgroundColor: ['rgba(245, 245, 245, .4)'],
@@ -27,7 +27,12 @@
 		type: 'bar',
 		data,
 		options: {
-			indexAxis: 'y'
+			indexAxis: 'y',
+			plugins: {
+				legend: {
+					display: false
+				}
+			}
 		}
 	};
 
