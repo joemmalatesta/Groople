@@ -232,15 +232,18 @@
 					youSelected = false;
 					todaySelected = false;
 					groupSelected = true;
-				}}>Group *soon*</button>
+				}}>Group</button>
 		</div>
 		{/if}
-			{#if scores !== null && !todaySelected}
+			{#if scores !== null && youSelected}
 				<ScoreChart sourceData={scores} />
-			{/if}
-			{#if supabaseScores !== null && todaySelected}<ScoreChart
+			{:else if supabaseScores !== null && todaySelected}<ScoreChart
 					sourceData={Object.values(supabaseScores)}
 				/>
+			{:else if groupSelected}
+				<div class="w-full h-full flex justify-center items-center text-3xl flex-col">
+					Coming Soon!
+				</div>
 			{/if}
 		</div>
 		<div class="flex gap-2 justify-center w-full">
