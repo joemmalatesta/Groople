@@ -78,6 +78,7 @@
 
 		//Get current streak.
 		streak = parseInt(String(localStorage.getItem('streak')));
+		streak = 365
 
 		//Set date for tomorrow.
 		let tomorrow: any = new Date();
@@ -189,11 +190,35 @@
 	let dialog: HTMLDialogElement;
 	$: if (dialog && scoresModalActive) dialog.showModal();
 
-
 	//Chose between seeing your scores, today's scores, or scores of the group
-	let youSelected: boolean = true
+	let youSelected: boolean = true;
 	let todaySelected: boolean = false;
-	let groupSelected: boolean = false
+	let groupSelected: boolean = false;
+
+
+
+	let streakEmoji = '';
+
+
+	$: if (Number(streak) >= 365) {
+		streakEmoji = '📅';
+	}
+	 else if (Number(streak) >= 200) {
+		streakEmoji = '✨';
+	}
+	 else if (Number(streak) >= 100) {
+		streakEmoji = '💯';
+	} else if (Number(streak) >= 50) {
+		streakEmoji = '🌠';
+	} else if (Number(streak) >= 25) {
+		streakEmoji = '🚀';
+	} else if (Number(streak) >= 10) {
+		streakEmoji = '🌟';
+	} else if (Number(streak) >= 5) {
+		streakEmoji = '🔥';
+	} else {
+		streakEmoji = ''; // default to nothing
+	}
 </script>
 
 {#if scoresModalActive}
@@ -209,32 +234,48 @@
 			{#if todaySelected}
 				<span class="text-lg">{scorePercentile} percentile</span>
 			{:else}
-				<h3 class="text-lg">Streak: {streak}{Number(streak) >= 10 ? ' 🔥' : ''}</h3>
+				<h3 class="text-lg">Streak: {streak} {streakEmoji}</h3>
 			{/if}
 		</div>
-		
 
-		<div class="2xl:h-[30rem] 2xl:w-[30rem] h-[20rem] w-[20rem] md:h-[25rem] md:w-[25rem] relative mb-12">
+		<div
+			class="2xl:h-[30rem] 2xl:w-[30rem] h-[20rem] w-[20rem] md:h-[25rem] md:w-[25rem] relative mb-12"
+		>
 			{#if supabaseScores !== null}
-			<!-- Buttons for selecting different graphs. -->
-			<div class="w-full flex justify-center border-b-2 pt-2 border-neutral-100/20">
-				<button class="w-1/3 text-sm md:text-base {youSelected ? "bg-gradient-to-t from-neutral-100/20 via-neutral-300/10 to-transparent pb-0.5": ""}" on:click={() => {
-					youSelected = true;
-					todaySelected = false;
-					groupSelected = false;
-				}}>You</button>
-				<button class="w-1/3 text-sm md:text-base {todaySelected ? "bg-gradient-to-t from-neutral-100/20 via-neutral-300/10 to-transparent pb-0.5": ""}" on:click={() => {
-					youSelected = false;
-					todaySelected = true;
-					groupSelected = false;
-				}}>Today</button>
-				<button class="w-1/3 text-sm md:text-base {groupSelected ? "bg-gradient-to-t from-neutral-100/20 via-neutral-300/10 to-transparent pb-0.5": ""}" on:click={() => {
-					youSelected = false;
-					todaySelected = false;
-					groupSelected = true;
-				}}>Group</button>
-		</div>
-		{/if}
+				<!-- Buttons for selecting different graphs. -->
+				<div class="w-full flex justify-center border-b-2 pt-2 border-neutral-100/20">
+					<button
+						class="w-1/3 text-sm md:text-base {youSelected
+							? 'bg-gradient-to-t from-neutral-100/20 via-neutral-300/10 to-transparent pb-0.5'
+							: ''}"
+						on:click={() => {
+							youSelected = true;
+							todaySelected = false;
+							groupSelected = false;
+						}}>You</button
+					>
+					<button
+						class="w-1/3 text-sm md:text-base {todaySelected
+							? 'bg-gradient-to-t from-neutral-100/20 via-neutral-300/10 to-transparent pb-0.5'
+							: ''}"
+						on:click={() => {
+							youSelected = false;
+							todaySelected = true;
+							groupSelected = false;
+						}}>Today</button
+					>
+					<button
+						class="w-1/3 text-sm md:text-base {groupSelected
+							? 'bg-gradient-to-t from-neutral-100/20 via-neutral-300/10 to-transparent pb-0.5'
+							: ''}"
+						on:click={() => {
+							youSelected = false;
+							todaySelected = false;
+							groupSelected = true;
+						}}>Group</button
+					>
+				</div>
+			{/if}
 			{#if scores !== null && youSelected}
 				<ScoreChart sourceData={scores} />
 			{:else if supabaseScores !== null && todaySelected}<ScoreChart
