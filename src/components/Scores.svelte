@@ -78,7 +78,6 @@
 
 		//Get current streak.
 		streak = parseInt(String(localStorage.getItem('streak')));
-		streak = 365
 
 		//Set date for tomorrow.
 		let tomorrow: any = new Date();
@@ -214,7 +213,7 @@
 		streakEmoji = '🚀';
 	} else if (Number(streak) >= 10) {
 		streakEmoji = '🌟';
-	} else if (Number(streak) >= 5) {
+	} else if (Number(streak) >= 3) {
 		streakEmoji = '🔥';
 	} else {
 		streakEmoji = ''; // default to nothing
