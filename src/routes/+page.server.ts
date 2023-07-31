@@ -22,7 +22,7 @@ export const actions: Actions = {
 		// Display the formatted data in the console
 		let useableData = dataArray
 			.map(
-				({ index, value }) => `${index}: ${value && String(value).length < 45 ? value : 'ZZZZZZ'}`
+				({ index, value }) => `${index}: ${value && String(value).length < 45 && String(value).length > 1 ? capitalizeFirstLetter(value) : 'ZZZZZZ'}`
 			)
 			.join('\n');
 		let prompt = `Welcome to Scattergories! You are the judge, and your task is to determine whether the player's responses match the category and start with the selected letter.
@@ -71,3 +71,10 @@ export const actions: Actions = {
 		};
 	}
 };
+
+
+
+
+function capitalizeFirstLetter(answer: any) {
+    return answer.charAt(0).toUpperCase() + answer.slice(1);
+}
