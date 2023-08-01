@@ -50,6 +50,7 @@
 	let answersSubmitted: boolean = false;
 	let formElement: any;
 	$: if (time === 0) {
+		answersSubmitted = true;
 		//Submit form
 		const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
 		formElement.dispatchEvent(submitEvent);
@@ -83,7 +84,7 @@
 			localStorage.setItem('answers', JSON.stringify(responseArray));
 		}
 
-		answersSubmitted = true;
+		
 	}
 
 	// Count up yes and no's for the share option.
