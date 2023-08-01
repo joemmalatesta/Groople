@@ -3,6 +3,7 @@
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import ScoreChart from './ScoreChart.svelte';
+	import Groups from './Groups.svelte';
 	let scores: any = null; // local, personal, scores
 	let yesCount: any; // Amount of correct answers
 	export let scoresModalActive: boolean;
@@ -271,7 +272,7 @@
 							youSelected = false;
 							todaySelected = false;
 							groupSelected = true;
-						}}>Group</button
+						}}>Group✨</button
 					>
 				</div>
 			{/if}
@@ -282,7 +283,7 @@
 				/>
 			{:else if groupSelected}
 				<div class="w-full h-full flex justify-center items-center text-3xl flex-col">
-					Coming Soon!
+					<Groups />
 				</div>
 			{/if}
 		</div>

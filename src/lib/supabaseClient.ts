@@ -16,13 +16,14 @@ export async function loginWithGoogle() {
 	throw redirect(303, String(data.url));
 }
 
-async function signInWithEmail() {
+export async function signInWithEmail(email: string, password: string) {
 	const { data, error } = await supabase.auth.signInWithPassword({
-		email: 'example@email.com',
-		password: 'example-password'
+		email: email,
+		password: password
 	});
+    console.log(data, data.user)
 }
 
-async function signOut() {
+export async function signOut() {
 	const { error } = await supabase.auth.signOut();
 }
