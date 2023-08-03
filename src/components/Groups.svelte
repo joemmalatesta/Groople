@@ -47,7 +47,10 @@
 </script>
 
 {#if !successfullyAdded}
-<h4 class="text-3xl mb-2">Coming soon!</h4>
+<div class="flex justify-center items-center flex-col">
+<h4 class="text-3xl">Coming soon!</h4>
+<h6 class="text-lg mb-2 text-center">Create custom groups to see all your friends scores</h6>
+</div>
 <form class="flex gap-0 mb-1 rounded-lg">
 	<input
 		type="email"
