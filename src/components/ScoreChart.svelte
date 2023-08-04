@@ -6,6 +6,12 @@
 
 	const labels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 	export let sourceData: number[];
+	export let score: number = 0;
+	//could do this with a loop but oh well. 
+	let barColors = ['rgba(245, 245, 245, .4)', 'rgba(245, 245, 245, .4)','rgba(245, 245, 245, .4)','rgba(245, 245, 245, .4)','rgba(245, 245, 245, .4)','rgba(245, 245, 245, .4)','rgba(245, 245, 245, .4)','rgba(245, 245, 245, .4)','rgba(245, 245, 245, .4)','rgba(245, 245, 245, .4)','rgba(245, 245, 245, .4)','rgba(245, 245, 245, .4)', 'rgba(245, 245, 245, .4)']
+	let borderColors = ['rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)']
+	$: barColors[score] = 'rgba(114, 212, 114,.8)'
+	$: borderColors[score] = 'rgba(114, 212, 114)'
 	sourceData = Object.values(sourceData);
 	let ctx: any;
 	let ctxMd: any;
@@ -17,8 +23,8 @@
 				label: "Times Scored",
 				data: sourceData,
 				fill: false,
-				backgroundColor: ['rgba(245, 245, 245, .4)'],
-				borderColor: ['rgb(233, 233, 233, .6)'],
+				backgroundColor: barColors,
+				borderColor: borderColors,
 				borderWidth: 1
 			}
 		]

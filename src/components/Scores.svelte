@@ -277,9 +277,10 @@
 				</div>
 			{/if}
 			{#if scores !== null && youSelected}
-				<ScoreChart sourceData={scores} />
+				<ScoreChart sourceData={scores}  score={yesCount}/>
 			{:else if supabaseScores !== null && todaySelected}<ScoreChart
 					sourceData={Object.values(supabaseScores)}
+					score={yesCount}
 				/>
 			{:else if groupSelected}
 				<div class="w-full h-full flex justify-center items-center text-3xl flex-col">
