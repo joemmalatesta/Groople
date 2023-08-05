@@ -10,11 +10,10 @@
 	//could do this with a loop but oh well. 
 	let barColors = ['rgba(245, 245, 245, .4)', 'rgba(245, 245, 245, .4)','rgba(245, 245, 245, .4)','rgba(245, 245, 245, .4)','rgba(245, 245, 245, .4)','rgba(245, 245, 245, .4)','rgba(245, 245, 245, .4)','rgba(245, 245, 245, .4)','rgba(245, 245, 245, .4)','rgba(245, 245, 245, .4)','rgba(245, 245, 245, .4)','rgba(245, 245, 245, .4)', 'rgba(245, 245, 245, .4)']
 	let borderColors = ['rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)','rgb(233, 233, 233, .6)']
-	$: barColors[score] = 'rgba(114, 212, 114,.8)'
-	$: borderColors[score] = 'rgba(114, 212, 114)'
+	$: barColors[score] = 'rgba(255,255,255)'
+	$: borderColors[score] = 'rgba(255,255,255)'
 	sourceData = Object.values(sourceData);
 	let ctx: any;
-	let ctxMd: any;
 	const data = {
 		labels: labels,
 		datasets: [

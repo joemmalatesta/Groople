@@ -226,7 +226,14 @@
 		bind:this={dialog}
 		class="bg-gradient-to-b from-neutral-700 to-neutral-800 text-neutral-100 ring-neutral-500 ring-2 rounded-lg md:p-8 p-4 drop-shadow-2xl overflow-x-hidden"
 	>
-		<div class="w-full flex items-center flex-col">
+		<div class="w-full flex items-center flex-col relative">
+			<button
+			on:click={() => {
+				scoresModalActive = false;
+			}}
+			class="absolute left-0 w-6"
+			><img src="/close-icon.png" alt="Close modal"></button
+		>
 			<h2 class="text-xl font-bold font-serif">Play again tomorrow!</h2>
 			<h3 class="text-xl flex items-center justify-center gap-2 w-full">
 				Score: {yesCount}
@@ -291,25 +298,20 @@
 		<div class="flex gap-2 justify-center w-full">
 			<button
 				on:click={shareClicked}
-				class="flex justify-center items-center gap-2 shadow-white bg-neutral-800 hover:bg-neutral-900 text-white ring-1 ring-neutral-500/20 p-2 rounded-md w-full mb-2"
+				autofocus
+				class="flex justify-center items-center gap-2 shadow-white bg-neutral-800 hover:bg-neutral-900 text-white ring-1 ring-neutral-500/20 p-2 rounded-md w-full"
 				>{!shared ? 'Share' : 'Copied'}<img
 					src="share.svg"
 					alt="copy to clipboard"
 					class="w-5"
+					
 				/></button
 			>
-			<a
+			<!-- <a
 				href="/create"
 				class="bg-neutral-800 hover:bg-neutral-900 text-white ring-1 ring-neutral-500/20 p-2 rounded-md w-full mb-2 text-center"
 				>Create a list</a
-			>
+			> -->
 		</div>
-		<button
-			on:click={() => {
-				scoresModalActive = false;
-			}}
-			class="w-full underline-offset-2 underline hover:underline-offset-4 transition-all text-sm md:text-base"
-			>Dismiss</button
-		>
 	</dialog>
 {/if}
