@@ -20,9 +20,10 @@ export const actions: Actions = {
 		const letter = letterObject?.value; // Use optional chaining in case letterObject is undefined
 
 		// Display the formatted data in the console
+		//Auto reject values starting with right letter, under 45 characters and over 1 character, and capitalize first letter for answers going well
 		let useableData = dataArray
 			.map(
-				({ index, value }) => `${index}: ${value && String(value).length < 45 && String(value).length > 1 ? capitalizeFirstLetter(value) : 'ZZZZZZ'}`
+				({ index, value }) => `${index}: ${value && String(value).length < 45 && String(value).trim().length > 1 ? capitalizeFirstLetter(value) : 'ZZZZZZ'}`
 			)
 			.join('\n');
 		let prompt = `Welcome to Scattergories! You are the judge, and your task is to determine whether the player's responses match the category and start with the selected letter.
@@ -62,8 +63,13 @@ export const actions: Actions = {
 			]
 		});
 		const answerArray = res.data.choices[0].message?.content;
+		
 		console.log('Prompt:' + prompt);
 		console.log('Answers:\n' + answerArray);
+		//if the array is of the wrong size PLEASE MAKE ME IT KNOWN
+		if (answerArray!.trim().split('\n').length != 12){
+			console.log("SOMETHING BAD HAPPENING! ANSWER ARRAY IS BAD:\n" + answerArray)
+		}
 		return {
 			// Useable Data should be dataArray it makes more sense but whatever
 			input: useableData,
