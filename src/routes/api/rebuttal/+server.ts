@@ -19,7 +19,7 @@ export const POST = (async ({ request }) => {
       }
       let prompt = `In Scattergories, does the response "${recordedAnswer}" fit in the category "${category}"? There should be no other words in your response besides Yes or No, no explanation should be provided`;
       const res = await openAI.createChatCompletion({
-        model: 'gpt-3.5-turbo',
+        model: 'gpt-4',
         messages: [
           {
             role: 'user',
