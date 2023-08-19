@@ -5,6 +5,28 @@
 	inject({ mode: dev ? 'development' : 'production' });
 </script>
 
+<svelte:head>
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://www.groople.xyz/" />
+	<meta property="og:title" content="Groople" />
+	<meta
+		property="og:description"
+		content="Play daily challenge! Answer 12 Categories starting with the letter  in 100 seconds. Share your results!"
+	/>
+	<meta property="og:image" content="/favicon.svg" />
+
+	<!-- Twitter -->
+	<meta property="twitter:card" content="summary_large_image" />
+	<meta property="twitter:url" content="https://www.groople.xyz/" />
+	<meta property="twitter:title" content="Groople" />
+	<meta
+		property="twitter:description"
+		content="Play daily challenge! Answer 12 Categories starting with the letter  in 100 seconds. Share your results!"
+	/>
+	<meta property="twitter:image" content="/favicon.svg" />
+</svelte:head>
+
 <header class="flex justify-center items-center flex-col relative">
 	<h1>
 		<a
