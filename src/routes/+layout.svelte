@@ -12,7 +12,7 @@
 	<meta property="og:title" content="Groople" />
 	<meta
 		property="og:description"
-		content="Play daily challenge! Answer 12 Categories starting with the letter  in 100 seconds. Share your results!"
+		content="Answer 12 categories in 100 seconds in todays daily challenge!"
 	/>
 	<meta property="og:image" content="/favicon.svg" />
 
@@ -22,7 +22,7 @@
 	<meta property="twitter:title" content="Groople" />
 	<meta
 		property="twitter:description"
-		content="Play daily challenge! Answer 12 Categories starting with the letter  in 100 seconds. Share your results!"
+		content="Answer 12 categories in 100 seconds in todays daily challenge!"
 	/>
 	<meta property="twitter:image" content="/favicon.svg" />
 </svelte:head>
