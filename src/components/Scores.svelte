@@ -232,7 +232,7 @@
 				scoresModalActive = false;
 			}}
 			class="absolute left-0 w-10 -top-1.5"
-			><img src="/close-icon.png" alt="Close modal"class="hover:bg-neutral-800/60 p-2 rounded-full"></button
+			><img src="/close-icon.png" alt="Close modal"class="hover:bg-neutral-700 p-2 rounded-full"></button
 		>
 			<h2 class="text-xl font-semibold">Play again tomorrow!</h2>
 			<h3 class="text-xl flex items-center justify-center gap-2 w-full">
