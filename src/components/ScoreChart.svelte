@@ -1,3 +1,7 @@
+<!-- 
+	Chart that is used for showing both local scores, and daily scores from supabase.
+ -->
+
 <script lang="ts">
 	import Chart from 'chart.js/auto';
 	import { onMount } from 'svelte';

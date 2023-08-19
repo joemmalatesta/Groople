@@ -8,6 +8,7 @@
 	import Scores from '../components/Scores.svelte';
 	import { onMount } from 'svelte';
 	import AlreadyPlayedLanding from '../components/AlreadyPlayedLanding.svelte';
+	import RepeatUserModal from '../components/RepeatUserModal.svelte';
 
 	//get daily challenge data from the +page.ts and populate the screen!
 	export let data: any;
@@ -29,12 +30,13 @@
 	}-${currentDate.getDate()}`;
 	let lastPlayed: string | null = 'placeholder',
 		tomorrow: string | null;
+	let repeatPlayer: boolean | null; //show different starting modal depending on if they've played before.
 	onMount(() => {
 		lastPlayed = localStorage.getItem('lastPlayed');
 		tomorrow = localStorage.getItem('tomorrow');
 		localAnswers = JSON.parse(String(localStorage.getItem('answers')));
 		localInputs = JSON.parse(String(localStorage.getItem('input')));
-
+		repeatPlayer = Boolean(localStorage.getItem('repeatPlayer'));
 		if (currentDate == lastPlayed) {
 			scoresModalActive = true;
 		}
@@ -65,7 +67,7 @@
 		});
 	}
 
-	//THIS IS FOR WHEN YOU SUBMIT THE FORM
+	//THIS IS FOR HANDLING THE DATA WHEN YOU SUBMIT THE FORM
 	let inputArray: string[] = [];
 	let answerArray: string[] = [];
 	let responseArray: string[] = [];
@@ -83,8 +85,6 @@
 			localStorage.setItem('input', JSON.stringify(inputArray));
 			localStorage.setItem('answers', JSON.stringify(responseArray));
 		}
-
-		
 	}
 
 	// Count up yes and no's for the share option.
@@ -136,12 +136,14 @@
 
 	let progressPercent: number = 0;
 	$: progressPercent = 100 - time;
-
 </script>
 
 <svelte:head>
 	<title>Groople</title>
-	<meta name="description" content="Play daily challenge! Answer 12 Categories starting with the letter {letter} in 100 seconds. Share your results!" />
+	<meta
+		name="description"
+		content="Play daily challenge! Answer 12 Categories starting with the letter {letter} in 100 seconds. Share your results!"
+	/>
 </svelte:head>
 
 <!-- This logic is good. Wait until placeholder changes. and have loading while it does. -->
@@ -279,9 +281,15 @@
 			</div>
 		</div>
 		{#if modalActive}
-			<div class="absolute inset-0 p-2 mt-48 flex justify-center h-fit z-50">
-				<RulesModal bind:modalActive {letter} />
-			</div>
+			{#if repeatPlayer}
+				<div class="absolute inset-0 p-2 mt-48 flex justify-center h-fit z-50">
+					<RepeatUserModal bind:modalActive {letter} />
+				</div>
+			{:else}
+				<div class="absolute inset-0 p-2 mt-48 flex justify-center h-fit z-50">
+					<RulesModal bind:modalActive {letter} />
+				</div>
+			{/if}
 		{/if}
 		{#if responseArray.length > 1 || scoresModalActive === true}
 			<div class="absolute inset-0 p-2 mt-48 flex justify-center h-fit z-50">
