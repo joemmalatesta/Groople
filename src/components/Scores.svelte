@@ -224,7 +224,7 @@
 {#if scoresModalActive}
 	<dialog
 		bind:this={dialog}
-		class="bg-gradient-to-b from-neutral-700 to-neutral-800 text-neutral-100 ring-neutral-500 ring-2 rounded-lg md:p-8 p-4 drop-shadow-2xl overflow-x-hidden"
+		class="bg-neutral-800 text-neutral-100 rounded-lg md:p-8 p-4 drop-shadow-2xl overflow-x-hidden"
 	>
 		<div class="w-full flex items-center flex-col relative">
 			<button
