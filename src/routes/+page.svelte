@@ -9,6 +9,8 @@
 	import { onMount } from 'svelte';
 	import AlreadyPlayedLanding from '../components/AlreadyPlayedLanding.svelte';
 	import RepeatUserModal from '../components/RepeatUserModal.svelte';
+	//Width of user's screen. Used for determining to show countdown numbers or not.
+	let screenSize: number;
 
 	//get daily challenge data from the +page.ts and populate the screen!
 	export let data: any;
@@ -196,11 +198,6 @@
 
 	<!-- ACTUAL GAMEPLAY HERE -->
 	{#if currentDate != lastPlayed}
-		<!-- Progress bar -->
-		<div
-			class="fixed top-0 left-0 right-0 h-3 bg-gradient-to-r from-black to-neutral-600 z-50 transition-all duration-700"
-			style="width: {progressPercent}%;"
-		/>
 		<div class="flex justify-center items-center flex-col">
 			<p class="md:text-3xl text-xl">{date.toLocaleDateString()}</p>
 
@@ -280,6 +277,7 @@
 				</div>
 			</div>
 		</div>
+		<!-- Show starting modal, either the rules or the minimal one. -->
 		{#if modalActive}
 			{#if repeatPlayer}
 				<div class="absolute inset-0 p-2 mt-48 flex justify-center h-fit z-50">
@@ -291,10 +289,45 @@
 				</div>
 			{/if}
 		{/if}
+		<!-- Show scores after game is done! -->
 		{#if responseArray.length > 1 || scoresModalActive === true}
 			<div class="absolute inset-0 p-2 mt-48 flex justify-center h-fit z-50">
 				<Scores bind:scoresModalActive />
 			</div>
 		{/if}
+		<!-- Time updates, only on phone screen -->
+		{#if screenSize < 640}
+			{#if time == 75 || time == 50 || time == 25 || time == 10 || time == 5 || time == 4 || time == 3 || time == 2 || time == 1}
+				{#key time}
+					<div class="fixed inset-0 flex items-center justify-center pointer-events-none">
+						<div class="text-center">
+							<p class="text-7xl countdown z-50">{time}</p>
+						</div>
+					</div>
+				{/key}
+			{/if}
+		{/if}
 	{/if}
 {/if}
+<svelte:window bind:innerWidth={screenSize} />
+
+<style>
+	@keyframes countdownAnimation {
+		0% {
+			transform: scale(0.75);
+			opacity: 0;
+		}
+		50% {
+			transform: scale(1.25);
+			opacity: 0.8;
+		}
+		100% {
+			transform: scale(0.75);
+			opacity: 0;
+		}
+	}
+
+	.countdown {
+		animation: countdownAnimation 1s ease-in-out forwards;
+	}
+</style>
