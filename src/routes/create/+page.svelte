@@ -25,7 +25,7 @@
 				class="mt-2 border-2 p-1 rounded-md"
 			/>
 
-			<p class="text-sm">For a shoutout if your list is used</p>
+			<p class="text-sm">For a shoutout when your list is used</p>
 		</div>
 		{#each categories as category, index}
 			<div class="gap-2 flex items-center border-b-2 text-xl m-1 w-full">
