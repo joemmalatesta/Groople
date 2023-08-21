@@ -32,7 +32,8 @@
 	>
 	<button
 		type="button"
-		class="p-2 hover:bg-neutral-500 bg-neutral-700 ring-2 ring-neutral-800 text-white rounded-md drop-shadow-lg text-center mt-0.5"
+		autofocus
+		class="p-2 hover:bg-neutral-500 bg-neutral-700 ring-2 ring-neutral-800 text-white rounded-md drop-shadow-lg text-center mt-0.5 focus:outline-none"
 		on:click={() => {
 			modalActive = !modalActive;
 		}}>Start Daily Challenge</button

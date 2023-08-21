@@ -4,6 +4,8 @@
 	import { onMount } from 'svelte';
 	import ScoreChart from './ScoreChart.svelte';
 	import Groups from './Groups.svelte';
+	// import { clickOutside } from '../lib/clickOutside.js';
+
 	let scores: any = null; // local, personal, scores
 	let yesCount: any; // Amount of correct answers
 	export let scoresModalActive: boolean;
@@ -13,7 +15,7 @@
 	onMount(() => {
 		scoresModalActive = true;
 		//set player as repeatPlayer, so rules aren't shown for tomorrow.
-		localStorage.setItem('repeatPlayer', 'true')
+		localStorage.setItem('repeatPlayer', 'true');
 		// Get scores and todays score
 		scores = JSON.parse(String(localStorage.getItem('scores'))); //scores array
 		yesCount = localStorage.getItem('yesCount'); //today score
@@ -152,7 +154,7 @@
 		});
 		return await response.json();
 	}
-	
+
 	//Get scores from SUPER BASE.
 	async function getSupabaseScores(date: string) {
 		//this is first time, so no need to pass previous count.
@@ -198,8 +200,6 @@
 	let todaySelected: boolean = false;
 	let groupSelected: boolean = false;
 
-
-
 	//handle streak emojis
 	let streakEmoji = '';
 	$: if (Number(streak) >= 365) {
@@ -228,12 +228,16 @@
 	>
 		<div class="w-full flex items-center flex-col relative">
 			<button
-			on:click={() => {
-				scoresModalActive = false;
-			}}
-			class="absolute left-0 w-10 -top-1.5"
-			><img src="/close-icon.png" alt="Close modal"class="hover:bg-neutral-700 p-2 rounded-full"></button
-		>
+				on:click={() => {
+					scoresModalActive = false;
+				}}
+				class="absolute left-0 w-10 -top-1.5"
+				><img
+					src="/close-icon.png"
+					alt="Close modal"
+					class="hover:bg-neutral-700 p-2 rounded-full"
+				/></button
+			>
 			<h2 class="text-xl font-semibold">Play again tomorrow!</h2>
 			<h3 class="text-xl flex items-center justify-center gap-2 w-full">
 				Score: {yesCount}
@@ -284,7 +288,7 @@
 				</div>
 			{/if}
 			{#if scores !== null && youSelected}
-				<ScoreChart sourceData={scores}  score={yesCount}/>
+				<ScoreChart sourceData={scores} score={yesCount} />
 			{:else if supabaseScores !== null && todaySelected}<ScoreChart
 					sourceData={Object.values(supabaseScores)}
 					score={yesCount}
@@ -299,13 +303,11 @@
 			<button
 				on:click={shareClicked}
 				autofocus
-				class="p-2 flex justify-center items-center gap-2 hover:bg-neutral-500 bg-neutral-700 ring-2 ring-neutral-800 text-white rounded-md w-full md:w-2/3 drop-shadow-lg"
-
+				class="p-2 flex justify-center focus:outline-none items-center gap-2 hover:bg-neutral-500 bg-neutral-700 ring-2 ring-neutral-800 text-white rounded-md w-full md:w-2/3 drop-shadow-lg"
 				>{!shared ? 'Share' : 'Copied'}<img
 					src="share.svg"
 					alt="copy to clipboard"
 					class="w-5"
-					
 				/></button
 			>
 			<!-- <a
