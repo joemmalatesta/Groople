@@ -23,7 +23,7 @@
 		class="p-1 hover:bg-neutral-500 bg-neutral-700 ring-2 ring-neutral-800 text-white rounded-md drop-shadow-lg text-center my-0.5"
 		on:click={() => {
 			showRules = !showRules;
-		}}>View rules</button
+		}}>How to play</button
 	>
 	<a
 		href='/create'
