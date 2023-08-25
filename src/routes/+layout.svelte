@@ -14,7 +14,7 @@
 		property="og:description"
 		content="Answer 12 categories in 100 seconds in todays daily challenge!"
 	/>
-	<meta property="og:image" content="/favicon.svg" />
+	<meta property="og:image" content="/opengraph.png" />
 
 	<!-- Twitter -->
 	<meta property="twitter:card" content="summary_large_image" />
@@ -24,7 +24,7 @@
 		property="twitter:description"
 		content="Answer 12 categories in 100 seconds in todays daily challenge!"
 	/>
-	<meta property="twitter:image" content="/favicon.svg" />
+	<meta property="twitter:image" content="/opengraph.png" />
 </svelte:head>
 
 <header class="flex justify-center items-center flex-col relative">
