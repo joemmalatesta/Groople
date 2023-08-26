@@ -128,7 +128,7 @@
 	>
 	{#if !recordedAnswer}
 		<input
-			disabled = {disabled}
+			disabled = {disabled || loading}
 			bind:value={answer}
 			type="text"
 			placeholder={loading ? '' : `${letter}...`}
