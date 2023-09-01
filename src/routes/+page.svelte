@@ -274,6 +274,7 @@
 					{#if creator}
 						<p class="text-xs">Todays categories by {creator}</p>
 					{/if}
+					<p class="text-xs">Happy Birthday Reba ❤️</p>
 				</div>
 			</div>
 		</div>
