@@ -42,6 +42,13 @@
 		if (currentDate == lastPlayed) {
 			scoresModalActive = true;
 		}
+		//reset rebuttal count. If logged in, give 12 rebuttals just for fun
+		// if (currentDate != lastPlayed) {
+		// 	//if not logged in
+		// 	localStorage.setItem('rebuttalsRemaining', '2');
+		// 	//if logged in
+		// 	// localStorage.setItem("rebuttalsRemaining", "12")
+		// }
 	});
 
 	// Show rules modal before each game. controls category blur and timer
@@ -158,7 +165,7 @@
 	<div class="flex items-center justify-center md:flex-row flex-col w-full relative md:mt-5">
 		<div class="flex flex-col mt-5 items-center relative w-full">
 			<div class="lg:w-1/2 w-full">
-				<!-- Have this here, so the letter is sent with the form details. I'm sure theres a better way -->
+				<!-- Placeholder values, no real form elements. -->
 				<input type="text" value={letter} class="hidden" name="letter" />
 				{#each [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as category, index}
 					{#key responseArray}
@@ -222,6 +229,11 @@
 					</h3>
 				{/if}
 			</div>
+			<!-- if 500 error from GPT -->
+			{#if responseArray[0] == '500 error'}
+				<p class="md:text-2xl text-xl text-red-500 font-bold">Our judge is on break... try again later</p>
+				<p class="text-red-500 font-semibold">(Something went wrong, <a class="underline underline-offset-2 hover:underline-offset-4 transition-all" href="https://joemmalatesta.com/#contact">let me know</a>) </p>
+			{/if}
 			<div class="flex items-center justify-center md:flex-row flex-col w-full relative md:mt-5">
 				<div class="flex flex-col mt-5 items-center relative {modalActive ? 'blur' : ''} w-full">
 					<form
