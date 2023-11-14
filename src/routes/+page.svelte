@@ -47,7 +47,7 @@
 		// 	//if not logged in
 		// 	localStorage.setItem('rebuttalsRemaining', '2');
 		// 	//if logged in
-		// 	// localStorage.setItem("rebuttalsRemaining", "12")
+		localStorage.setItem("rebuttalsRemaining", "12")
 		// }
 	});
 

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { enhance } from '$app/forms';
+	import LoginModal from './LoginModal.svelte';
 	export let index: number,
 		category: string,
 		letter: string,
@@ -13,7 +14,8 @@
 		disabled: boolean = false;
 	let answer: string = ''; //answer before submission
 	let cssOutline: string = '';
-	let yesCount: number
+	let yesCount: number;
+	let showLoginModal: boolean = false;
 	$: if (!recordedAnswer && answersSubmitted) {
 		answer = '';
 		loading = true;
@@ -33,13 +35,11 @@
 	$: if (valid !== '') {
 		if (valid === 'yes' && recordedAnswer.toLowerCase().startsWith(letter.toLowerCase())) {
 			validResponse = '✔️';
-		} else if (valid === 'no' || !recordedAnswer.toLowerCase().startsWith(letter.toLowerCase())){
+		} else if (valid === 'no' || !recordedAnswer.toLowerCase().startsWith(letter.toLowerCase())) {
 			validResponse = '❌';
-		}
-		else if (valid === 'noyes'){
+		} else if (valid === 'noyes') {
 			validResponse = '❌✔️';
-		}
-		else if (valid === 'nono'){
+		} else if (valid === 'nono') {
 			validResponse = '❌❌';
 		}
 	}
@@ -55,6 +55,16 @@
 
 	// Rebuttal Swag
 	async function rebuttal() {
+		if (browser) {
+			let rebuttalsRemaining = Number(localStorage.getItem('rebuttalsRemaining'));
+			if (rebuttalsRemaining <= 0) {
+				showLoginModal = true;
+				return;
+			} else {
+				rebuttalsRemaining--;
+				localStorage.setItem('rebuttalsRemaining', String(rebuttalsRemaining));
+			}
+		}
 		rebuttalClicked = true;
 		let response = await fetch('/api/rebuttal', {
 			method: 'POST',
@@ -66,19 +76,16 @@
 		});
 		rebuttalResponse = await response.json();
 		rebuttalFinished = true;
+
 		if (rebuttalResponse === 'yes') {
 			rebuttalResponseEmoji = '✔️';
 			//add 1 to yesCount, remove 1 from previous scores array and add 1 to new scores array
 			if (browser) {
-
-				
-				
-
 				//update local storage scores and yes/no array
 				let scores = JSON.parse(String(localStorage.getItem('scores')));
 				yesCount = Number(localStorage.getItem('yesCount'));
 				// change supabase scores, such a hassle for a silly feature.
-				updateSupabaseScore(new Date().toLocaleDateString('en-US'), yesCount)
+				updateSupabaseScore(new Date().toLocaleDateString('en-US'), yesCount);
 				let localAnswers = JSON.parse(String(localStorage.getItem('answers')));
 				scores[yesCount] -= 1;
 				scores[yesCount + 1] += 1;
@@ -88,7 +95,7 @@
 				localStorage.setItem('answers', JSON.stringify(localAnswers));
 			}
 		} else {
-			if (browser){
+			if (browser) {
 				let localAnswers = JSON.parse(String(localStorage.getItem('answers')));
 				localAnswers[index - 1] += 'no';
 				localStorage.setItem('answers', JSON.stringify(localAnswers));
@@ -97,17 +104,13 @@
 		}
 	}
 
-
-
-
-
 	//Update score in Supabase.
 	async function updateSupabaseScore(date: string, score: number) {
 		//this is first time, so no need to pass previous count.
 		let response = await fetch('/api/updateSupabaseScores', {
 			method: 'POST',
 			//Since it responded yes, add one to score+1 and remove one from current score -- yesCount local is updated, so this should work always.
-			body: JSON.stringify({ date, score: score+1, previousScore: score }),
+			body: JSON.stringify({ date, score: score + 1, previousScore: score }),
 			headers: {
 				'content-type': 'application/json',
 				accept: 'application/json'
@@ -115,7 +118,6 @@
 		});
 		return await response.json();
 	}
-
 </script>
 
 <div
@@ -128,13 +130,13 @@
 	>
 	{#if !recordedAnswer}
 		<input
-			disabled = {disabled}
+			disabled={disabled || loading}
 			bind:value={answer}
 			type="text"
 			placeholder={loading ? '' : `${letter}...`}
-			class="focus:outline-none p-1 rounded-md w-full sm:w-fit {forRules ? "text-black": ""} {loading
-				? 'skeleton'
-				: `${cssOutline} border-2`}"
+			class="focus:outline-none p-1 rounded-md w-full sm:w-fit {forRules
+				? 'text-black'
+				: ''} {loading ? 'skeleton' : `${cssOutline} border-2`}"
 			name="{index} : {category}"
 			id="{index}Input"
 			autocomplete="off"
@@ -148,13 +150,22 @@
 			</p>
 			{#if recordedAnswer
 				.toLowerCase()
-				.startsWith(letter.toLowerCase()) && valid !== 'yes' && rebuttalFinished === false && rebuttalClicked === false && valid !== "noyes" && valid !== 'nono'}
+				.startsWith(letter.toLowerCase()) && valid !== 'yes' && rebuttalFinished === false && rebuttalClicked === false && valid !== 'noyes' && valid !== 'nono'}
 				<!-- Maybe I can make this a refresh logo as well. -->
-				<button class="px-2 py-0.5 bg-neutral-600 hover:bg-neutral-700 rounded-3xl text-white text-sm" type="button" on:click={rebuttal}>Rebuttal</button>
+				<button
+					class="px-2 py-0.5 bg-neutral-800 hover:bg-neutral-900 rounded-3xl text-white text-sm"
+					type="button"
+					on:click={rebuttal}>Rebuttal</button
+				>
 			{/if}
 		</div>
 	{/if}
 </div>
+{#if showLoginModal}
+	<div class="absolute inset-0 p-2 mt-48 flex justify-center h-fit z-50">
+		<LoginModal bind:modalActive={showLoginModal} />
+	</div>
+{/if}
 
 <style>
 	.skeleton {

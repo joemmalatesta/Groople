@@ -30,6 +30,16 @@
 		class="p-1 hover:bg-neutral-500 bg-neutral-700 ring-2 ring-neutral-800 text-white rounded-md drop-shadow-lg text-center my-0.5"
 		>Create a list</a
 	>
+	<!-- <a
+		href='/infinite'
+		class="p-1 hover:bg-neutral-500 bg-neutral-700 ring-2 ring-neutral-800 text-white rounded-md drop-shadow-lg text-center my-0.5"
+		>Play Infinite</a
+	> -->
+	<!-- <a
+		href='/blitz'
+		class="p-1 hover:bg-neutral-500 bg-neutral-700 ring-2 ring-neutral-800 text-white rounded-md drop-shadow-lg text-center my-0.5"
+		>Play Blitz</a
+	> -->
 	<button
 		type="button"
 		autofocus

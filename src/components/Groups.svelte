@@ -1,9 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	// onMount(() => {
-	// 	console.log('meow');
-	// });
+
 
 	let email: string = '';
     let errorMessage: string = 'Something went wrong'
@@ -31,7 +29,6 @@
         apiResponse = await response.json()
         if (apiResponse == 'success'){
             successfullyAdded = true
-            console.log('swagger, it worked')
         }
         else{
             errorMessage = apiResponse
