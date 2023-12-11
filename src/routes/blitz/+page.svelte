@@ -23,11 +23,9 @@
 				index++;
 				time = 10;
 			} else {
-				console.log('game over, you won');
 				gameOver = true
 			}
 		} else {
-			console.log('shit sucks');
 			gameOver = true
 		}
 	}

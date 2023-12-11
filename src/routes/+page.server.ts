@@ -83,11 +83,11 @@ export const actions: Actions = {
 				output: answerArray
 			};
 		} catch (error: any) {
-			if (error.response && error.response.status === 500){
-				return{
+			if (error.response && error.response.status === 500) {
+				return {
 					input: useableData,
-					output: "500 error"
-				}
+					output: '500 error'
+				};
 			}
 			console.error('An error occurred:', error.response.status);
 		}

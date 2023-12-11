@@ -205,6 +205,7 @@
 
 	<!-- ACTUAL GAMEPLAY HERE -->
 	{#if currentDate != lastPlayed}
+	
 		<div class="flex justify-center items-center flex-col">
 			<p class="md:text-3xl text-xl">{date.toLocaleDateString()}</p>
 
