@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/svelte';
 import type { HandleClientError } from '@sveltejs/kit';
 
 Sentry.init({
-  dsn: "https://146ecd29f6f4c6f133e673a12919076b@o4506356838957056.ingest.sentry.io/4506359470948352",
+  dsn: "https://75d2773c27d883dfaf3775ff83b73913@o4507370066870272.ingest.us.sentry.io/4507370067722240",
 
   // This sets the sample rate to be 10%. You may want this to be 100% while
   // in development and sample at a lower rate in production

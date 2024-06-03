@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import type { HandleServerError } from '@sveltejs/kit';
 
 Sentry.init({
-	dsn: 'https://c3678b3ae77f6e9b815d3abe29e50f37@o4506356838957056.ingest.sentry.io/4506359185670144'
+	dsn: 'https://75d2773c27d883dfaf3775ff83b73913@o4507370066870272.ingest.us.sentry.io/4507370067722240'
 });
 
 export const handleError: HandleServerError = async ({ error, event }) => {
