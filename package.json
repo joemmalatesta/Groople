@@ -36,6 +36,7 @@
 	"dependencies": {
 		"@sentry/node": "^7.86.0",
 		"@sentry/svelte": "^7.86.0",
+		"@sentry/sveltekit": "^8.7.0",
 		"@vercel/analytics": "^1.0.1",
 		"chart.js": "^4.3.0",
 		"dotenv": "^16.0.3",
