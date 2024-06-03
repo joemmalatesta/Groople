@@ -9,7 +9,6 @@ const openAI = new OpenAIApi(
 
 export const actions: Actions = {
 	default: async (event) => {
-		throw new Error('new test ')
 		const formData = Object.fromEntries(await event.request.formData());
 		const dataArray = Object.entries(formData).map(([index, value]) => ({ index, value }));
 
