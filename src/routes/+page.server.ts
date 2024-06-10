@@ -1,6 +1,6 @@
 import { OPENAI_KEY } from '$env/static/private';
 import { Configuration, OpenAIApi } from 'openai';
-import type { Actions } from '@sveltejs/kit';
+import  type{ Actions } from '@sveltejs/kit';
 const openAI = new OpenAIApi(
 	new Configuration({
 		apiKey: OPENAI_KEY
@@ -9,6 +9,7 @@ const openAI = new OpenAIApi(
 
 export const actions: Actions = {
 	default: async (event) => {
+		// throw new Error('cool')c
 		const formData = Object.fromEntries(await event.request.formData());
 		const dataArray = Object.entries(formData).map(([index, value]) => ({ index, value }));
 

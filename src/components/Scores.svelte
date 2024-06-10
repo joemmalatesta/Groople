@@ -3,7 +3,6 @@
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import ScoreChart from './ScoreChart.svelte';
-	import Groups from './Groups.svelte';
 	// import { clickOutside } from '../lib/clickOutside.js';
 
 	let scores: any = null; // local, personal, scores
@@ -198,7 +197,6 @@
 	//Chose between seeing your scores, today's scores, or scores of the group
 	let youSelected: boolean = true;
 	let todaySelected: boolean = false;
-	let groupSelected: boolean = false;
 
 	//handle streak emojis
 	let streakEmoji = '';
@@ -262,7 +260,6 @@
 						on:click={() => {
 							youSelected = true;
 							todaySelected = false;
-							groupSelected = false;
 						}}>You</button
 					>
 					<button
@@ -272,18 +269,7 @@
 						on:click={() => {
 							youSelected = false;
 							todaySelected = true;
-							groupSelected = false;
 						}}>Today</button
-					>
-					<button
-						class="w-1/3 text-sm md:text-base {groupSelected
-							? 'bg-gradient-to-t from-neutral-100/20 via-neutral-300/10 to-transparent pb-0.5'
-							: ''}"
-						on:click={() => {
-							youSelected = false;
-							todaySelected = false;
-							groupSelected = true;
-						}}>Group✨</button
 					>
 				</div>
 			{/if}
@@ -293,10 +279,6 @@
 					sourceData={Object.values(supabaseScores)}
 					score={yesCount}
 				/>
-			{:else if groupSelected}
-				<div class="w-full h-full flex justify-center items-center text-3xl flex-col">
-					<Groups />
-				</div>
 			{/if}
 		</div>
 		<div class="flex gap-2 justify-center w-full">

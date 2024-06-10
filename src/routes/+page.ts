@@ -2,6 +2,7 @@ import { browser } from '$app/environment';
 
 export async function load() {
 	if (browser) {
+		// throw new Error('what happening')
         //local date, hell yeah
         const localDate = new Date().toLocaleDateString('en-US');		
         //Call API to keep everything spooky on the server

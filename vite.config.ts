@@ -6,8 +6,8 @@ const env = loadEnv(process.env.NODE_ENV!, process.cwd(), "")
 export default defineConfig({
 	plugins: [sentrySvelteKit({
         sourceMapsUploadOptions: {
-            org: "groople",
-            project: "javascript-sveltekit",
+            org: "sentry-devrel",
+            project: "groople",
             authToken: env.SENTRY_AUTH_TOKEN
         }
     }), sveltekit()]
