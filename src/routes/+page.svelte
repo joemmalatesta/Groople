@@ -251,7 +251,7 @@
 						<input type="text" value={letter} class="hidden" name="letter" />
 						{#each categories as category, index}
 							{#key responseArray}
-								<div class="my-1 w-full md:border-b-2" transition:slide={{ duration: 500 }}>
+								<div class="my-1 w-full md:border-b-2" transition:slide|global={{ duration: 500 }}>
 									<Category
 										index={index + 1}
 										{category}

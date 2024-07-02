@@ -420,14 +420,14 @@
 				<!-- Key makes it so that each time paused changes, the animations are reset. Most of this stuff is handled in the script portion though-->
 				{#key paused}
 					<div class="absolute top-0 flex w-full">
-						<p class="text-2xl my-1 mx-3" transition:fly={{ delay: 100, duration: 400, y: 20 }}>{playPause}</p>
+						<p class="text-2xl my-1 mx-3" transition:fly|global={{ delay: 100, duration: 400, y: 20 }}>{playPause}</p>
 					</div>
 					<img
 						src="infinite/{pausedIcon}"
 						alt="{playPause} Game"
 						class="{paused ? 'w-56' : 'w-40'} cursor-pointer absolute"
-						in:fly={{ delay: 100, x: -20 }}
-						out:fly={{ duration: 100, x: 20 }}
+						in:fly|global={{ delay: 100, x: -20 }}
+						out:fly|global={{ duration: 100, x: 20 }}
 						on:click={() => {
 							if (changeTimeSelected) {
 								confirmTimeClicked();
@@ -477,12 +477,12 @@
 
 		<!-- List of Categories -->
 		<!-- Categories can run and will be replaced with "Out of categories" -->
-		<ol class="w-full flex flex-col p-2 h-full" transition:slide>
+		<ol class="w-full flex flex-col p-2 h-full" transition:slide|global>
 			{#each categories as category, index}
 				<li class="py-2 border-b lg:font-semibold relative w-fit" style="font-size: {categorySizeKey[categoryTextSizeIndicator-1]};">
 					{++index} <span class="mx-4" style="font-size: {categoryTextSize};">{category ? category : "Out of categories"}</span>
 					{#if paused}
-						<div class="absolute inset-0 bg-[#222222]" in:slide={{ delay: index * 40 }} out:slide />
+						<div class="absolute inset-0 bg-[#222222]" in:slide|global={{ delay: index * 40 }} out:slide|global />
 					{/if}
 				</li>
 			{/each}
@@ -532,7 +532,7 @@
 
 	<!-- TIMES UP and RESETTING overlay. Swipe in and out! -->
 	{#if showReset}
-		<div class="absolute inset-0 bg-[#222222] w-full opactiy-100 flex items-center justify-center" transition:slide={{ duration: 400, axis: "x" }}>
+		<div class="absolute inset-0 bg-[#222222] w-full opactiy-100 flex items-center justify-center" transition:slide|global={{ duration: 400, axis: "x" }}>
 			<h1 class="text-9xl text-white font-bold">{alertTime ? "Time's Up" : "Restarting..."}</h1>
 		</div>
 	{/if}
@@ -595,14 +595,14 @@
 			<!-- Key makes it so that each time paused changes, the animations are reset. Most of this stuff is handled in the script portion though-->
 			{#key paused}
 				<div class="absolute top-0 flex w-full">
-					<p class="text-2xl my-1 mx-3" transition:fly={{ delay: 100, duration: 400, y: 20 }}>{playPause}</p>
+					<p class="text-2xl my-1 mx-3" transition:fly|global={{ delay: 100, duration: 400, y: 20 }}>{playPause}</p>
 				</div>
 				<img
 					src="infinite/{pausedIcon}"
 					alt="{playPause} Game"
 					class="{paused ? 'md:w-56 w-40' : 'md:w-40 w-32'} cursor-pointer absolute"
-					in:fly={{ delay: 100, x: -20 }}
-					out:fly={{ duration: 100, x: 20 }}
+					in:fly|global={{ delay: 100, x: -20 }}
+					out:fly|global={{ duration: 100, x: 20 }}
 					on:click={() => {
 						if (changeTimeSelected) {
 							confirmTimeClicked();
@@ -649,12 +649,12 @@
 
 			<!-- List of Categories -->
 			<!-- Categories can run and will be replaced with "Out of categories" -->
-			<ol class="w-full flex flex-col p-2  h-full overflow-auto" transition:slide>
+			<ol class="w-full flex flex-col p-2  h-full overflow-auto" transition:slide|global>
 				{#each categories as category, index}
 					<li class="sm:py-2 py-1 font-semibold relative w-fit border-b" style="font-size:{categorySizeKey[categoryTextSizeIndicator-1]};">
 						{++index} <span class="mx-4" style="font-size: {categoryTextSize};">{category ? category : "Out of categories"}</span>
 						{#if paused}
-							<div class="absolute inset-0 bg-[#222222]" in:slide={{ delay: index * 40 }} out:slide />
+							<div class="absolute inset-0 bg-[#222222]" in:slide|global={{ delay: index * 40 }} out:slide|global />
 						{/if}
 					</li>
 				{/each}
@@ -704,7 +704,7 @@
 		</div>
 	</div>
 	{#if showReset}
-		<div class="absolute inset-0 bg-[#222222] w-full opactiy-100 flex items-center justify-center" transition:slide={{ duration: 400, axis: "x" }}>
+		<div class="absolute inset-0 bg-[#222222] w-full opactiy-100 flex items-center justify-center" transition:slide|global={{ duration: 400, axis: "x" }}>
 			<h1 class="md:text-8xl sm:text-6xl text-5xl text-white font-bold">{alertTime ? "Time's Up" : "Restarting..."}</h1>
 		</div>
 	{/if}
