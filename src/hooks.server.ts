@@ -6,7 +6,6 @@ import { error as errorResponse, redirect } from '@sveltejs/kit';
 Sentry.init({
 	dsn: 'https://75d2773c27d883dfaf3775ff83b73913@o4506044970565632.ingest.us.sentry.io/4507370067722240',
 	tracesSampleRate: import.meta.env.DEV ? 1: .3,
-	debug: true
 });
 
 const myErrorHandler: HandleServerError = ({ error, event }) => {
