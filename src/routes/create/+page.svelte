@@ -3,7 +3,7 @@
 	import { enhance } from '$app/forms';
 
 	let categories: string[] = ['', '', '', '', '', '', '', '', '', '', '', ''];
-	let newCategory: string = '';
+	let newCategory = '';
 	export let form;
 </script>
 

@@ -6,7 +6,7 @@
 	import RulesModal from "./RulesModal.svelte";
 
     let showRules = false
-	export let modalActive: boolean = true;
+	export let modalActive = true;
 	export let letter: string;
 
 	let dialog: HTMLDialogElement;
@@ -40,6 +40,7 @@
 		class="p-1 hover:bg-neutral-500 bg-neutral-700 ring-2 ring-neutral-800 text-white rounded-md drop-shadow-lg text-center my-0.5"
 		>Play Blitz</a
 	> -->
+	<!-- svelte-ignore a11y-autofocus -->
 	<button
 		type="button"
 		autofocus

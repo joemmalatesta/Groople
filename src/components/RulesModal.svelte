@@ -13,9 +13,9 @@
 		},
 	];
 
-	export let modalActive: boolean = true;
+	export let modalActive = true;
 	export let letter: string;
-	export let buttonText: string = "Start Daily Challenge"
+	export let buttonText = "Start Daily Challenge"
 
 	let dialog: HTMLDialogElement;
 	$: if (dialog && modalActive) dialog.showModal();

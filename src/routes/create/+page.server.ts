@@ -13,7 +13,7 @@ export const actions: Actions = {
 				output: 'empty'
 			};
 		}
-		let respondentName: string = "None provided"
+		let respondentName = "None provided"
 		if (filteredArray.find(element => element.index == "name")){
 			respondentName = String(filteredArray.shift()?.value);
 		}

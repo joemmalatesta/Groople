@@ -9,14 +9,16 @@
 	import { onMount } from 'svelte';
 	import AlreadyPlayedLanding from '../components/AlreadyPlayedLanding.svelte';
 	import RepeatUserModal from '../components/RepeatUserModal.svelte';
+	import Error from './+error.svelte';
+	import { fail } from '@sveltejs/kit';
 	//Width of user's screen. Used for determining to show countdown numbers or not.
 	let screenSize: number;
 
 	//get daily challenge data from the +page.ts and populate the screen!
 	export let data: any;
-	let letter: string = '';
+	let letter = '';
 	let categories: string[] = [];
-	let creator: string = '';
+	let creator = '';
 	//Don't know why this is necessary now and not before, but... data.data prevents 500 error
 	//It just makes sure all is loaded before we start trying to get silly
 	$: letter = data.data ? data.data[0].letter : '';
@@ -56,24 +58,32 @@
 	let scoresModalActive = false;
 
 	//Submit the form when time = 0, and pressing submit makes the time 0.
-	let time: number = 100;
+	let time = 100;
 	// Manually click form element so it doesn't accidentally submit.
-	let answersSubmitted: boolean = false;
+	let answersSubmitted = false;
 	let formElement: any;
 	$: if (time === 0) {
-		answersSubmitted = true;
-		//Submit form
-		const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
-		formElement.dispatchEvent(submitEvent);
-		//Increment play count today.
-		fetch('/api/incrementPlayCount', {
-			method: 'POST',
-			body: JSON.stringify({ date: currentDate }),
-			headers: {
-				'content-type': 'application/json',
-				accept: 'application/json'
-			}
-		});
+		try{
+
+			answersSubmitted = true;
+			//Submit form
+			formElement.dispatchEvent(new Event('submit'));
+			// const submitEvent = new Event('submit');
+			// formElement.dispatchEvent(submitEvent);
+			
+			//Increment play count today.
+			fetch('/api/incrementPlayCount', {
+				method: 'POST',
+				body: JSON.stringify({ date: currentDate }),
+				headers: {
+					'content-type': 'application/json',
+					accept: 'application/json'
+				}
+			});
+		} catch(error: any){
+			console.log('some error happening')
+			fail(500, {message: 'something wrong'})
+		}
 	}
 
 	//THIS IS FOR HANDLING THE DATA WHEN YOU SUBMIT THE FORM
@@ -143,7 +153,7 @@
 		localStorage.setItem('scores', JSON.stringify(scores));
 	}
 
-	let progressPercent: number = 0;
+	let progressPercent = 0;
 	$: progressPercent = 100 - time;
 </script>
 

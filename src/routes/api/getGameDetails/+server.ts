@@ -6,12 +6,13 @@ import type { RequestHandler } from './$types';
 
 export const POST = (async ({ request }) => {
 	const { date } = await request.json();
-	let { data, error } = await supabase.from('dailyChallenge').select().eq('date', date);
+	const { data, error } = await supabase.from('dailyChallenge').select().eq('date', date);
+	let questionData = data
 
 	//Use silly data if nothing is found
 	if (data!.length < 1) {
 		console.log(`data not retrieved for ${date}.. using backup shit\nError Message: ${error?.message}\nError Code: ${error?.code}\nError Details: ${error?.details}\nError Hint: ${error?.hint}`);
-		data = [
+		questionData = [
 			{
 				letter: 'E',
 				categories: [
@@ -30,9 +31,9 @@ export const POST = (async ({ request }) => {
 				]
 			}
 		];
-		return json(data);
+		return json(questionData);
 	}
 
 	console.log(`game data successfully retrieved for ${date}`)
-	return json(data);
+	return json(questionData);
 }) satisfies RequestHandler;

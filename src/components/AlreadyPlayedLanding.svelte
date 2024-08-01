@@ -4,7 +4,7 @@
     import Scores from "./Scores.svelte";
     import { slide } from "svelte/transition";
     let date = new Date();
-    export let categories: string[], letter: string, responseArray: any, localAnswers: any, localInputs: any, answersSubmitted: any, scoresModalActive: boolean, creator: string ="";
+    export let categories: string[], letter: string, responseArray: any, localAnswers: any, localInputs: any, answersSubmitted: any, scoresModalActive: boolean, creator ="";
 
 </script>
 

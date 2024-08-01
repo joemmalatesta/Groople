@@ -9,14 +9,14 @@ import { get } from 'svelte/store';
 //Set new scores, or update list of scores
 export const POST = (async ({ request }) => {
 	const { date, score, previousScore } = await request.json();
-	let response = await updateScores(date, score, previousScore);
+	const response = await updateScores(date, score, previousScore);
 	return json(response);
 }) satisfies RequestHandler;
 
 
 //Get scores.. simple enough.
 export const GET = (async ({ request, url }) => {
-	let date = url.searchParams.get('date') as string
+	const date = url.searchParams.get('date') as string
     return json(await getScores(date))
 }) satisfies RequestHandler;
 

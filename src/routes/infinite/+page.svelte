@@ -4,7 +4,6 @@
 </svelte:head>
 
 <script lang="ts">
-	import { each, onMount, space, onDestroy } from "svelte/internal";
 	import { fly, slide, fade, blur, crossfade } from "svelte/transition";
 
 	let screenWidth: number;
@@ -287,7 +286,7 @@
 	//Number always resets back to time entered by user (resetTo)
 	//StartTimer and pause timer do exactly that and are called by the later "$:" statement
 
-	let resetTo: number = 120; //Bound to value of change time
+	let resetTo = 120; //Bound to value of change time
 	let time = resetTo;
 	let interval: any;
 	let alertTime = false;
@@ -337,7 +336,7 @@
 	// Animate Refresh. Either for resetting or when the time runs out.
 	let showReset = false; //Covers the background completely
 	let spinRefresh = false; //Animate the spinny image and accompanying text
-	async function animateRefresh(timesUp: boolean = false) {
+	async function animateRefresh(timesUp = false) {
 		if (timesUp) {
 			showReset = true; //Swipe in
 			await sleep(2000); //Let layer stay longer when time is up
@@ -408,6 +407,7 @@
 			</div>
 
 			<!-- PLAY / PAUSE -->
+			<!-- svelte-ignore a11y-no-static-element-interactions -->
 			<div
 				class="w-1/2 border-4 border-neutral-900 relative flex justify-center items-center {pauseHovered ? 'dots' : ''}"
 				on:mouseenter={() => {
@@ -422,6 +422,7 @@
 					<div class="absolute top-0 flex w-full">
 						<p class="text-2xl my-1 mx-3" transition:fly|global={{ delay: 100, duration: 400, y: 20 }}>{playPause}</p>
 					</div>
+					<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 					<img
 						src="infinite/{pausedIcon}"
 						alt="{playPause} Game"
@@ -492,6 +493,7 @@
 
 	<!-- THIRD COLUMN, RESET -->
 	<!-- Pretty straight forward here. -->
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div
 		class="h-full border-4 border-neutral-900 border-l-0 w-[15%] flex justify-center items-center cursor-pointer {refreshHovered ? 'dots' : ''}"
 		on:mouseenter={() => {
@@ -597,6 +599,7 @@
 				<div class="absolute top-0 flex w-full">
 					<p class="text-2xl my-1 mx-3" transition:fly|global={{ delay: 100, duration: 400, y: 20 }}>{playPause}</p>
 				</div>
+				<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 				<img
 					src="infinite/{pausedIcon}"
 					alt="{playPause} Game"
@@ -662,6 +665,7 @@
 		</div>
 
 		<!-- REFRESH -->
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<div
 			class=" h-1/5 border-t-4 border-neutral-900 flex justify-center items-center cursor-pointer dots"
 			on:mouseenter={() => {

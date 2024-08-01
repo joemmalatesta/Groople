@@ -42,7 +42,7 @@
 
 			let scored = Number(yesCount) + 1;
 			allScores.splice(scored);
-			let scoresBelowSum: number = 0;
+			let scoresBelowSum = 0;
 			for (const score of allScores) {
 				scoresBelowSum += score;
 			}
@@ -107,7 +107,7 @@
 
 				let scored = Number(yesCount) + 1;
 				allScores.splice(scored);
-				let scoresBelowSum: number = 0;
+				let scoresBelowSum = 0;
 				for (const score of allScores) {
 					scoresBelowSum += score;
 				}
@@ -119,7 +119,7 @@
 	}
 
 	// Share function for sharing thing
-	let shared: boolean = false;
+	let shared = false;
 	function shareClicked() {
 		va.track('share');
 		let shareString = `Groople - ${yesCount}/12 ✔️\n${date.toLocaleDateString()}\n`;
@@ -195,8 +195,8 @@
 	$: if (dialog && scoresModalActive) dialog.showModal();
 
 	//Chose between seeing your scores, today's scores, or scores of the group
-	let youSelected: boolean = true;
-	let todaySelected: boolean = false;
+	let youSelected = true;
+	let todaySelected = false;
 
 	//handle streak emojis
 	let streakEmoji = '';
@@ -282,6 +282,7 @@
 			{/if}
 		</div>
 		<div class="flex gap-2 justify-center w-full">
+			<!-- svelte-ignore a11y-autofocus -->
 			<button
 				on:click={shareClicked}
 				autofocus

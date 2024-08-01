@@ -4,14 +4,14 @@
 
 <script lang="ts">
 	let showRules = false;
-	export let modalActive: boolean = true;
+	export let modalActive = true;
 
 	let dialog: HTMLDialogElement;
 	$: if (dialog && modalActive) dialog.showModal();
 
-	let loginWithUsername: boolean = false;
-	let signUpSelected: boolean = false;
-	let buttonText: string = 'Login';
+	let loginWithUsername = false;
+	let signUpSelected = false;
+	let buttonText = 'Login';
 	function signUp() {
 		console.log('switch to signing up. ');
 		signUpSelected = true;
@@ -70,6 +70,7 @@
 		</form>
 	{/if}
 	<div class="w-full justify-center flex">
+		<!-- svelte-ignore a11y-autofocus -->
 		<button
 			type="button"
 			autofocus

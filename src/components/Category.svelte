@@ -9,13 +9,13 @@
 		recordedAnswer: string, //answer after submission
 		answersSubmitted: boolean,
 		//Just some shit I needed added after the fact
-		loading: boolean = false,
-		forRules: boolean = false,
-		disabled: boolean = false;
-	let answer: string = ''; //answer before submission
-	let cssOutline: string = '';
+		loading = false,
+		forRules = false,
+		disabled = false;
+	let answer = ''; //answer before submission
+	let cssOutline = '';
 	let yesCount: number;
-	let showLoginModal: boolean = false;
+	let showLoginModal = false;
 	$: if (!recordedAnswer && answersSubmitted) {
 		answer = '';
 		loading = true;
@@ -49,9 +49,9 @@
 	}
 
 	let rebuttalResponse: string;
-	let rebuttalClicked: boolean = false;
-	let rebuttalResponseEmoji: string = '';
-	let rebuttalFinished: boolean = false;
+	let rebuttalClicked = false;
+	let rebuttalResponseEmoji = '';
+	let rebuttalFinished = false;
 
 	// Rebuttal Swag
 	async function rebuttal() {

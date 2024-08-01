@@ -13,8 +13,8 @@ export const actions: Actions = {
 	default: async (event) => {
 		const formData = Object.fromEntries(await event.request.formData());
 		const dataArray = Object.entries(formData).map(([index, value]) => ({ index, value }));
-		let category = dataArray[0].index;
-		let answer = dataArray[0].value;
+		const category = dataArray[0].index;
+		const answer = dataArray[0].value;
 		letter = String(dataArray[1].value) || letter
 		try {
 			if (!answer || answer.length > 45 || String(answer)[0].toLowerCase() != String(letter).toLowerCase()) {
@@ -23,7 +23,7 @@ export const actions: Actions = {
 					output: "no"
 				};
 			}
-			let prompt = `In Scattergories, does the response "${capitalizeFirstLetter(answer)}" fit in the category "${category}"? There should be no other words in your response besides Yes or No, no explanation should be provided`;
+			const prompt = `In Scattergories, does the response "${capitalizeFirstLetter(answer)}" fit in the category "${category}"? There should be no other words in your response besides Yes or No, no explanation should be provided`;
 			const res = await openAI.createChatCompletion({
 				model: 'gpt-4-1106-preview',
 				messages: [

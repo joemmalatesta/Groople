@@ -17,7 +17,7 @@ export const POST = (async ({ request }) => {
         console.log("someone's trying to fuck around...")
         return new Response("You really shouldn't be doing that.", { status: 500 });
       }
-      let prompt = `In Scattergories, does the response "${recordedAnswer}" fit in the category "${category}"? There should be no other words in your response besides Yes or No, no explanation should be provided`;
+      const prompt = `In Scattergories, does the response "${recordedAnswer}" fit in the category "${category}"? There should be no other words in your response besides Yes or No, no explanation should be provided`;
       const res = await openAI.createChatCompletion({
         model: 'gpt-4',
         messages: [

@@ -5,9 +5,9 @@
 
 	let categories: string[];
 	let letter: string;
-	let index: number = 0;
+	let index = 0;
 	let time = 10;
-	let gameOver: boolean = false
+	let gameOver = false
 
 	// Get data from +page.ts
 	export let data: any;
@@ -39,7 +39,7 @@
 	}
 
 	let date = new Date();
-	let currentAnswer: string = ""
+	let currentAnswer = ""
 </script>
 
 <!-- The idea for this is to have 10 prompts with a single letter each day. -->
