@@ -7,13 +7,10 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-
-*{
-    font-family: 'Libre Baskerville', serif;
+* {
+	font-family: 'Libre Baskerville', serif;
 }
 
 dialog::backdrop {
-    background-color: #26262675
+	background-color: #26262675;
 }
