@@ -22,7 +22,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22'
+          node-version: '16' # Specify the Node.js version you are using
 
       - name: Install dependencies
         run: npm install
@@ -30,12 +30,18 @@ jobs:
       - name: Verify ESLint installation
         run: npx eslint --version
 
+      - name: Check ESLint config file
+        run: |
+          if [ ! -f .eslintrc.cjs ]; then
+            echo "ESLint config file not found!"
+            exit 1
+          fi
+
       - name: Run ESLint
         run: |
           npx eslint . \
             --config .eslintrc.cjs \
             --ext .js,.jsx,.ts,.tsx,.svelte
-        continue-on-error: true
 
       - name: Check ESLint result
         if: failure()
