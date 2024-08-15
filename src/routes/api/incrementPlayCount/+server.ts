@@ -14,6 +14,7 @@ export const POST = (async ({ request }) => {
 
 
 //Increment tha score!
+//TODO: I can just call a function SQL function to increment. I did this for HackerLink
 async function incrementPlayCount(date: string) {
 	// Retrieve the existing plays value
 	const { data: existingData, error } = await supabase

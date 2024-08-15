@@ -90,7 +90,7 @@ export const actions: Actions = {
 					output: '500 error'
 				};
 			}
-			console.error('An error occurred:', error.response.status);
+			console.error('An error occurred making openAI call:', `${error.response.status} -- ${error.message}`);
 		}
 	}
 };
