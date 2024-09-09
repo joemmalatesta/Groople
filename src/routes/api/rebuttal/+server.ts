@@ -19,7 +19,7 @@ export const POST = (async ({ request }) => {
       }
       const prompt = `In Scattergories, does the response "${recordedAnswer}" fit in the category "${category}"? There should be no other words in your response besides Yes or No, no explanation should be provided`;
       const res = await openAI.createChatCompletion({
-        model: 'gpt-4',
+        model: 'gpt-4o',
         messages: [
           {
             role: 'user',
@@ -29,7 +29,7 @@ export const POST = (async ({ request }) => {
       });
 
       
-      let response = res.data.choices[0].message?.content.replace(/\./g, '');
+      let response = res.data.choices[0].message?.content?.replace(/\./g, '');
       console.log(`Rebuttal: ${prompt}\nResponse: ${response}`);
       //Default to no if it gives some stupid shit
       if (response?.toLowerCase() != "yes" && response?.toLowerCase() != "no"){

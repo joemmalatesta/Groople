@@ -61,7 +61,7 @@ export const actions: Actions = {
 
 		try {
 			const res = await openAI.createChatCompletion({
-				model: 'gpt-3.5-turbo',
+				model: 'gpt-3.5-turbo-0125',
 				messages: [
 					{
 						role: 'user',
@@ -72,12 +72,16 @@ export const actions: Actions = {
 
 			const answerArray = res.data.choices[0].message?.content;
 
-			console.log('Prompt:' + prompt);
-			console.log('Answers:\n' + answerArray);
+			// console.log('Prompt:' + prompt);
+			// console.log('Answers:\n' + answerArray);
+			console.log(answerArray!.trim().split('\n').length)
 			//if the array is of the wrong size PLEASE MAKE ME IT KNOWN
 			if (answerArray!.trim().split('\n').length != 12) {
 				console.log('SOMETHING BAD HAPPENING! ANSWER ARRAY IS BAD:\n' + answerArray);
 			}
+
+
+			console.log(answerArray)
 			return {
 				// Useable Data should be dataArray it makes more sense but whatever
 				input: useableData,
