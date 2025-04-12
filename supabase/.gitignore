@@ -1,0 +1,14 @@
+# Supabase
+.branches
+.temp
+
+# dotenvx
+.env.keys
+.env.local
+.env.*.local
+
+# Seed file
+seed.sql
+
+# Config file
+config.toml
