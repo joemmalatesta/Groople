@@ -10,8 +10,10 @@ export const POST = (async ({ request }) => {
 	let questionData = data
 
 	//Use silly data if nothing is found
-	if (data!.length < 1) {
-		console.log(`data not retrieved for ${date}.. using backup shit\nError Message: ${error?.message}\nError Code: ${error?.code}\nError Details: ${error?.details}\nError Hint: ${error?.hint}`);
+	if (!data || data.length < 1) {
+		console.log(
+			`data not retrieved for ${date}.. using backup shit\nError Message: ${error?.message}\nError Code: ${error?.code}\nError Details: ${error?.details}\nError Hint: ${error?.hint}`
+		);
 		questionData = [
 			{
 				letter: 'E',
