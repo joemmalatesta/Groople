@@ -81,7 +81,6 @@
 				}
 			});
 		} catch(error: any){
-			console.log('some error happening')
 			fail(500, {message: 'something wrong'})
 		}
 	}

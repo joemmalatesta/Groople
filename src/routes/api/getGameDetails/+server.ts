@@ -8,6 +8,7 @@ export const POST = (async ({ request }) => {
 	const { date } = await request.json();
 	const { data, error } = await supabase.from('dailyChallenge').select().eq('date', date);
 	let questionData = data
+	console.log(questionData);
 
 	//Use silly data if nothing is found
 	if (data!.length < 1) {

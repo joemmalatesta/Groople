@@ -24,15 +24,3 @@ const myErrorHandler: HandleClientError = ({ error, event }) => {
   
 
 export const handleError = Sentry.handleErrorWithSentry(myErrorHandler);
-
-// export const handleError: HandleClientError = async ({ error, event }) => {
-// 	console.log('in da client');
-// 	const errorId = crypto.randomUUID();
-// 	// example integration with https://sentry.io/
-// 	Sentry.captureException(error, { extra: { event, errorId } });
-
-// 	return {
-// 		message: 'Whoops!',
-// 		errorId
-// 	};
-// };
