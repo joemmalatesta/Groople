@@ -3,6 +3,7 @@ import type { RequestHandler } from './$types';
 import { OPENAI_KEY } from '$env/static/private';
 import { Configuration, OpenAIApi } from 'openai';
 import type { Actions } from '@sveltejs/kit';
+import { rebuttalModel } from '$lib/constants';
 const openAI = new OpenAIApi(
 	new Configuration({
 		apiKey: OPENAI_KEY
@@ -19,7 +20,7 @@ export const POST = (async ({ request }) => {
       }
       const prompt = `In Scattergories, does the response "${recordedAnswer}" fit in the category "${category}"? There should be no other words in your response besides Yes or No, no explanation should be provided`;
       const res = await openAI.createChatCompletion({
-        model: 'gpt-4o',
+        model: rebuttalModel,
         messages: [
           {
             role: 'user',

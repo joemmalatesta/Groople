@@ -1,4 +1,4 @@
-export interface QuestionData {
+export interface DailyChallenge {
     id: number;
     letter: string; 
     categories: string[];
