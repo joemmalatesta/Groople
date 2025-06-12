@@ -302,7 +302,7 @@
 			<button
 				on:click={shareClicked}
 				autofocus
-				class="p-2 flex justify-center focus:outline-none items-center gap-2 hover:bg-neutral-500 bg-neutral-700 ring-2 ring-neutral-800 text-white rounded-md w-full md:w-2/3 drop-shadow-lg"
+				class="p-2 flex justify-center focus:outline-none items-center gap-2 hover:bg-gradient-to-r hover:from-neutral-600 hover:via-neutral-500 hover:to-neutral-600 bg-gradient-to-r from-neutral-700 via-neutral-600 to-neutral-700 ring-2 ring-neutral-400/60 text-white rounded-md w-full drop-shadow-lg"
 				>{!copied ? 'Share' : 'Copied'}<img src="share.svg" alt="share" class="w-5" /></button
 			>
 			<!-- <a
