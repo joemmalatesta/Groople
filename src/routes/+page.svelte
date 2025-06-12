@@ -49,7 +49,7 @@
 		// 	//if not logged in
 		// 	localStorage.setItem('rebuttalsRemaining', '2');
 		// 	//if logged in
-		localStorage.setItem("rebuttalsRemaining", "12")
+		localStorage.setItem('rebuttalsRemaining', '12');
 		// }
 	});
 
@@ -63,14 +63,13 @@
 	let answersSubmitted = false;
 	let formElement: any;
 	$: if (time === 0) {
-		try{
-
+		try {
 			answersSubmitted = true;
 			//Submit form
 			formElement.dispatchEvent(new Event('submit'));
 			// const submitEvent = new Event('submit');
 			// formElement.dispatchEvent(submitEvent);
-			
+
 			//Increment play count today.
 			fetch('/api/incrementPlayCount', {
 				method: 'POST',
@@ -80,9 +79,9 @@
 					accept: 'application/json'
 				}
 			});
-		} catch(error: any){
-			console.log('some error happening')
-			fail(500, {message: 'something wrong'})
+		} catch (error: any) {
+			console.log('some error happening');
+			fail(500, { message: 'something wrong' });
 		}
 	}
 
@@ -158,11 +157,24 @@
 </script>
 
 <svelte:head>
-	<title>Groople</title>
-	<meta
-		name="description"
-		content="Play daily challenge! Answer 12 Categories starting with the letter {letter} in 100 seconds. Share your results!"
-	/>
+	<title>Groople - {date.toLocaleDateString()}</title>
+	{#if letter}
+		<!-- Override title and description only when data is loaded -->
+		<meta property="og:title" content="Groople - {date.toLocaleDateString()}" />
+		<meta
+			property="og:description"
+			content="Today's challenge: Answer 12 categories starting with '{letter}' in 100 seconds! Can you beat my score?"
+		/>
+		<meta name="twitter:title" content="Groople - {date.toLocaleDateString()}" />
+		<meta
+			name="twitter:description"
+			content="Today's challenge: Answer 12 categories starting with '{letter}' in 100 seconds! Can you beat my score?"
+		/>
+		<meta
+			name="description"
+			content="Play daily challenge! Answer 12 Categories starting with the letter {letter} in 100 seconds. Share your results!"
+		/>
+	{/if}
 </svelte:head>
 
 <!-- This logic is good. Wait until placeholder changes. and have loading while it does. -->
@@ -215,7 +227,6 @@
 
 	<!-- ACTUAL GAMEPLAY HERE -->
 	{#if currentDate != lastPlayed}
-	
 		<div class="flex justify-center items-center flex-col">
 			<p class="md:text-3xl text-xl">{date.toLocaleDateString()}</p>
 
@@ -242,8 +253,15 @@
 			</div>
 			<!-- if 500 error from GPT -->
 			{#if responseArray[0] == '500 error'}
-				<p class="md:text-2xl text-xl text-red-500 font-bold">Our judge is on break... try again later</p>
-				<p class="text-red-500 font-semibold">(Something went wrong, <a class="underline underline-offset-2 hover:underline-offset-4 transition-all" href="https://joemmalatesta.com/#contact">let me know</a>) </p>
+				<p class="md:text-2xl text-xl text-red-500 font-bold">
+					Our judge is on break... try again later
+				</p>
+				<p class="text-red-500 font-semibold">
+					(Something went wrong, <a
+						class="underline underline-offset-2 hover:underline-offset-4 transition-all"
+						href="https://joemmalatesta.com/#contact">let me know</a
+					>)
+				</p>
 			{/if}
 			<div class="flex items-center justify-center md:flex-row flex-col w-full relative md:mt-5">
 				<div class="flex flex-col mt-5 items-center relative {modalActive ? 'blur' : ''} w-full">

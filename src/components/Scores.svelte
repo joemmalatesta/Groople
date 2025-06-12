@@ -119,10 +119,10 @@
 	}
 
 	// Share function for sharing thing
-	let shared = false;
-	function shareClicked() {
+	let copied = false;
+	async function shareClicked() {
 		va.track('share');
-		let shareString = `Groople - ${yesCount}/12 ✔️\n${date.toLocaleDateString()}\n`;
+		let shareString = '';
 		//Make share string more detailed.
 		if (browser) {
 			let localAnswers = JSON.parse(String(localStorage.getItem('answers')));
@@ -135,9 +135,25 @@
 				}
 			}
 		}
-		shareString += '\nPlay Groople! - https://groople.xyz';
-		navigator.clipboard.writeText(shareString);
-		shared = true;
+
+		// Check if Web Share API is supported
+		if (navigator.share) {
+			try {
+				await navigator.share({
+					title: 'Groople - ' + date.toLocaleDateString(),
+					text: shareString,
+					url: 'https://groople.xyz'
+				});
+			} catch (error) {
+				// User cancelled share or error occurred, fall back to clipboard
+				navigator.clipboard.writeText(shareString);
+				copied = true;
+			}
+		} else {
+			// Fallback to clipboard copy
+			navigator.clipboard.writeText(shareString);
+			copied = true;
+		}
 	}
 
 	//Update score in Supabase.
@@ -286,12 +302,8 @@
 			<button
 				on:click={shareClicked}
 				autofocus
-				class="p-2 flex justify-center focus:outline-none items-center gap-2 hover:bg-neutral-500 bg-neutral-700 ring-2 ring-neutral-800 text-white rounded-md w-full md:w-2/3 drop-shadow-lg"
-				>{!shared ? 'Share' : 'Copied'}<img
-					src="share.svg"
-					alt="copy to clipboard"
-					class="w-5"
-				/></button
+				class="p-2 flex justify-center focus:outline-none items-center gap-2 hover:bg-gradient-to-r hover:from-neutral-600 hover:via-neutral-500 hover:to-neutral-600 bg-gradient-to-r from-neutral-700 via-neutral-600 to-neutral-700 ring-2 ring-neutral-400/60 text-white rounded-md w-full drop-shadow-lg"
+				>{!copied ? 'Share' : 'Copied'}<img src="share.svg" alt="share" class="w-5" /></button
 			>
 			<!-- <a
 				href="/create"
