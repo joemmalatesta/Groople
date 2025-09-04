@@ -14,8 +14,8 @@
 	"devDependencies": {
 		"@supabase/supabase-js": "^2.26.0",
 		"@sveltejs/adapter-auto": "^2.0.0",
-		"@sveltejs/adapter-vercel": "^2.4.1",
-		"@sveltejs/kit": "^1.20.4",
+		"@sveltejs/adapter-vercel": "^3.1.0",
+		"@sveltejs/kit": "^1.30.4",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"autoprefixer": "^10.4.14",
@@ -33,6 +33,9 @@
 		"vite": "^4.2.0"
 	},
 	"type": "module",
+	"engines": {
+		"node": ">=20.0.0"
+	},
 	"dependencies": {
 		"@sentry/node": "^7.86.0",
 		"@sentry/svelte": "^7.86.0",
